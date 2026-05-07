@@ -177,6 +177,21 @@ for f in index.html dashboard.html welcome.html; do
 done
 $HTML_OK && print_ok "HTML-Closing-Tags OK"
 
+# ============ 7b. SMASH-CROSS-BRAND CHECK (Sebi-Decision 07.05.2026 spät: PEAKING-only) ============
+print_section "SMASH-Cross-Brand Check (PEAKING-only Pages)"
+# Public-User-Facing-Pages dürfen KEINE smashtheapp/smashuniverse-Links + 'Founder, SMASH' Strings haben
+# changelog.html ist Build-Log und darf SMASH historisch erwähnen (Schwester-Brand, Naming-Pivot, etc.)
+SMASH_HITS=$(grep -lE "smashtheapp\.de|smashuniverse\.info|Founder, SMASH \+ PEAKING|SMASH \+ PEAKING" \
+  welcome.html links.html privacy.html terms.html manifest-page.html index.html \
+  modules/replies.html modules/growth.html 2>/dev/null || true)
+if [ -z "$SMASH_HITS" ]; then
+  print_ok "Keine SMASH-Cross-Brand-Strings in PEAKING-Public-Pages"
+else
+  print_warn "SMASH-Cross-Brand-Strings gefunden — Sebi will PEAKING-only:"
+  echo "$SMASH_HITS" | sed 's/^/    /'
+fi
+# changelog.html ist whitelisted (historisch + Build-Log)
+
 # ============ 8. CNAME-FILE NOT REMOVED ============
 print_section "CNAME-Trap (GH-Pages CNAME-File)"
 if [ -f "CNAME" ] && grep -q "peaking.world" CNAME; then
