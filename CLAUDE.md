@@ -162,28 +162,43 @@ Account-Switcher im Dashboard-Header (oben rechts) — Pill mit Sunrise-Border, 
 
 ---
 
-## Deploy-Workflow
+## Deploy-Workflow (Stage→Prod, seit 07.05.2026)
 
-### Edit → Deploy (~3 Min Cycle)
+**WICHTIG — 2 unabhaengige Systeme, NIE direkt auf Prod pushen:**
+
+| Repo | URL | Rolle |
+|---|---|---|
+| `~/smash-insta-manager/` | (lokal, kein Git) | Source of Truth |
+| `~/smash-universe-hub/insta/` | smashuniverse.info/insta | **STAGING** (hidden, Test-System) |
+| `~/peaking-world/` | peaking.world | **PRODUCTION** (Insta-Bio-Link) |
+
+### Standard-Workflow
+
 ```bash
-# 1. Source bearbeiten
-cd ~/smash-insta-manager
-# ... edit files ...
+# 1. Edit in Source
+cd ~/smash-insta-manager && # ... edit ...
 
-# 2. In primary Repo kopieren
-cp -R index.html dashboard.html js modules data assets ~/peaking-world/
+# 2. STAGE first (smashuniverse.info/insta)
+cp -R index.html dashboard.html js modules data assets sw.js manifest.json links.html ~/smash-universe-hub/insta/
+cd ~/smash-universe-hub && git add insta/ && git commit -m "STAGE: <desc>" && git push
 
-# 3. In mirror Repo kopieren (solange peaking.world DNS noch nicht live)
-cp -R index.html dashboard.html js modules data assets ~/smash-universe-hub/insta/
+# 3. QA-Sweep auf Stage (~60-120s warten + curl-checks)
+curl -s -o /dev/null -w "%{http_code}" https://smashuniverse.info/insta/
 
-# 4. Push beide
-cd ~/peaking-world && git add -A && git commit -m "..." && git push
+# 4. WENN STAGE ✓ → PROD (peaking.world)
+cp -R index.html dashboard.html js modules data assets sw.js manifest.json links.html CLAUDE.md ~/peaking-world/
+cd ~/peaking-world && git add -A && git commit -m "PROD: <desc>" && git push
 
-cd ~/smash-universe-hub && git add insta/ && git commit -m "/insta mirror: ..." && git push
+# 5. QA-Sweep auf Prod
 ```
+
+→ Details in `~/.claude/projects/.../memory/project_peaking_stage_prod_workflow.md`.
 
 ### Wichtig: CNAME-Trap
 **NIEMALS** im GitHub-Pages-Settings „Remove Domain" klicken — löscht die `CNAME`-Datei aus dem Repo automatisch (Sebi hatte das Trauma schon mal mit smashuniverse.info!). Wenn `peaking.world` plötzlich 404: erst CNAME im Repo prüfen.
+
+### iOS Safari + HTTP-Edge-Cases
+Solange peaking.world auf HTTP laeuft (kein SSL): **Recorder/SW/getUserMedia/Notifications broken**. Login funktioniert nach Pure-JS-SHA-256-Fallback (07.05.). Details: `feedback_peaking_qa_workflow.md`.
 
 ---
 
