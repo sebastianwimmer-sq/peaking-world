@@ -37,7 +37,7 @@ Personal Influencer-Management-Tool. Track Reels, plan Content, finde Hooks — 
 - **CSS:** Tailwind via CDN + custom `assets/effects.css` für Glow + Animations
 - **Charts:** Chart.js via CDN (nur in `tracker.html` + `analytics.html`)
 - **Storage:** localStorage (Multi-Account-prefixed: `smash:<account>:<key>`)
-- **Auth:** SHA-256-Hash von `SMW1508!` in `js/app.js`, 24h Session
+- **Auth:** SHA-256-Hash des Login-PWs in `js/app.js` (Hash, nicht Plaintext), 24h Session
 - **Hosting:** GitHub Pages (Auto-Deploy bei push to main)
 - **Domain:** peaking.world bei United-Domains, A-Records auf GH-Pages-IPs (185.199.108-111.153)
 
@@ -280,7 +280,7 @@ Solange peaking.world auf HTTP laeuft (kein SSL): **Recorder/SW/getUserMedia/Not
 - **Logo-Preview:** /assets/logo-preview.html
 
 ### Login
-- **Passwort:** `SMW1508!` (SHA-256-Hash in `js/app.js`)
+- **Passwort:** Sebis Login-PW (Plaintext bewusst NICHT dokumentiert — Hash in `js/app.js`)
 - **Session:** 24h via localStorage
 
 ### GitHub
