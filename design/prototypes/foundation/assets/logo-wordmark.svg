@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 280 320" fill="none">
+  <title>PEAKING Logo Mix-A2 — Faceted Peak (no zipfel + voller Sun-Halo)</title>
+  <defs>
+    
+    <radialGradient id="sunDiskA2" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#FFE066" stop-opacity="0.95"></stop>
+      <stop offset="40%" stop-color="#FFD43B" stop-opacity="0.75"></stop>
+      <stop offset="70%" stop-color="#FFA94D" stop-opacity="0.45"></stop>
+      <stop offset="92%" stop-color="#FF6B6B" stop-opacity="0.18"></stop>
+      <stop offset="100%" stop-color="transparent"></stop>
+    </radialGradient>
+    
+    <linearGradient id="pyrLightA2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FF8E5A"></stop>
+      <stop offset="100%" stop-color="#C73E3E"></stop>
+    </linearGradient>
+    <linearGradient id="pyrDarkA2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#5C1F1F"></stop>
+      <stop offset="100%" stop-color="#2A0E0E"></stop>
+    </linearGradient>
+    
+    <linearGradient id="wordmarkA2" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#FF6B6B"></stop>
+      <stop offset="50%" stop-color="#FFA94D"></stop>
+      <stop offset="100%" stop-color="#FFD43B"></stop>
+    </linearGradient>
+    
+    <filter id="pyrGlowA2" x="-15%" y="-15%" width="130%" height="130%">
+      <feGaussianBlur stdDeviation="1.4" result="b"></feGaussianBlur>
+      <feMerge><feMergeNode in="b"></feMergeNode><feMergeNode in="SourceGraphic"></feMergeNode></feMerge>
+    </filter>
+    
+    <radialGradient id="groundShadowA2" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#000" stop-opacity="0.45"></stop>
+      <stop offset="100%" stop-color="transparent"></stop>
+    </radialGradient>
+  </defs>
+
+  
+  <circle cx="140" cy="135" r="105" fill="url(#sunDiskA2)"></circle>
+
+  
+  <ellipse cx="140" cy="232" rx="65" ry="6" fill="url(#groundShadowA2)"></ellipse>
+
+  
+  <g filter="url(#pyrGlowA2)">
+    
+    <path d="M 140 60 L 196 222 L 140 222 Z" fill="url(#pyrDarkA2)"></path>
+    
+    <path d="M 140 60 L 84 222 L 140 222 Z" fill="url(#pyrLightA2)"></path>
+    
+    <line x1="140" y1="60" x2="140" y2="222" stroke="#FFD43B" stroke-width="1.5" stroke-opacity="0.85" stroke-linecap="round"></line>
+  </g>
+
+  
+  <text x="140" y="278" text-anchor="middle" font-family="-apple-system, system-ui, &#39;Helvetica Neue&#39;, sans-serif" font-size="40" font-weight="900" fill="url(#wordmarkA2)" letter-spacing="4">PEAKING</text>
+
+  
+  <text x="140" y="302" text-anchor="middle" font-family="-apple-system, system-ui, sans-serif" font-size="11" font-weight="500" fill="#FFA94D" letter-spacing="6" opacity="0.7">ALWAYS PEAKING.</text>
+</svg>
