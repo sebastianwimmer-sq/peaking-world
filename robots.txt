@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /
+
+# Internal admin/data paths — keine relevanten Public-Crawls
+Disallow: /admin.html
+Disallow: /data/
+Disallow: /scripts/
+
+Sitemap: https://peaking.world/sitemap.xml
