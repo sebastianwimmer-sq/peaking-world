@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self' https:; script-src 'self' 'unsafe-inline' 'unsafe-eval' https:; style-src 'self' 'unsafe-inline' https:; img-src 'self' data: blob: https:; font-src 'self' data: https:; connect-src 'self' https: wss:; upgrade-insecure-requests">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>404 — Off the path | PEAKING</title>
+<meta name="description" content="This trail leads nowhere. Back to base camp.">
+<meta name="theme-color" content="#FFA94D">
+<meta name="robots" content="noindex">
+<link rel="icon" href="assets/logo.svg" type="image/svg+xml">
+<style>
+  :root {
+    --bg-a: #0f172a;
+    --bg-b: #1e293b;
+    --text: #fff;
+    --text2: #cbd5e1;
+    --text3: #94a3b8;
+    --sunrise1: #FFA94D;
+    --sunrise2: #FF6B6B;
+    --sunrise3: #FFD43B;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
+    background: linear-gradient(135deg, var(--bg-a) 0%, var(--bg-b) 100%);
+    color: var(--text);
+    min-height: 100dvh;
+    -webkit-font-smoothing: antialiased;
+  }
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    background:
+      radial-gradient(circle at 18% 12%, rgba(255,169,77,0.12), transparent 40%),
+      radial-gradient(circle at 88% 88%, rgba(255,107,107,0.08), transparent 42%);
+  }
+  .page-404 {
+    position: relative;
+    min-height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: clamp(24px, 4vw, 56px) clamp(18px, 3vw, 32px);
+    z-index: 1;
+  }
+  .mountain {
+    font-size: clamp(50px, 8vw, 88px);
+    line-height: 1;
+    margin-bottom: 8px;
+    filter: drop-shadow(0 8px 24px rgba(255,169,77,0.4));
+  }
+  .num-404 {
+    font-size: clamp(60px, 11vw, 120px);
+    font-weight: 900;
+    line-height: 1;
+    letter-spacing: clamp(-3px, -0.3vw, -1.5px);
+    background: linear-gradient(135deg, var(--sunrise2), var(--sunrise1), var(--sunrise3));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 12px;
+  }
+  .text-404 {
+    font-size: clamp(17px, 2vw, 22px);
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 8px;
+  }
+  .sub-404 {
+    font-size: clamp(13px, 1.2vw, 15px);
+    color: var(--text3);
+    margin-bottom: 32px;
+    max-width: 380px;
+    line-height: 1.55;
+    font-style: italic;
+  }
+  .back-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: clamp(12px, 1.4vw, 16px) clamp(20px, 2.4vw, 28px);
+    background: linear-gradient(135deg, var(--sunrise1), var(--sunrise2));
+    color: var(--bg-a);
+    border-radius: 12px;
+    font-weight: 800;
+    font-size: clamp(13px, 1.2vw, 15px);
+    letter-spacing: 0.4px;
+    text-decoration: none;
+    box-shadow: 0 8px 24px -4px rgba(255, 169, 77, 0.45);
+    transition: filter 0.15s, transform 0.12s;
+  }
+  .back-cta:hover { filter: brightness(1.08); transform: translateY(-1px); }
+  .footnote-404 {
+    margin-top: 36px;
+    font-size: 10.5px;
+    color: var(--text3);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    font-weight: 700;
+  }
+</style>
+</head>
+<body>
+<div class="page-404">
+  <div class="mountain">⛰️</div>
+  <div class="num-404">404</div>
+  <div class="text-404">Off the path.</div>
+  <div class="sub-404">This trail doesn't exist. Even peaking pros wander sometimes — back to base camp.</div>
+  <a href="/welcome.html" class="back-cta">← Back to PEAKING</a>
+  <div class="footnote-404">peaking.world · Always peaking.</div>
+</div>
+</body>
+</html>
