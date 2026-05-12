@@ -24,6 +24,7 @@
       brandId: 'peaking',
       brandName: 'PEAKING',
       tagline: 'Always peaking.',
+      aiSubHeadline: 'ALWAYS PEAKING',
       voice: ['builder', 'public-progress', 'AI-native', 'concrete-over-abstract'],
       audience: 'Solo-Founders + AI-Tool-Creators (DACH)',
       palette: ['#0f172a', '#1e293b', '#FFA94D', '#FFD43B', '#FF6B6B'],
@@ -40,6 +41,7 @@
       brandId: 'smash',
       brandName: 'SMASH',
       tagline: 'Date your best self.',
+      aiSubHeadline: 'DATE YOUR BEST SELF',
       voice: ['brutalist', 'minimal', 'edgy', 'imperative'],
       audience: 'DACH 16-30, fitness + habit-builders',
       palette: ['#000000', '#10b981', '#FFFFFF'],
@@ -56,6 +58,7 @@
       brandId: 'vegetarianhulk',
       brandName: 'vegetarianhulk',
       tagline: 'Disziplin ist kein Talent. Sie ist ein Ritual.',
+      aiSubHeadline: 'DISZIPLIN ALS RITUAL',
       voice: ['raw', 'vulnerable', '1st-person', 'christlich-emotional', 'warm'],
       audience: 'DACH 25-40, disziplin-suchende mit Faith-Touch, vegetarisch-stark',
       palette: ['#F5EFE6', '#3D5A3A', '#1a1a1a'],
@@ -158,8 +161,9 @@
 
       // Auto-Detect: Soll Text im Bild sein?
       const hasHeadlineHint = /day \d|launch|beta|live|update|new|coming|featured|story|reset|tag \d/i.test(idea);
+      const subText = p.aiSubHeadline || p.tagline || '';
       const headlinePart = hasHeadlineHint
-        ? `Large bold headline reading: "${extractHeadline(idea, p)}", subline reading: "${p.tagline}".`
+        ? `Large bold headline reading: "${extractHeadline(idea, p)}", subline reading: "${subText}".`
         : '';
 
       const ideaPart = `Concept: ${idea}.`;
