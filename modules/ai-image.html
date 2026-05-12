@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self' https:; script-src 'self' 'unsafe-inline' 'unsafe-eval' https:; style-src 'self' 'unsafe-inline' https:; img-src 'self' data: blob: https:; font-src 'self' data: https:; connect-src 'self' https: wss:; upgrade-insecure-requests">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<title>AI Image Studio · PEAKING</title>
+<link rel="icon" href="../assets/logo.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../assets/effects.css">
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+  body {
+    background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+    min-height: 100dvh;
+    color: white;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Inter, sans-serif;
+  }
+  .glass {
+    background: rgba(30, 41, 59, 0.6);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255,255,255,0.1);
+  }
+  .neon { color: #FFA94D; }
+  .text-sunrise {
+    background: linear-gradient(135deg, #FF6B6B, #FFA94D, #FFD43B);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+  }
+  input, textarea, select {
+    background: rgba(15, 23, 42, 0.6);
+    border: 1px solid rgba(255,255,255,0.15);
+    color: white;
+    font-family: inherit;
+  }
+  input:focus, textarea:focus, select:focus {
+    outline: none;
+    border-color: #FFA94D;
+  }
+  .btn-primary {
+    background: linear-gradient(135deg, #FFD43B, #FFA94D, #FF6B6B);
+    color: #0f172a;
+    transition: transform 0.12s, box-shadow 0.25s;
+    font-weight: 800;
+  }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 14px 36px rgba(255,169,77,0.5); }
+  .btn-primary:disabled { opacity: 0.4; cursor: not-allowed; }
+  .pill {
+    display: inline-block; padding: 4px 12px; border-radius: 999px;
+    font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;
+  }
+  .pill-orange { background: rgba(255,169,77,0.15); color: #FFA94D; border: 1px solid rgba(255,169,77,0.3); }
+  .pill-green { background: rgba(16,185,129,0.15); color: #10b981; border: 1px solid rgba(16,185,129,0.3); }
+  .brand-tile {
+    padding: 14px; border-radius: 14px; cursor: pointer;
+    border: 1.5px solid rgba(255,255,255,0.1); transition: 0.2s;
+  }
+  .brand-tile:hover { border-color: rgba(255,169,77,0.4); transform: translateY(-2px); }
+  .brand-tile.active { border-color: #FFA94D; background: rgba(255,169,77,0.1); }
+  .loading-spinner {
+    display: inline-block; width: 16px; height: 16px;
+    border: 2px solid rgba(255,255,255,0.2); border-top-color: #FFA94D;
+    border-radius: 50%; animation: spin 0.8s linear infinite;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+</style>
+</head>
+<body class="p-5">
+
+<div class="max-w-3xl mx-auto">
+
+  <!-- Header -->
+  <header class="mb-8 flex items-center justify-between">
+    <a href="../dashboard.html" class="text-gray-400 hover:text-white text-sm">← Dashboard</a>
+    <div class="text-right">
+      <h1 class="text-2xl font-bold tracking-tight">🎨 AI Image Studio</h1>
+      <p class="neon text-xs font-bold tracking-wide">Powered by Replicate · Always peaking.</p>
+    </div>
+  </header>
+
+  <!-- Generate Form -->
+  <div class="glass rounded-2xl p-6 mb-6">
+
+    <!-- Brand Picker -->
+    <label class="block text-sm text-gray-400 mb-2 font-bold">Brand-Style</label>
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-2 mb-5">
+      <div class="brand-tile active" data-brand="peaking" onclick="selectBrand('peaking')">
+        <div class="text-lg">⛰️</div>
+        <div class="text-sm font-bold">PEAKING</div>
+        <div class="text-xs text-gray-400">Sunrise + Mountain</div>
+      </div>
+      <div class="brand-tile" data-brand="smash" onclick="selectBrand('smash')">
+        <div class="text-lg">💪</div>
+        <div class="text-sm font-bold">SMASH</div>
+        <div class="text-xs text-gray-400">Black + Hulk-Green</div>
+      </div>
+      <div class="brand-tile" data-brand="vegetarianhulk" onclick="selectBrand('vegetarianhulk')">
+        <div class="text-lg">🌱</div>
+        <div class="text-sm font-bold">vegetarianhulk</div>
+        <div class="text-xs text-gray-400">Vanilla + Forest</div>
+      </div>
+      <div class="brand-tile" data-brand="custom" onclick="selectBrand('custom')">
+        <div class="text-lg">🎨</div>
+        <div class="text-sm font-bold">Custom</div>
+        <div class="text-xs text-gray-400">Kein Brand-Overlay</div>
+      </div>
+    </div>
+
+    <!-- Topic Input -->
+    <label class="block text-sm text-gray-400 mb-2 font-bold">Topic / Prompt</label>
+    <textarea id="topic" rows="3" placeholder="z.B. Mountain peak with sunrise gradient, headline reading: DAY 6"
+      class="w-full p-3 rounded-xl mb-5"></textarea>
+
+    <!-- Format + Model Picker -->
+    <div class="grid grid-cols-2 gap-4 mb-5">
+      <div>
+        <label class="block text-sm text-gray-400 mb-2 font-bold">Format</label>
+        <select id="format" class="w-full p-3 rounded-xl">
+          <option value="1:1">1:1 — Square (Feed)</option>
+          <option value="4:5" selected>4:5 — Portrait (Feed)</option>
+          <option value="9:16">9:16 — Story / Reel</option>
+          <option value="16:9">16:9 — Hero / Cover</option>
+        </select>
+      </div>
+      <div>
+        <label class="block text-sm text-gray-400 mb-2 font-bold">Modell</label>
+        <select id="model" class="w-full p-3 rounded-xl">
+          <option value="ideogram" selected>Ideogram V3 — mit Text ($0.04)</option>
+          <option value="flux">Flux Dev — nur Background ($0.025)</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Generate Button -->
+    <button id="genBtn" class="btn-primary w-full p-4 rounded-xl text-lg" onclick="generate()">
+      ⚡ Generate
+    </button>
+
+    <!-- Cost-Tracker -->
+    <div class="mt-4 flex items-center justify-between text-xs text-gray-400">
+      <span>Heute generiert: <span id="todayCount">0</span> Bilder</span>
+      <span>Heute Cost: $<span id="todayCost">0.00</span></span>
+    </div>
+  </div>
+
+  <!-- Output Section -->
+  <div id="output" class="hidden glass rounded-2xl p-6">
+    <div class="flex items-center justify-between mb-4">
+      <span class="pill pill-orange">✨ Generated</span>
+      <span id="outCost" class="text-xs text-gray-400"></span>
+    </div>
+    <img id="outImg" src="" alt="generated" class="w-full rounded-xl mb-4" style="max-width: 100%;">
+    <div class="flex gap-2 flex-wrap">
+      <a id="outDownload" download="peaking-ai.png" class="btn-primary px-5 py-2 rounded-xl text-sm" style="text-decoration:none">⬇️ Download</a>
+      <button onclick="copyURL()" class="px-5 py-2 rounded-xl text-sm border border-gray-700 hover:border-orange-400">📋 URL kopieren</button>
+      <button onclick="generate()" class="px-5 py-2 rounded-xl text-sm border border-gray-700 hover:border-orange-400">🔄 Nochmal</button>
+    </div>
+  </div>
+
+  <!-- Error -->
+  <div id="error" class="hidden mt-4 p-4 rounded-xl bg-red-900/30 border border-red-500/30 text-red-300 text-sm"></div>
+
+</div>
+
+<script>
+const WORKER_URL = 'https://peaking-ai-api.peaking.workers.dev';
+const FRONTEND_KEY = ''; // leer wenn kein PEAKING_FRONTEND_KEY gesetzt — Worker erlaubt dann alle Requests
+
+let currentBrand = 'peaking';
+
+function selectBrand(brand) {
+  currentBrand = brand;
+  document.querySelectorAll('.brand-tile').forEach(t => t.classList.remove('active'));
+  document.querySelector(`[data-brand="${brand}"]`).classList.add('active');
+}
+
+async function generate() {
+  const topic = document.getElementById('topic').value.trim();
+  if (!topic) { showError('Topic darf nicht leer sein'); return; }
+
+  const format = document.getElementById('format').value;
+  const model = document.getElementById('model').value;
+  const btn = document.getElementById('genBtn');
+  const out = document.getElementById('output');
+  const err = document.getElementById('error');
+
+  err.classList.add('hidden');
+  btn.disabled = true;
+  btn.innerHTML = '<span class="loading-spinner"></span> Generiere... (5-10s)';
+
+  try {
+    const res = await fetch(WORKER_URL, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        ...(FRONTEND_KEY ? { 'X-Peaking-Key': FRONTEND_KEY } : {}),
+      },
+      body: JSON.stringify({ topic, brand: currentBrand, format, model }),
+    });
+
+    const data = await res.json();
+
+    if (!res.ok || data.error) {
+      showError(data.error || `HTTP ${res.status}`);
+      return;
+    }
+
+    // Show output
+    document.getElementById('outImg').src = data.url;
+    document.getElementById('outImg').dataset.url = data.url;
+    document.getElementById('outDownload').href = data.url;
+    document.getElementById('outDownload').download = `${currentBrand}-${Date.now()}.png`;
+    document.getElementById('outCost').textContent = `Cost: $${data.cost.toFixed(3)} · ${data.model} · ${data.format}`;
+    out.classList.remove('hidden');
+    out.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+    // Update tracker
+    bumpTracker(data.cost);
+
+  } catch (e) {
+    showError(`Network error: ${e.message}`);
+  } finally {
+    btn.disabled = false;
+    btn.innerHTML = '⚡ Generate';
+  }
+}
+
+function showError(msg) {
+  const err = document.getElementById('error');
+  err.textContent = '⚠️ ' + msg;
+  err.classList.remove('hidden');
+}
+
+function copyURL() {
+  const url = document.getElementById('outImg').dataset.url;
+  navigator.clipboard.writeText(url).then(() => {
+    alert('URL kopiert!');
+  });
+}
+
+function bumpTracker(cost) {
+  const today = new Date().toISOString().slice(0, 10);
+  const k = `peaking:ai_stats:${today}`;
+  let stats = JSON.parse(localStorage.getItem(k) || '{"count":0,"cost":0}');
+  stats.count++;
+  stats.cost += cost;
+  localStorage.setItem(k, JSON.stringify(stats));
+  document.getElementById('todayCount').textContent = stats.count;
+  document.getElementById('todayCost').textContent = stats.cost.toFixed(2);
+}
+
+// Initial load tracker
+(function initTracker() {
+  const today = new Date().toISOString().slice(0, 10);
+  const k = `peaking:ai_stats:${today}`;
+  const stats = JSON.parse(localStorage.getItem(k) || '{"count":0,"cost":0}');
+  document.getElementById('todayCount').textContent = stats.count;
+  document.getElementById('todayCost').textContent = stats.cost.toFixed(2);
+})();
+</script>
+
+</body>
+</html>
