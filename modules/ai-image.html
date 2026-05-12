@@ -9,6 +9,7 @@
 <link rel="icon" href="../assets/logo.svg" type="image/svg+xml">
 <link rel="stylesheet" href="../assets/effects.css">
 <script src="https://cdn.tailwindcss.com"></script>
+<script src="../js/ai-profiles.js?v=1"></script>
 <style>
   body {
     background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
@@ -109,9 +110,19 @@
     </div>
 
     <!-- Topic Input -->
-    <label class="block text-sm text-gray-400 mb-2 font-bold">Topic / Prompt</label>
-    <textarea id="topic" rows="3" placeholder="z.B. Mountain peak with sunrise gradient, headline reading: DAY 6"
-      class="w-full p-3 rounded-xl mb-5"></textarea>
+    <div class="flex items-center justify-between mb-2">
+      <label class="block text-sm text-gray-400 font-bold">Topic / Idee</label>
+      <label class="flex items-center gap-2 text-xs text-gray-400 cursor-pointer">
+        <input type="checkbox" id="brainToggle" checked class="accent-orange-400">
+        <span>🧠 AI-Brain Auto-Prompt</span>
+      </label>
+    </div>
+    <textarea id="topic" rows="3" placeholder="z.B. „Day 6 Beta-Launch" oder „Disziplin-Reset Montag" — AI-Brain ergänzt Brand-DNA + Headline"
+      class="w-full p-3 rounded-xl mb-2"></textarea>
+    <details class="mb-5 text-xs text-gray-500">
+      <summary class="cursor-pointer hover:text-orange-400">📝 Final-Prompt-Preview anzeigen</summary>
+      <pre id="promptPreview" class="mt-2 p-3 bg-black/30 rounded-lg whitespace-pre-wrap text-gray-400 text-[11px]"></pre>
+    </details>
 
     <!-- Format + Model Picker -->
     <div class="grid grid-cols-2 gap-4 mb-5">
@@ -177,12 +188,27 @@ function selectBrand(brand) {
   document.querySelector(`[data-brand="${brand}"]`).classList.add('active');
 }
 
+function updatePromptPreview() {
+  const rawTopic = document.getElementById('topic').value.trim();
+  const format = document.getElementById('format').value;
+  const useBrain = document.getElementById('brainToggle').checked;
+  const preview = document.getElementById('promptPreview');
+  if (!rawTopic) { preview.textContent = '(leer)'; return; }
+  preview.textContent = useBrain && window.AIProfiles
+    ? AIProfiles.buildPrompt(currentBrand, rawTopic, format)
+    : rawTopic;
+}
+
 async function generate() {
-  const topic = document.getElementById('topic').value.trim();
-  if (!topic) { showError('Topic darf nicht leer sein'); return; }
+  const rawTopic = document.getElementById('topic').value.trim();
+  if (!rawTopic) { showError('Topic darf nicht leer sein'); return; }
 
   const format = document.getElementById('format').value;
   const model = document.getElementById('model').value;
+  const useBrain = document.getElementById('brainToggle').checked;
+  const topic = useBrain && window.AIProfiles
+    ? AIProfiles.buildPrompt(currentBrand, rawTopic, format)
+    : rawTopic;
   const btn = document.getElementById('genBtn');
   const out = document.getElementById('output');
   const err = document.getElementById('error');
@@ -260,6 +286,19 @@ function bumpTracker(cost) {
   document.getElementById('todayCount').textContent = stats.count;
   document.getElementById('todayCost').textContent = stats.cost.toFixed(2);
 })();
+
+// Live-Preview wenn Topic/Brand/Format ändert
+['topic','format','brainToggle'].forEach(id => {
+  document.getElementById(id).addEventListener('input', updatePromptPreview);
+  document.getElementById(id).addEventListener('change', updatePromptPreview);
+});
+// auch wenn Brand wechselt
+const _selectBrand = selectBrand;
+selectBrand = function(brand) {
+  _selectBrand(brand);
+  updatePromptPreview();
+};
+updatePromptPreview();
 </script>
 
 </body>
