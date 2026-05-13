@@ -10,6 +10,7 @@
 <link rel="stylesheet" href="../assets/effects.css">
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="../js/ai-profiles.js?v=1"></script>
+<script src="../js/asset-library.js?v=1"></script>
 <style>
   body {
     background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
@@ -76,6 +77,39 @@
     border-radius: 50%; animation: spin 0.8s linear infinite;
   }
   @keyframes spin { to { transform: rotate(360deg); } }
+  .lib-filter {
+    padding: 4px 12px; border-radius: 999px;
+    border: 1px solid rgba(255,255,255,0.15);
+    background: rgba(15,23,42,0.6); color: #cbd5e1;
+    cursor: pointer; transition: all 0.15s;
+  }
+  .lib-filter:hover { border-color: rgba(255,169,77,0.5); }
+  .lib-filter.active {
+    background: linear-gradient(135deg, #FFA94D, #FF6B6B);
+    color: #0f172a; border-color: #FFA94D; font-weight: 700;
+  }
+  .lib-asset {
+    position: relative; aspect-ratio: 1;
+    border-radius: 10px; overflow: hidden;
+    border: 1px solid rgba(255,255,255,0.1);
+    cursor: pointer; transition: all 0.15s;
+  }
+  .lib-asset:hover { border-color: #FFA94D; transform: scale(1.02); }
+  .lib-asset img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .lib-asset .lib-delete {
+    position: absolute; top: 4px; right: 4px;
+    width: 22px; height: 22px; border-radius: 50%;
+    background: rgba(0,0,0,0.7); color: white;
+    font-size: 12px; line-height: 22px; text-align: center;
+    cursor: pointer; opacity: 0; transition: opacity 0.15s;
+  }
+  .lib-asset:hover .lib-delete { opacity: 1; }
+  .lib-asset .lib-brand {
+    position: absolute; bottom: 4px; left: 4px;
+    padding: 2px 6px; border-radius: 4px;
+    background: rgba(0,0,0,0.7); color: white;
+    font-size: 9px; font-weight: 700; text-transform: uppercase;
+  }
 </style>
 </head>
 <body class="p-3 sm:p-5">
@@ -177,9 +211,39 @@
     <div class="flex gap-2 flex-wrap">
       <a id="outDownload" download="peaking-ai.png" class="btn-primary px-5 py-2 rounded-xl text-sm" style="text-decoration:none">⬇️ Download</a>
       <button onclick="copyURL()" class="px-5 py-2 rounded-xl text-sm border border-gray-700 hover:border-orange-400">📋 URL kopieren</button>
+      <button id="saveLibraryBtn" onclick="saveCurrentToLibrary()" class="px-5 py-2 rounded-xl text-sm border border-gray-700 hover:border-orange-400">💾 Save to Library</button>
       <button onclick="generate()" class="px-5 py-2 rounded-xl text-sm border border-gray-700 hover:border-orange-400">🔄 Nochmal</button>
     </div>
+    <div class="mt-3 text-xs text-gray-500">
+      <label class="flex items-center gap-2 cursor-pointer">
+        <input type="checkbox" id="autoSaveLibrary" class="accent-orange-400">
+        <span>Auto-save zukünftige Generates in Library</span>
+      </label>
+    </div>
   </div>
+
+  <!-- Asset-Library Section -->
+  <details class="mt-6 glass rounded-2xl p-4 sm:p-6" id="librarySection">
+    <summary class="cursor-pointer flex items-center justify-between gap-3">
+      <div class="flex items-center gap-2">
+        <span class="text-lg">📚</span>
+        <span class="font-bold">Asset-Library</span>
+        <span id="libraryCount" class="text-xs text-gray-400">(–)</span>
+      </div>
+      <button onclick="event.stopPropagation(); refreshLibrary()" class="text-xs text-gray-400 hover:text-orange-400 px-2 py-1">🔄 Reload</button>
+    </summary>
+    <div class="mt-4">
+      <div class="flex gap-2 mb-3 flex-wrap text-xs">
+        <button class="lib-filter active" data-filter="all" onclick="setLibraryFilter('all')">Alle</button>
+        <button class="lib-filter" data-filter="peaking" onclick="setLibraryFilter('peaking')">🚀 PEAKING</button>
+        <button class="lib-filter" data-filter="smash" onclick="setLibraryFilter('smash')">💪 SMASH</button>
+        <button class="lib-filter" data-filter="vegetarianhulk" onclick="setLibraryFilter('vegetarianhulk')">🌱 veg</button>
+      </div>
+      <div id="libraryGrid" class="grid grid-cols-3 sm:grid-cols-4 gap-2">
+        <div class="text-xs text-gray-500 col-span-full py-4 text-center">Lade…</div>
+      </div>
+    </div>
+  </details>
 
   <!-- Error -->
   <div id="error" class="hidden mt-4 p-4 rounded-xl bg-red-900/30 border border-red-500/30 text-red-300 text-sm"></div>
@@ -247,14 +311,24 @@ async function generate() {
     // Show output
     document.getElementById('outImg').src = data.url;
     document.getElementById('outImg').dataset.url = data.url;
+    document.getElementById('outImg').dataset.brand = currentBrand;
+    document.getElementById('outImg').dataset.prompt = topic;
+    document.getElementById('outImg').dataset.model = data.model;
     document.getElementById('outDownload').href = data.url;
     document.getElementById('outDownload').download = `${currentBrand}-${Date.now()}.png`;
     document.getElementById('outCost').textContent = `Cost: $${data.cost.toFixed(3)} · ${data.model} · ${data.format}`;
+    document.getElementById('saveLibraryBtn').textContent = '💾 Save to Library';
+    document.getElementById('saveLibraryBtn').disabled = false;
     out.classList.remove('hidden');
     out.scrollIntoView({ behavior: 'smooth', block: 'start' });
 
     // Update tracker
     bumpTracker(data.cost);
+
+    // Auto-save to Library if enabled
+    if (document.getElementById('autoSaveLibrary').checked) {
+      saveCurrentToLibrary();
+    }
 
   } catch (e) {
     showError(`Network error: ${e.message}`);
@@ -295,6 +369,126 @@ function bumpTracker(cost) {
   const stats = JSON.parse(localStorage.getItem(k) || '{"count":0,"cost":0}');
   document.getElementById('todayCount').textContent = stats.count;
   document.getElementById('todayCost').textContent = stats.cost.toFixed(2);
+})();
+
+// ============ ASSET-LIBRARY UI ============
+
+let libraryFilter = 'all';
+let libraryAssetsCache = [];
+
+async function saveCurrentToLibrary() {
+  const img = document.getElementById('outImg');
+  const url = img.dataset.url;
+  if (!url) {
+    showError('Kein Bild da zum Speichern');
+    return;
+  }
+  const btn = document.getElementById('saveLibraryBtn');
+  btn.disabled = true;
+  btn.textContent = '💾 Speichere…';
+  try {
+    if (!window.AssetLibrary) throw new Error('AssetLibrary nicht geladen');
+    const asset = await window.AssetLibrary.mirrorFromReplicate(url, {
+      brandId: img.dataset.brand || 'custom',
+      prompt: img.dataset.prompt || '',
+      model: img.dataset.model || '',
+      tags: [],
+    });
+    btn.textContent = '✓ Gespeichert';
+    setTimeout(() => {
+      btn.textContent = '💾 Save to Library';
+      btn.disabled = false;
+    }, 2000);
+    await refreshLibrary();
+  } catch (e) {
+    btn.textContent = '⚠️ Fehler';
+    console.warn('saveCurrentToLibrary:', e);
+    setTimeout(() => {
+      btn.textContent = '💾 Save to Library';
+      btn.disabled = false;
+    }, 2500);
+  }
+}
+
+async function refreshLibrary() {
+  try {
+    if (!window.AssetLibrary) return;
+    libraryAssetsCache = await window.AssetLibrary.list();
+    document.getElementById('libraryCount').textContent = `(${libraryAssetsCache.length})`;
+    renderLibrary();
+  } catch (e) {
+    console.warn('refreshLibrary:', e);
+    document.getElementById('libraryGrid').innerHTML =
+      '<div class="text-xs text-red-400 col-span-full py-4 text-center">Library Fehler: ' + escapeLibHtml(e.message) + '</div>';
+  }
+}
+
+function setLibraryFilter(filter) {
+  libraryFilter = filter;
+  document.querySelectorAll('.lib-filter').forEach(b => b.classList.remove('active'));
+  document.querySelector(`.lib-filter[data-filter="${filter}"]`).classList.add('active');
+  renderLibrary();
+}
+
+function renderLibrary() {
+  const grid = document.getElementById('libraryGrid');
+  const filtered = libraryFilter === 'all'
+    ? libraryAssetsCache
+    : libraryAssetsCache.filter(a => a.brandId === libraryFilter);
+  if (filtered.length === 0) {
+    grid.innerHTML = '<div class="text-xs text-gray-500 col-span-full py-4 text-center">Keine Assets · Generate + Save klicken</div>';
+    return;
+  }
+  grid.innerHTML = filtered.map(a => `
+    <div class="lib-asset" onclick="copyAssetUrl('${a.id}')" title="Click: URL kopieren · Hover-X: löschen">
+      <img src="${a.publicUrl}" alt="" loading="lazy">
+      <div class="lib-brand">${a.brandId}</div>
+      <div class="lib-delete" onclick="event.stopPropagation(); deleteAsset('${a.id}')">✕</div>
+    </div>
+  `).join('');
+}
+
+async function copyAssetUrl(id) {
+  if (!window.AssetLibrary) return;
+  const url = window.AssetLibrary.publicUrl(id);
+  try {
+    await navigator.clipboard.writeText(url);
+    alert(`✓ URL kopiert: ${url}`);
+  } catch (e) {
+    prompt('URL (manuell kopieren):', url);
+  }
+}
+
+async function deleteAsset(id) {
+  if (!confirm('Asset wirklich löschen?')) return;
+  try {
+    await window.AssetLibrary.delete(id);
+    await refreshLibrary();
+  } catch (e) {
+    alert('Lösch-Fehler: ' + e.message);
+  }
+}
+
+function escapeLibHtml(s) {
+  return String(s || '')
+    .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+}
+
+// Restore auto-save preference + load library on open
+(function initLibrary() {
+  const autoSave = localStorage.getItem('peaking:ai_autosave') === '1';
+  document.getElementById('autoSaveLibrary').checked = autoSave;
+  document.getElementById('autoSaveLibrary').addEventListener('change', (e) => {
+    localStorage.setItem('peaking:ai_autosave', e.target.checked ? '1' : '0');
+  });
+
+  // Lazy-load library on first <details> open
+  document.getElementById('librarySection').addEventListener('toggle', (e) => {
+    if (e.target.open && libraryAssetsCache.length === 0) {
+      refreshLibrary();
+    }
+  });
 })();
 
 // Live-Preview wenn Topic/Brand/Format ändert
