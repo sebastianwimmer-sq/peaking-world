@@ -191,14 +191,16 @@
     </div>
   </div>
 
-  <!-- Result Count + Sort -->
-  <div class="flex items-center justify-between mb-3 text-xs text-gray-500">
+  <!-- Result Count + View-Toggle + Sort -->
+  <div class="flex items-center justify-between mb-3 text-xs text-gray-500 gap-2 flex-wrap">
     <div><span id="resultCount">…</span> Memos</div>
-    <div>
+    <div class="flex items-center gap-2">
+      <button id="viewCards" class="filter-pill active text-xs" data-view="cards">🃏 Cards</button>
+      <button id="viewTimeline" class="filter-pill text-xs" data-view="timeline">📅 Timeline</button>
       <select id="sortBy" class="rounded-lg px-2 py-1 text-xs">
-        <option value="modified">📅 Zuletzt geändert</option>
+        <option value="modified">Zuletzt geändert</option>
         <option value="name">A-Z</option>
-        <option value="size">📏 Größe</option>
+        <option value="size">Größe</option>
       </select>
     </div>
   </div>
@@ -235,6 +237,7 @@
   let allMemos = [];
   let filters = { brand: 'all', type: 'all', status: 'all', search: '' };
   let sortBy = 'modified';
+  let view = 'cards'; // 'cards' | 'timeline'
 
   function escapeHtml(s) {
     return String(s).replace(/[&<>"']/g, m => ({
@@ -262,6 +265,15 @@
 
     document.getElementById('resultCount').textContent = list.length;
 
+    if (view === 'timeline') {
+      renderTimeline(list);
+      return;
+    }
+
+    // Reset grid-classes for cards-view
+    const memosEl = document.getElementById('memos');
+    memosEl.className = 'grid grid-cols-1 md:grid-cols-2 gap-3';
+
     const html = list.map(m => `
       <div class="memo-card glass rounded-2xl p-4" onclick='openMemo(${JSON.stringify(m.slug).replace(/'/g, "&#39;")})'>
         <div class="flex items-start justify-between gap-2 mb-2">
@@ -280,6 +292,58 @@
     `).join('');
 
     document.getElementById('memos').innerHTML = html || '<div class="text-center text-gray-500 col-span-2 py-12">Keine Memos für aktuellen Filter.</div>';
+  }
+
+  function renderTimeline(list) {
+    const memosEl = document.getElementById('memos');
+    memosEl.className = ''; // Single-column for timeline
+
+    // Group by date (modified)
+    const groups = {};
+    list.forEach(m => {
+      const d = m.modified || 'unknown';
+      if (!groups[d]) groups[d] = [];
+      groups[d].push(m);
+    });
+
+    const dates = Object.keys(groups).sort((a, b) => b.localeCompare(a));
+
+    const html = dates.map(date => {
+      const dateLabel = formatDateLabel(date);
+      const items = groups[date];
+      return `
+        <div class="mb-6">
+          <div class="flex items-center gap-3 mb-3 sticky top-0 bg-slate-900/80 backdrop-blur py-2 z-10">
+            <div class="text-sunrise font-black text-lg">${dateLabel}</div>
+            <div class="flex-1 h-px bg-white/10"></div>
+            <span class="text-xs text-gray-500">${items.length} Memo${items.length===1?'':'s'}</span>
+          </div>
+          <div class="space-y-2 ml-2 pl-4 border-l-2 border-orange-300/20">
+            ${items.map(m => `
+              <div class="memo-card glass rounded-xl p-3 cursor-pointer" onclick='openMemo(${JSON.stringify(m.slug).replace(/'/g, "&#39;")})'>
+                <div class="flex items-start justify-between gap-2 mb-1">
+                  <div class="text-sm font-bold leading-snug flex-1">${escapeHtml(m.name || m.slug)}</div>
+                  <span class="badge badge-${m.status}" style="font-size:9px">${m.status}</span>
+                </div>
+                <div class="text-xs text-gray-400 leading-relaxed line-clamp-2">${escapeHtml((m.description||'').slice(0,160))}</div>
+                <div class="flex items-center gap-1 mt-2">${brandTags(m.brands)}<span class="badge badge-${m.type} ml-auto" style="font-size:9px">${m.type}</span></div>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+      `;
+    }).join('');
+
+    memosEl.innerHTML = html || '<div class="text-center text-gray-500 py-12">Keine Memos für aktuellen Filter.</div>';
+  }
+
+  function formatDateLabel(date) {
+    if (!date) return '—';
+    const today = new Date().toISOString().slice(0, 10);
+    if (date === today) return 'Heute';
+    const yest = new Date(); yest.setDate(yest.getDate() - 1);
+    if (date === yest.toISOString().slice(0, 10)) return 'Gestern';
+    return new Date(date).toLocaleDateString('de-DE', { weekday: 'long', day: 'numeric', month: 'long' });
   }
 
   function openMemo(slug) {
@@ -360,6 +424,20 @@
 
   document.getElementById('sortBy').addEventListener('change', e => {
     sortBy = e.target.value;
+    renderMemos();
+  });
+
+  // View-Toggle: cards | timeline
+  document.getElementById('viewCards').addEventListener('click', () => {
+    view = 'cards';
+    document.getElementById('viewCards').classList.add('active');
+    document.getElementById('viewTimeline').classList.remove('active');
+    renderMemos();
+  });
+  document.getElementById('viewTimeline').addEventListener('click', () => {
+    view = 'timeline';
+    document.getElementById('viewTimeline').classList.add('active');
+    document.getElementById('viewCards').classList.remove('active');
     renderMemos();
   });
 
