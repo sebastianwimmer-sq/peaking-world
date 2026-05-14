@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self' https:; script-src 'self' 'unsafe-inline' 'unsafe-eval' https:; style-src 'self' 'unsafe-inline' https:; img-src 'self' data: blob: https:; font-src 'self' data: https:; connect-src 'self' https: wss:; upgrade-insecure-requests">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<title>📡 Live Insta Sync · PEAKING</title>
+<link rel="icon" href="../assets/logo.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="../assets/logo.svg">
+<link rel="manifest" href="../manifest.json">
+<meta name="theme-color" content="#FFA94D">
+<link rel="stylesheet" href="../assets/effects.css">
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+  body {
+    background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+    min-height: 100dvh;
+    color: white;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Inter, sans-serif;
+  }
+  .glass {
+    background: rgba(30, 41, 59, 0.6);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255,255,255,0.1);
+  }
+  .neon { color: #FFA94D; }
+  .text-sunrise {
+    background: linear-gradient(135deg, #FF6B6B, #FFA94D, #FFD43B);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+  }
+  .btn-primary {
+    background: linear-gradient(135deg, #FFD43B, #FFA94D, #FF6B6B);
+    color: #0f172a;
+    transition: transform 0.12s, box-shadow 0.25s;
+    font-weight: 800;
+  }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 14px 36px rgba(255,169,77,0.5); }
+  .btn-primary:disabled { opacity: 0.5; cursor: not-allowed; transform: none; box-shadow: none; }
+  .btn-ghost {
+    background: rgba(15,23,42,0.7);
+    border: 1px solid rgba(255,255,255,0.15);
+    color: #cbd5e1;
+    transition: all 0.15s;
+  }
+  .btn-ghost:hover { border-color: rgba(255,169,77,0.5); color: #FFA94D; }
+  .btn-ghost:disabled { opacity: 0.5; cursor: not-allowed; }
+  .brand-card {
+    transition: all 0.2s;
+  }
+  .brand-card:hover { border-color: rgba(255,169,77,0.3); }
+  .stat-num {
+    font-size: 22px;
+    font-weight: 800;
+    line-height: 1;
+  }
+  .stat-label {
+    font-size: 10px;
+    color: #94a3b8;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-top: 4px;
+  }
+  .badge-live {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 2px 8px;
+    border-radius: 999px;
+    background: rgba(34,197,94,0.15);
+    color: #22c55e;
+    border: 1px solid rgba(34,197,94,0.3);
+    font-size: 10px;
+    font-weight: 700;
+  }
+  .badge-live::before {
+    content: '';
+    width: 6px; height: 6px;
+    border-radius: 999px;
+    background: #22c55e;
+    box-shadow: 0 0 8px #22c55e;
+    animation: pulse 2s infinite;
+  }
+  @keyframes pulse {
+    0%,100% { opacity: 1; }
+    50% { opacity: 0.4; }
+  }
+  .spin { animation: spin 1s linear infinite; display: inline-block; }
+  @keyframes spin { 100% { transform: rotate(360deg); } }
+  .profile-pic {
+    width: 56px; height: 56px;
+    border-radius: 50%;
+    border: 2px solid rgba(255,169,77,0.4);
+    object-fit: cover;
+    background: #1e293b;
+  }
+</style>
+</head>
+<body class="px-4 md:px-8 py-6">
+<div class="max-w-5xl mx-auto">
+
+  <!-- Header -->
+  <header class="flex items-center justify-between mb-6">
+    <div>
+      <a href="../dashboard.html" class="text-xs text-gray-400 hover:neon">← Dashboard</a>
+      <h1 class="text-3xl md:text-4xl font-black text-sunrise mt-2">📡 Live Insta Sync</h1>
+      <p class="text-sm text-gray-400 mt-1">Auto-Sync via Meta API · alle 6h · alle 3 Brands</p>
+    </div>
+    <button id="syncAllBtn" class="btn-primary rounded-xl px-5 py-3 text-sm">
+      🔄 <span id="syncAllLabel">Alle syncen</span>
+    </button>
+  </header>
+
+  <!-- Status-Banner -->
+  <div id="statusBanner" class="glass rounded-2xl p-4 mb-6 flex items-center gap-3">
+    <span class="badge-live">LIVE</span>
+    <span class="text-sm text-gray-300">Letzter Cron-Sync: <span id="cronLastLabel" class="neon font-bold">noch nie</span></span>
+    <span class="text-xs text-gray-500 ml-auto">Nächster: alle 6h um :00 UTC</span>
+  </div>
+
+  <!-- Brand-Cards -->
+  <div id="brandsGrid" class="grid grid-cols-1 md:grid-cols-3 gap-4">
+    <!-- Cards werden via JS gerendert -->
+  </div>
+
+  <!-- Loading-State (initial) -->
+  <div id="loadingState" class="text-center text-gray-500 text-sm py-8">
+    <span class="spin">⏳</span> Lade Brand-Status...
+  </div>
+
+  <!-- Toast-Container -->
+  <div id="toast" class="fixed bottom-6 left-1/2 -translate-x-1/2 hidden glass rounded-xl px-5 py-3 text-sm font-bold z-50"></div>
+
+</div>
+
+<script src="../js/app.js"></script>
+<script>
+  // ────────────────────────────────────────────
+  // CONFIG
+  // ────────────────────────────────────────────
+  const API_BASE = 'https://peaking-ai-api.peaking.workers.dev';
+  const API_KEY = 'pk_peaking_2026_sebi_solo_x7k2m9';
+
+  const BRAND_META = {
+    peaking: { emoji: '🚀', color: '#FFA94D' },
+    hulk: { emoji: '🌱', color: '#22c55e' },
+    smash: { emoji: '💪', color: '#10b981' },
+  };
+
+  // ────────────────────────────────────────────
+  // HELPERS
+  // ────────────────────────────────────────────
+  function showToast(msg, isError = false) {
+    const el = document.getElementById('toast');
+    el.textContent = msg;
+    el.classList.remove('hidden');
+    el.style.background = isError ? 'rgba(220,38,38,0.9)' : 'rgba(34,197,94,0.9)';
+    el.style.color = '#fff';
+    setTimeout(() => el.classList.add('hidden'), 3000);
+  }
+
+  function relativeTime(iso) {
+    if (!iso) return 'noch nie';
+    const diffMs = Date.now() - new Date(iso).getTime();
+    const min = Math.floor(diffMs / 60000);
+    if (min < 1) return 'gerade eben';
+    if (min < 60) return `vor ${min} Min`;
+    const h = Math.floor(min / 60);
+    if (h < 24) return `vor ${h} Std`;
+    const d = Math.floor(h / 24);
+    return `vor ${d} Tagen`;
+  }
+
+  async function apiGet(path) {
+    const r = await fetch(`${API_BASE}${path}`, {
+      headers: { 'X-Peaking-Key': API_KEY, 'Origin': location.origin },
+    });
+    return r.json();
+  }
+
+  async function apiPost(path) {
+    const r = await fetch(`${API_BASE}${path}`, {
+      method: 'POST',
+      headers: { 'X-Peaking-Key': API_KEY, 'Origin': location.origin },
+    });
+    return r.json();
+  }
+
+  // ────────────────────────────────────────────
+  // RENDER
+  // ────────────────────────────────────────────
+  function renderBrandCard(b) {
+    const meta = BRAND_META[b.name] || { emoji: '📡', color: '#FFA94D' };
+    const syncedAt = b.lastSync?.syncedAt;
+    const reelCount = b.reelCount || 0;
+
+    return `
+      <div class="brand-card glass rounded-2xl p-5" data-brand="${b.name}">
+        <div class="flex items-center gap-3 mb-4">
+          <div class="text-4xl">${meta.emoji}</div>
+          <div class="flex-1 min-w-0">
+            <div class="font-bold text-base truncate">${b.label}</div>
+            <div class="text-xs text-gray-400">${b.configured ? 'API ✅' : '⚠️ nicht konfiguriert'}</div>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-2 gap-3 mb-4">
+          <div>
+            <div class="stat-num neon">${reelCount}</div>
+            <div class="stat-label">Reels gecacht</div>
+          </div>
+          <div>
+            <div class="stat-num">${b.lastSync?.count ?? '—'}</div>
+            <div class="stat-label">Last-Sync-Count</div>
+          </div>
+        </div>
+
+        <div class="text-xs text-gray-400 mb-4">
+          Last Sync: <span class="neon font-bold">${relativeTime(syncedAt)}</span>
+        </div>
+
+        <div class="flex gap-2">
+          <button class="btn-primary rounded-xl px-4 py-2 text-xs flex-1" onclick="syncBrand('${b.name}', this)" ${!b.configured ? 'disabled' : ''}>
+            🔄 Refresh
+          </button>
+          <a href="tracker.html" class="btn-ghost rounded-xl px-4 py-2 text-xs flex items-center">→ Tracker</a>
+        </div>
+      </div>
+    `;
+  }
+
+  function renderDashboard(data) {
+    const grid = document.getElementById('brandsGrid');
+    grid.innerHTML = (data.brands || []).map(renderBrandCard).join('');
+
+    const cronLabel = document.getElementById('cronLastLabel');
+    cronLabel.textContent = relativeTime(data.cronLast?.ranAt);
+
+    document.getElementById('loadingState').classList.add('hidden');
+  }
+
+  // ────────────────────────────────────────────
+  // SYNC ACTIONS
+  // ────────────────────────────────────────────
+  async function syncBrand(brand, btn) {
+    if (btn) { btn.disabled = true; btn.innerHTML = '<span class="spin">🔄</span> sync...'; }
+    try {
+      const r = await apiPost(`/insta/sync-reels?brand=${brand}&limit=25&onlyReels=false`);
+      if (r.ok) {
+        showToast(`✅ ${brand}: ${r.stored} items synced`);
+      } else {
+        showToast(`❌ ${brand}: ${r.error || 'unknown'}`, true);
+      }
+    } catch (e) {
+      showToast(`❌ ${brand}: ${e.message}`, true);
+    } finally {
+      if (btn) { btn.disabled = false; btn.innerHTML = '🔄 Refresh'; }
+      await loadDashboard();
+    }
+  }
+
+  async function syncAll() {
+    const btn = document.getElementById('syncAllBtn');
+    const label = document.getElementById('syncAllLabel');
+    btn.disabled = true;
+    label.innerHTML = '<span class="spin">⏳</span> Sync läuft...';
+    try {
+      const brands = ['peaking', 'hulk', 'smash'];
+      let total = 0;
+      for (const b of brands) {
+        const r = await apiPost(`/insta/sync-reels?brand=${b}&limit=25&onlyReels=false`);
+        if (r.ok) total += r.stored || 0;
+      }
+      showToast(`✅ ${total} items über 3 Brands gesynct`);
+    } catch (e) {
+      showToast(`❌ Sync-Fehler: ${e.message}`, true);
+    } finally {
+      btn.disabled = false;
+      label.textContent = 'Alle syncen';
+      await loadDashboard();
+    }
+  }
+
+  // ────────────────────────────────────────────
+  // BOOT
+  // ────────────────────────────────────────────
+  async function loadDashboard() {
+    try {
+      const data = await apiGet('/insta/dashboard');
+      if (data.error) {
+        showToast(`❌ ${data.error}`, true);
+        return;
+      }
+      renderDashboard(data);
+    } catch (e) {
+      showToast(`❌ Load-Fehler: ${e.message}`, true);
+    }
+  }
+
+  document.getElementById('syncAllBtn').addEventListener('click', syncAll);
+  loadDashboard();
+</script>
+</body>
+</html>
