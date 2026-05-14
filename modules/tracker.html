@@ -932,8 +932,9 @@ function autoTrackerRender() {
     const captionShort = (r.caption || '').slice(0, 100) + ((r.caption||'').length > 100 ? '…' : '');
     const isReel = r.media_product_type === 'REELS';
     const thumb = r.thumbnail_url || r.media_url;
+    const realIgId = r.id; // Insta-Media-ID for history-lookup
     return `
-      <div class="auto-reel-card" onclick="window.open('${_autoEscapeHtml(r.permalink || '#')}', '_blank')">
+      <div class="auto-reel-card" data-mediaid="${_autoEscapeHtml(realIgId)}" onclick="window.open('${_autoEscapeHtml(r.permalink || '#')}', '_blank')">
         ${thumb ? `<img class="auto-reel-thumb" src="${_autoEscapeHtml(thumb)}" alt="Reel" loading="lazy" onerror="this.style.display='none'">` : ''}
         <div class="p-3">
           <div class="flex items-center justify-between gap-2 mb-2">
@@ -941,15 +942,75 @@ function autoTrackerRender() {
             <span class="text-[10px] text-gray-500">${date}</span>
           </div>
           <div class="text-xs text-gray-300 mb-3 leading-snug line-clamp-3">${_autoEscapeHtml(captionShort) || '<span class="text-gray-600 italic">— keine Caption —</span>'}</div>
-          <div class="flex items-center gap-3 text-xs">
+          <div class="flex items-center gap-3 text-xs mb-2">
             <span class="neon font-bold">❤️ ${(r.like_count||0).toLocaleString('de-DE')}</span>
             <span class="text-gray-400">💬 ${r.comments_count||0}</span>
             ${isReel ? '<span class="text-gray-500 text-[10px]">🎬 REEL</span>' : '<span class="text-gray-500 text-[10px]">📷 POST</span>'}
+          </div>
+          <div class="sparkline-host" data-mediaid="${_autoEscapeHtml(realIgId)}">
+            <div class="text-[10px] text-gray-600 italic">Trend lädt…</div>
           </div>
         </div>
       </div>
     `;
   }).join('');
+
+  // Batch-load history-data for all visible reels
+  _autoLoadSparklines(list.map(r => r.id).filter(Boolean));
+}
+
+async function _autoLoadSparklines(mediaIds) {
+  if (!mediaIds.length) return;
+  try {
+    const r = await fetch(`${AT_API}/insta/reel-history-batch`, {
+      method: 'POST',
+      headers: { 'X-Peaking-Key': AT_KEY, 'Content-Type': 'application/json' },
+      body: JSON.stringify({ mediaIds }),
+    });
+    const data = await r.json();
+    const histories = data.histories || {};
+    for (const mediaId of mediaIds) {
+      const host = document.querySelector(`.sparkline-host[data-mediaid="${mediaId}"]`);
+      if (!host) continue;
+      const snaps = histories[mediaId] || [];
+      host.innerHTML = _autoRenderSparkline(snaps);
+    }
+  } catch (e) {
+    // Silently fail — sparkline ist nice-to-have
+  }
+}
+
+function _autoRenderSparkline(snaps) {
+  if (snaps.length < 2) {
+    return `<div class="text-[10px] text-gray-600 italic">Trend: sammle Daten (${snaps.length}/2)</div>`;
+  }
+  const likes = snaps.map(s => s.l || 0);
+  const minL = Math.min(...likes);
+  const maxL = Math.max(...likes);
+  const range = maxL - minL || 1;
+  const w = 100, h = 24;
+  const step = w / (snaps.length - 1);
+  const points = likes.map((l, i) => `${i * step},${h - ((l - minL) / range) * h}`).join(' ');
+  const delta = likes[likes.length - 1] - likes[0];
+  const deltaColor = delta > 0 ? '#22c55e' : delta < 0 ? '#ef4444' : '#94a3b8';
+  const deltaText = delta > 0 ? `+${delta}` : String(delta);
+
+  return `
+    <div class="flex items-center gap-2">
+      <svg viewBox="0 0 ${w} ${h}" preserveAspectRatio="none" style="width:60%; height:24px;">
+        <polyline points="${points}" fill="none" stroke="url(#sparkGrad)" stroke-width="1.5" />
+        <defs>
+          <linearGradient id="sparkGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stop-color="#FF6B6B" />
+            <stop offset="50%" stop-color="#FFA94D" />
+            <stop offset="100%" stop-color="#FFD43B" />
+          </linearGradient>
+        </defs>
+      </svg>
+      <span class="text-[10px] font-bold" style="color:${deltaColor}">${deltaText} ❤️</span>
+      <span class="text-[10px] text-gray-600">${snaps.length}d</span>
+    </div>
+  `;
 }
 
 async function autoTrackerRefresh() {
