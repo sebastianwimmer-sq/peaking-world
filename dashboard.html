@@ -398,27 +398,90 @@ SmashApp.requireAuth();
   });
 })();
 
-// ============ LIVE FOLLOWERS — pull from Worker-Profile (Meta API) ============
-(async function showLiveFollowers() {
-  if (!SmashApp.getWorkerProfile) return;
+// ============ v1.9.7 — LIVE STATS (alle 4 Stats-Cards aus Worker, account-aware) ============
+(async function loadLiveStats() {
+  const PEAKING_API = 'https://peaking-ai-api.peaking.workers.dev';
+  const PEAKING_KEY = 'pk_peaking_2026_sebi_solo_x7k2m9';
+  const ACCOUNT_TO_BRAND = { vegetarianhulk: 'hulk', peakingworld: 'peaking' };
+  const currentAccount = SmashApp.getCurrentAccount();
+  const brand = ACCOUNT_TO_BRAND[currentAccount];
+  if (!brand) return;
+
+  // Parallel fetch: profile + reels-list (account-specific)
   try {
-    const profile = await SmashApp.getWorkerProfile();
-    if (!profile || profile.followers_count == null) return;
-    const el = document.getElementById('followerCount');
-    if (el) {
+    const [profileRes, reelsRes] = await Promise.all([
+      fetch(`${PEAKING_API}/insta/dashboard`, { headers: { 'X-Peaking-Key': PEAKING_KEY } }),
+      fetch(`${PEAKING_API}/insta/reels-list?brand=${brand}`, { headers: { 'X-Peaking-Key': PEAKING_KEY } }),
+    ]);
+    const profileData = await profileRes.json();
+    const reelsData = await reelsRes.json();
+
+    const brandInfo = (profileData.brands || []).find(b => b.name === brand);
+    const profile = brandInfo?.profile;
+    const reels = reelsData.reels || [];
+
+    // 1. Follower
+    if (profile?.followers_count != null) {
       const fc = profile.followers_count;
-      el.textContent = fc >= 1000 ? (fc / 1000).toFixed(1) + 'K' : String(fc);
-      el.title = `Live von Meta API · ${fc} Follower · ${new Date(profile.fetchedAt).toLocaleString('de-DE')}`;
-      // Add live-dot indicator
-      const parent = el.parentElement;
-      if (parent && !parent.querySelector('.live-dot')) {
-        const dot = document.createElement('span');
-        dot.className = 'live-dot';
-        dot.style.cssText = 'display:inline-block;width:6px;height:6px;border-radius:50%;background:#22c55e;box-shadow:0 0 6px #22c55e;margin-left:4px;vertical-align:middle;';
-        parent.querySelector('.text-gray-400')?.appendChild(dot);
+      const el = document.getElementById('followerCount');
+      if (el) {
+        el.textContent = fc >= 1000 ? (fc / 1000).toFixed(1) + 'K' : String(fc);
+        el.title = `Live von Meta API · ${fc} Follower · synced ${new Date(profile.fetchedAt).toLocaleString('de-DE')}`;
       }
     }
-  } catch (e) {}
+
+    // 2. Diese Woche (Reels < 7 Tage)
+    const weekAgo = Date.now() - 7 * 24 * 3600 * 1000;
+    const thisWeek = reels.filter(r => new Date(r.timestamp || 0).getTime() > weekAgo).length;
+    const weekEl = document.getElementById('weekCount');
+    if (weekEl) weekEl.textContent = `${thisWeek}/4`;
+
+    // 3. Streak (consecutive days mit mindestens 1 post)
+    const dates = new Set(reels.map(r => (r.timestamp || '').slice(0, 10)).filter(Boolean));
+    let streak = 0;
+    let d = new Date();
+    while (true) {
+      const key = d.toISOString().slice(0, 10);
+      if (dates.has(key)) {
+        streak++;
+        d.setDate(d.getDate() - 1);
+      } else {
+        // Allow yesterday-only-skip (today maybe not posted yet)
+        if (streak === 0) {
+          d.setDate(d.getDate() - 1);
+          const yKey = d.toISOString().slice(0, 10);
+          if (dates.has(yKey)) {
+            streak = 1;
+            d.setDate(d.getDate() - 1);
+            continue;
+          }
+        }
+        break;
+      }
+    }
+    const streakEl = document.getElementById('streakCount');
+    if (streakEl) streakEl.textContent = `${streak}🔥`;
+
+    // 4. Total Reels (Worker-Cache count, ehrliche Live-Zahl)
+    const totalEl = document.getElementById('totalReels');
+    if (totalEl) {
+      totalEl.textContent = reels.length;
+      totalEl.title = `Live aus Worker-Cache · synced ${brandInfo?.lastSync?.syncedAt ? new Date(brandInfo.lastSync.syncedAt).toLocaleString('de-DE') : '—'}`;
+    }
+
+    // Live-Dot Indicator
+    document.querySelectorAll('.stat-card').forEach(card => {
+      if (!card.querySelector('.live-dot')) {
+        const dot = document.createElement('span');
+        dot.className = 'live-dot';
+        dot.style.cssText = 'display:inline-block;width:5px;height:5px;border-radius:50%;background:#22c55e;box-shadow:0 0 5px #22c55e;margin-left:6px;vertical-align:middle;';
+        const label = card.querySelector('.text-gray-400');
+        if (label) label.appendChild(dot);
+      }
+    });
+  } catch (e) {
+    console.warn('[Live-Stats]', e.message);
+  }
 })();
 
 // ============ UI PREFS (apply early) ============
