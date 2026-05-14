@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self' https:; script-src 'self' 'unsafe-inline' 'unsafe-eval' https:; style-src 'self' 'unsafe-inline' https:; img-src 'self' data: blob: https:; font-src 'self' data: https:; connect-src 'self' https: wss:; upgrade-insecure-requests">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<title>🧭 Growth-Coach · PEAKING</title>
+<link rel="icon" href="../assets/logo.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="../assets/logo.svg">
+<link rel="manifest" href="../manifest.json">
+<meta name="theme-color" content="#FFA94D">
+<link rel="stylesheet" href="../assets/effects.css">
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+  body {
+    background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+    min-height: 100dvh;
+    color: white;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Inter, sans-serif;
+  }
+  .glass { background: rgba(30,41,59,0.6); backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.1); }
+  .neon { color: #FFA94D; }
+  .text-sunrise {
+    background: linear-gradient(135deg, #FF6B6B, #FFA94D, #FFD43B);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+  }
+  .btn-primary {
+    background: linear-gradient(135deg, #FFD43B, #FFA94D, #FF6B6B);
+    color: #0f172a;
+    font-weight: 800;
+    transition: transform 0.12s, box-shadow 0.25s;
+  }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 14px 36px rgba(255,169,77,0.5); }
+  .tip-card { transition: all 0.2s; }
+  .tip-card:hover { transform: translateY(-2px); border-color: rgba(255,169,77,0.3); }
+  .sev-red { border-left: 3px solid #ef4444; }
+  .sev-yellow { border-left: 3px solid #FFA94D; }
+  .sev-green { border-left: 3px solid #22c55e; }
+  .sev-info { border-left: 3px solid #60a5fa; }
+  .pill { display:inline-block; padding:2px 8px; border-radius:6px; font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:0.5px; }
+  .pill-red { background: rgba(239,68,68,0.15); color: #ef4444; }
+  .pill-yellow { background: rgba(255,169,77,0.15); color: #FFA94D; }
+  .pill-green { background: rgba(34,197,94,0.15); color: #22c55e; }
+  .pill-info { background: rgba(96,165,250,0.15); color: #60a5fa; }
+</style>
+</head>
+<body class="px-4 md:px-8 py-6">
+<div class="max-w-4xl mx-auto">
+
+  <!-- Header -->
+  <header class="mb-6">
+    <a href="../dashboard.html" class="text-xs text-gray-400 hover:neon">← Dashboard</a>
+    <h1 class="text-3xl md:text-4xl font-black text-sunrise mt-2">🧭 Growth-Coach</h1>
+    <p class="text-sm text-gray-400 mt-1">Personalisierte Wachstums-Tipps · basiert auf deinen Live-Reel-Daten + 2026-Algorithm-Research</p>
+  </header>
+
+  <!-- Account-Indicator -->
+  <div class="glass rounded-2xl p-4 mb-5 flex items-center gap-3">
+    <div class="text-2xl" id="accEmoji">🏔️</div>
+    <div class="flex-1 min-w-0">
+      <div class="font-bold text-sm" id="accLabel">@vegetarianhulk</div>
+      <div class="text-xs text-gray-400" id="accStats">Lade Stats…</div>
+    </div>
+    <button onclick="runAnalysis(true)" class="btn-primary rounded-xl px-4 py-2 text-xs">🔄 Refresh</button>
+  </div>
+
+  <!-- Daily-Tip-Hero -->
+  <div class="glass rounded-2xl p-6 mb-5" style="background: linear-gradient(135deg, rgba(255,169,77,0.12), rgba(255,212,59,0.06)); border: 1px solid rgba(255,169,77,0.3);">
+    <div class="flex items-start gap-3 mb-3">
+      <div class="text-3xl">💡</div>
+      <div class="flex-1 min-w-0">
+        <div class="text-[10px] uppercase tracking-wider text-gray-400 font-bold mb-1">Tipp des Tages</div>
+        <h2 class="text-xl md:text-2xl font-black text-sunrise" id="dailyTipTitle">Lade Coach-Analyse…</h2>
+      </div>
+    </div>
+    <p class="text-sm text-gray-200 leading-relaxed" id="dailyTipBody">Eine Analyse deiner Reels läuft.</p>
+    <div class="mt-3 text-xs text-gray-500" id="dailyTipMeta">—</div>
+  </div>
+
+  <!-- All Triggered Tips -->
+  <h2 class="text-lg font-bold mb-3 mt-6">🎯 Alle aktiven Tipps</h2>
+  <div id="tipsList" class="space-y-3">
+    <div class="glass rounded-xl p-4 text-sm text-gray-500 text-center">⏳ Analysiere…</div>
+  </div>
+
+  <!-- All Templates -->
+  <details class="mt-8 glass rounded-2xl p-4">
+    <summary class="cursor-pointer font-bold text-sm">📚 Alle 15 Coach-Templates ansehen</summary>
+    <div class="mt-3 space-y-2 text-xs text-gray-300" id="allTemplates"></div>
+  </details>
+
+  <div class="mt-6 text-[10px] text-gray-600 text-center">
+    Algorithm-Research 2026 (Mosseri · Buffer · Hootsuite · OpusClip · Reachbird DACH).
+  </div>
+
+</div>
+
+<script src="../js/app.js"></script>
+<script>
+const API = 'https://peaking-ai-api.peaking.workers.dev';
+const KEY = 'pk_peaking_2026_sebi_solo_x7k2m9';
+const A2B = { vegetarianhulk: 'hulk', peakingworld: 'peaking' };
+
+const TEMPLATES = [
+  { id:'freq_low', sev:'red', cat:'Frequency', trigger:d=>d.postsLast7d<3, title:'Posting-Frequenz zu niedrig', body:'Du bist unter 3 Reels/Woche. Algorithm vergisst dich. Min-Cadence: 3 Reels/Woche, sonst Pillar-Gap-Penalty.' },
+  { id:'freq_high', sev:'yellow', cat:'Frequency', trigger:d=>d.postsLast7d>10, title:'Posting-Overdrive', body:'>2/Tag = Audience-Fatigue. Cut auf 5 Best-Quality/Woche. Quality > Quantity.' },
+  { id:'er_low', sev:'red', cat:'Engagement', trigger:d=>d.totalReels>5 && d.avgEngagementRate<2, title:'Engagement-Rate < 2%', body:'Niedriges ER trotz Followers. Audit: hast du Giveaways/Trends gefahren? Audience-Mismatch-Cleanup nötig.' },
+  { id:'comments_zero', sev:'yellow', cat:'Engagement', trigger:d=>d.totalReels>=3 && d.avgComments===0, title:'0 Comments im Schnitt', body:'Save-Content ohne Konversations-Trigger. Test: ende mit einer Frage oder polarisierendem Take.' },
+  { id:'plateau_1k', sev:'yellow', cat:'Plateau', trigger:d=>d.followers>=800 && d.followers<1200, title:'1k-Plateau-Zone', body:'Niche schärfen statt Frequenz pushen. 2-3 Top-Quality-Posts/Woche, klarer Pillar-1-Fokus.' },
+  { id:'plateau_10k', sev:'yellow', cat:'Plateau', trigger:d=>d.followers>=9000 && d.followers<12000, title:'10k-Wall', body:'Audit deine Top-3-Reels: was haben sie gemeinsam? Verdopple dieses Pattern 4 Wochen.' },
+  { id:'no_recent_reel', sev:'red', cat:'Content', trigger:d=>d.daysSinceLastPost>7, title:'Letztes Reel > 7 Tage her', body:'Algorithm-Distribution sinkt nach 7d Pause. Post diese Woche min. 1 Reel — egal welchen Pillar.' },
+  { id:'consistent_streak', sev:'green', cat:'Content', trigger:d=>d.postsLast7d>=3 && d.postsLast7d<=5, title:'Sweet-Spot Frequenz ✅', body:'Du fährst 3-5 Reels/Woche — Algorithm-Sweet-Spot 2026. Weiter so. 2.8x faster follower-growth vs 1-2x.' },
+  { id:'likes_dominant', sev:'yellow', cat:'Hook', trigger:d=>d.totalReels>=5 && d.avgLikes>50 && (d.avgComments/Math.max(d.avgLikes,1))<0.05, title:'Likes >> Comments', body:'Saves-Content. Für Reach: füg eine Identity-Aussage hinzu die Leute *teilen* wollen, nicht nur speichern.' },
+  { id:'dm_share_hint', sev:'info', cat:'Hook', trigger:d=>d.totalReels>=3, title:'DM-Share = #1 Reach-Driver 2026', body:'Bau einen „Schick das deiner [Person]"-Moment in die letzten 3 Sek deiner Reels. 1 DM ≈ 15 Likes Score.' },
+  { id:'pillar_gap', sev:'yellow', cat:'Pillar', trigger:d=>d.totalReels>=5, title:'Pillar-Balance prüfen', body:'Check deine letzten 10 Reels: fährst du Mono-Pillar? 3-5 Pillars = optimal. Test in nächsten 5 Posts 2 weitere Pillars.' },
+  { id:'first_hour_engagement', sev:'info', cat:'Timing', trigger:d=>d.totalReels>=3, title:'20-Min-Early-Window', body:'Engagement in den ersten 20 Min entscheidet Lifetime-Reach. Block 15 Min Post-Posting für DM-Replies + Comments.' },
+  { id:'reel_length_hint', sev:'info', cat:'Hook', trigger:d=>true, title:'Optimal-Length 2026', body:'7-15 Sek = viral-sweet-spot 2026. Lang erklären? Lieber Carousel. Reel = Hook + Payoff.' },
+  { id:'reach_drop_hint', sev:'info', cat:'Audit', trigger:d=>d.daysSinceLastPost>14 && d.daysSinceLastPost<=30, title:'Reach-Drop-Risiko', body:'Bei sinkender Reach NICHT panic-posten. Check: (1) Audience-Mismatch? (2) Posts ohne DM-Share-Trigger? (3) Hook unter 3 Sek?' },
+  { id:'visual_first_hint', sev:'info', cat:'Hook', trigger:d=>d.totalReels>=1, title:'Text-Overlay in Sek 1', body:'Sound-off-Scroll-User verlieren dich. Text-Overlay in Sek 1 = +2-3 Sek Watch-Time. Burn-In via Reel-Edit-Assistant.' },
+];
+
+async function loadAccountData() {
+  const acc = SmashApp.getCurrentAccount();
+  const brand = A2B[acc];
+  document.getElementById('accLabel').textContent = SmashApp.getAccount().handle;
+  document.getElementById('accEmoji').textContent = SmashApp.getAccount().emoji;
+  if (!brand) return null;
+
+  try {
+    const [dashRes, reelsRes] = await Promise.all([
+      fetch(`${API}/insta/dashboard`, { headers: { 'X-Peaking-Key': KEY } }),
+      fetch(`${API}/insta/reels-list?brand=${brand}`, { headers: { 'X-Peaking-Key': KEY } }),
+    ]);
+    const dash = await dashRes.json();
+    const reelsData = await reelsRes.json();
+    const reels = reelsData.reels || [];
+    const brandInfo = (dash.brands || []).find(b => b.name === brand);
+    const profile = brandInfo?.profile || {};
+
+    const now = Date.now();
+    const weekAgo = now - 7 * 86400 * 1000;
+    const postsLast7d = reels.filter(r => new Date(r.timestamp || 0).getTime() > weekAgo).length;
+    const lastPost = reels.length > 0 ? new Date(reels[0].timestamp || 0).getTime() : 0;
+    const daysSinceLastPost = lastPost ? Math.floor((now - lastPost) / 86400000) : 999;
+    const totalLikes = reels.reduce((s, r) => s + (r.like_count || 0), 0);
+    const totalComments = reels.reduce((s, r) => s + (r.comments_count || 0), 0);
+    const avgLikes = reels.length ? Math.round(totalLikes / reels.length) : 0;
+    const avgComments = reels.length ? Math.round(totalComments / reels.length) : 0;
+    const followers = profile.followers_count || 0;
+    const avgEngagementRate = (followers > 0 && reels.length > 0) ? ((avgLikes + avgComments) / followers) * 100 : 0;
+
+    return { brand, account: acc, followers, totalReels: reels.length, postsLast7d, daysSinceLastPost, avgLikes, avgComments, avgEngagementRate };
+  } catch (e) { console.warn('[Coach]', e); return null; }
+}
+
+function renderStats(d) {
+  if (!d) return '— · keine Daten';
+  return `${(d.followers||0).toLocaleString('de-DE')} Followers · ${d.totalReels} Reels · ${d.postsLast7d}/Wo · Ø ${d.avgLikes}❤️`;
+}
+
+function getTriggered(data) {
+  return TEMPLATES.filter(t => { try { return t.trigger(data); } catch (e) { return false; } });
+}
+
+function pickDailyTip(triggered) {
+  if (triggered.length === 0) return null;
+  const today = new Date().toISOString().slice(0, 10);
+  const seed = today.split('-').reduce((s, x) => s + parseInt(x), 0);
+  const sevOrder = { red: 1, yellow: 2, green: 3, info: 4 };
+  const sorted = [...triggered].sort((a, b) => (sevOrder[a.sev]||9) - (sevOrder[b.sev]||9));
+  return sorted[seed % sorted.length] || sorted[0];
+}
+
+async function runAnalysis() {
+  document.getElementById('tipsList').innerHTML = '<div class="glass rounded-xl p-4 text-sm text-gray-500 text-center">⏳ Analysiere…</div>';
+  const data = await loadAccountData();
+  if (!data) { document.getElementById('accStats').textContent = '— keine Verbindung'; return; }
+
+  document.getElementById('accStats').textContent = renderStats(data);
+  const triggered = getTriggered(data);
+  const dailyTip = pickDailyTip(triggered);
+
+  if (dailyTip) {
+    document.getElementById('dailyTipTitle').textContent = dailyTip.title;
+    document.getElementById('dailyTipBody').textContent = dailyTip.body;
+    document.getElementById('dailyTipMeta').textContent = `${dailyTip.cat} · Severity: ${dailyTip.sev.toUpperCase()} · ${triggered.length} aktive Tipps insgesamt`;
+  } else {
+    document.getElementById('dailyTipTitle').textContent = 'Du bist im Flow ✨';
+    document.getElementById('dailyTipBody').textContent = 'Keine kritischen Trigger. Post 3-5 Reels/Woche, vary Hooks, halt deine Pillars 80/20. Always peaking.';
+    document.getElementById('dailyTipMeta').textContent = '0 aktive Tipps · grünes Licht';
+  }
+
+  if (triggered.length === 0) {
+    document.getElementById('tipsList').innerHTML = '<div class="glass rounded-xl p-6 text-center text-gray-400 text-sm">🟢 Keine kritischen Trigger. Du bist auf Kurs.</div>';
+  } else {
+    document.getElementById('tipsList').innerHTML = triggered.map(t => `
+      <div class="glass rounded-xl p-4 tip-card sev-${t.sev}">
+        <div class="flex items-center gap-2 mb-2 flex-wrap">
+          <span class="pill pill-${t.sev}">${t.sev.toUpperCase()}</span>
+          <span class="pill pill-info">${t.cat}</span>
+        </div>
+        <div class="font-bold text-sm mb-1">${t.title}</div>
+        <div class="text-xs text-gray-300 leading-relaxed">${t.body}</div>
+      </div>
+    `).join('');
+  }
+
+  document.getElementById('allTemplates').innerHTML = TEMPLATES.map(t => `
+    <div class="border-l-2 pl-3" style="border-color:${t.sev==='red'?'#ef4444':t.sev==='yellow'?'#FFA94D':t.sev==='green'?'#22c55e':'#60a5fa'}">
+      <div class="font-bold">${t.title}</div>
+      <div class="text-gray-500">${t.body}</div>
+      <div class="text-[9px] uppercase tracking-wider text-gray-600 mt-1">${t.cat} · ${t.sev}</div>
+    </div>
+  `).join('');
+}
+
+runAnalysis();
+</script>
+</body>
+</html>
