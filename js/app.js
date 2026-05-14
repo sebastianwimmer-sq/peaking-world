@@ -5,13 +5,30 @@
 
 // App-Version — bump bei jedem Feature-Push (MINOR) oder Polish (PATCH)
 // Wird automatisch in alle Elemente mit id="appVersion" oder [data-app-version] gesetzt
-window.APP_VERSION = 'v1.9.7';
+window.APP_VERSION = 'v1.9.8';
 
 if (typeof document !== 'undefined') {
   document.addEventListener('DOMContentLoaded', () => {
     document.querySelectorAll('#appVersion, [data-app-version]').forEach(el => {
       el.textContent = window.APP_VERSION;
     });
+
+    // v1.9.8 — Auto-inject Help-FAB on all pages (except login + help itself)
+    try {
+      const path = location.pathname || '';
+      const onLogin = path === '/' || path.endsWith('/index.html');
+      const onHelp = path.endsWith('/help.html');
+      if (!onLogin && !onHelp && !document.querySelector('.help-fab')) {
+        const a = document.createElement('a');
+        a.className = 'help-fab';
+        a.title = 'Help-Center · FAQ · Troubleshooting';
+        const helpPath = path.includes('/modules/') ? 'help.html' : 'modules/help.html';
+        a.href = helpPath;
+        a.textContent = '?';
+        a.setAttribute('aria-label', 'Help-Center');
+        document.body.appendChild(a);
+      }
+    } catch (e) {}
   });
 }
 

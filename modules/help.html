@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self' https:; script-src 'self' 'unsafe-inline' 'unsafe-eval' https:; style-src 'self' 'unsafe-inline' https:; img-src 'self' data: blob: https:; font-src 'self' data: https:; connect-src 'self' https: wss:; upgrade-insecure-requests">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<title>🆘 Help-Center · PEAKING</title>
+<link rel="icon" href="../assets/logo.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="../assets/logo.svg">
+<link rel="manifest" href="../manifest.json">
+<meta name="theme-color" content="#FFA94D">
+<link rel="stylesheet" href="../assets/effects.css">
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+  body {
+    background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+    min-height: 100dvh;
+    color: white;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Inter, sans-serif;
+  }
+  .glass { background: rgba(30, 41, 59, 0.6); backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.1); }
+  .neon { color: #FFA94D; }
+  .text-sunrise {
+    background: linear-gradient(135deg, #FF6B6B, #FFA94D, #FFD43B);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+  }
+  details summary { cursor: pointer; list-style: none; }
+  details summary::-webkit-details-marker { display: none; }
+  details summary::after { content: '▸'; transition: transform 0.2s; display: inline-block; margin-left: 8px; color: #FFA94D; }
+  details[open] summary::after { transform: rotate(90deg); }
+  .topic-card { transition: all 0.15s; }
+  .topic-card:hover { transform: translateY(-2px); border-color: rgba(255,169,77,0.3); }
+  .step-num {
+    width: 28px; height: 28px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #FFD43B, #FFA94D, #FF6B6B);
+    color: #0f172a;
+    display: inline-flex; align-items: center; justify-content: center;
+    font-weight: 800; font-size: 13px;
+    flex-shrink: 0;
+  }
+  code {
+    background: rgba(15, 23, 42, 0.7);
+    padding: 1px 6px;
+    border-radius: 4px;
+    font-size: 12px;
+    color: #FFA94D;
+    font-family: 'Menlo', monospace;
+  }
+  .btn-ghost {
+    background: rgba(15,23,42,0.7);
+    border: 1px solid rgba(255,255,255,0.15);
+    color: #cbd5e1;
+    transition: all 0.15s;
+  }
+  .btn-ghost:hover { border-color: rgba(255,169,77,0.5); color: #FFA94D; }
+</style>
+</head>
+<body class="px-4 md:px-8 py-6">
+<div class="max-w-4xl mx-auto">
+
+  <!-- Header -->
+  <header class="mb-6">
+    <a href="../dashboard.html" class="text-xs text-gray-400 hover:neon">← Dashboard</a>
+    <h1 class="text-3xl md:text-4xl font-black text-sunrise mt-2">🆘 Help-Center</h1>
+    <p class="text-sm text-gray-400 mt-1">Alle Module · Setup-Guides · Troubleshooting · FAQ</p>
+  </header>
+
+  <!-- Quick-Search -->
+  <div class="glass rounded-2xl p-3 mb-6">
+    <input type="text" id="helpSearch" placeholder="🔍 Suche in allen Topics …" class="w-full bg-transparent border-0 outline-none px-2 py-2 text-sm text-white" oninput="filterHelp()">
+  </div>
+
+  <!-- Quick-Links -->
+  <div class="grid grid-cols-2 md:grid-cols-3 gap-3 mb-6" id="quickLinks">
+    <a href="#getting-started" class="topic-card glass rounded-2xl p-4 block">
+      <div class="text-2xl mb-1">🚀</div>
+      <div class="text-sm font-bold">Erste Schritte</div>
+      <div class="text-[10px] text-gray-500">3-Min-Setup</div>
+    </a>
+    <a href="#tracker" class="topic-card glass rounded-2xl p-4 block">
+      <div class="text-2xl mb-1">📊</div>
+      <div class="text-sm font-bold">Reel-Tracker</div>
+      <div class="text-[10px] text-gray-500">Live + Trends</div>
+    </a>
+    <a href="#brain" class="topic-card glass rounded-2xl p-4 block">
+      <div class="text-2xl mb-1">🧠</div>
+      <div class="text-sm font-bold">AI Brain</div>
+      <div class="text-[10px] text-gray-500">187+ Memos</div>
+    </a>
+    <a href="#reel-edit" class="topic-card glass rounded-2xl p-4 block">
+      <div class="text-2xl mb-1">✂️</div>
+      <div class="text-sm font-bold">Reel-Edit-Assistant</div>
+      <div class="text-[10px] text-gray-500">Audio → SRT</div>
+    </a>
+    <a href="#insta-sync" class="topic-card glass rounded-2xl p-4 block">
+      <div class="text-2xl mb-1">📡</div>
+      <div class="text-sm font-bold">Live Insta Sync</div>
+      <div class="text-[10px] text-gray-500">Meta API</div>
+    </a>
+    <a href="#troubleshooting" class="topic-card glass rounded-2xl p-4 block" style="border:1px solid rgba(239,68,68,0.3)">
+      <div class="text-2xl mb-1">🛠</div>
+      <div class="text-sm font-bold">Troubleshooting</div>
+      <div class="text-[10px] text-gray-500">Bekannte Probleme</div>
+    </a>
+  </div>
+
+  <!-- ════════════════════════════════════ -->
+  <!-- ERSTE SCHRITTE -->
+  <!-- ════════════════════════════════════ -->
+  <section id="getting-started" class="glass rounded-2xl p-6 mb-6 help-section">
+    <h2 class="text-xl font-bold text-sunrise mb-4">🚀 Erste Schritte</h2>
+
+    <div class="space-y-3">
+      <details class="glass rounded-xl p-4">
+        <summary class="font-bold text-sm">Was ist PEAKING?</summary>
+        <div class="mt-3 text-sm text-gray-300 leading-relaxed space-y-2">
+          <p>PEAKING ist dein <strong>Solo-Creator-Tool</strong> für Instagram-Wachstum — Reel-Tracking, AI-Brain für Strategy-Memos, Auto-Edit-Assistant für Captions, und vieles mehr.</p>
+          <p><strong>Built solo. Ohne VC. Ohne Hype. Always peaking.</strong></p>
+        </div>
+      </details>
+
+      <details class="glass rounded-xl p-4">
+        <summary class="font-bold text-sm">Wie melde ich mich an?</summary>
+        <div class="mt-3 text-sm text-gray-300 leading-relaxed">
+          <ol class="space-y-2 ml-2">
+            <li class="flex items-start gap-3"><span class="step-num">1</span><span>peaking.world öffnen → Login-Screen</span></li>
+            <li class="flex items-start gap-3"><span class="step-num">2</span><span>Sebi-Login-PW eingeben (24h Session via SHA-256)</span></li>
+            <li class="flex items-start gap-3"><span class="step-num">3</span><span>Dashboard ist offen → Account-Switcher oben rechts wählen</span></li>
+          </ol>
+        </div>
+      </details>
+
+      <details class="glass rounded-xl p-4">
+        <summary class="font-bold text-sm">Account-Switch — wofür?</summary>
+        <div class="mt-3 text-sm text-gray-300 leading-relaxed">
+          <p>Du hast 2 Insta-Accounts: <strong>@vegetarianhulk</strong> (🏔 Plant-Based) + <strong>@peakingworld</strong> (🚀 Builder-Tool). PEAKING speichert Daten pro Account getrennt — Reels, Ideen, Plan, Stats. Switch → Dashboard zeigt nur den gewählten Account.</p>
+        </div>
+      </details>
+
+      <details class="glass rounded-xl p-4">
+        <summary class="font-bold text-sm">Dashboard-Stats verstehen</summary>
+        <div class="mt-3 text-sm text-gray-300 leading-relaxed">
+          <ul class="space-y-1 ml-4 list-disc">
+            <li><strong>Follower</strong>: Live von Meta API (alle 6h gesynct)</li>
+            <li><strong>Diese Woche</strong>: Reels mit Timestamp &lt; 7 Tage</li>
+            <li><strong>Streak</strong>: Consecutive Tage mit ≥1 Post</li>
+            <li><strong>Total Reels</strong>: alle gecachten Reels für den Account</li>
+          </ul>
+          <p class="mt-2 text-xs text-gray-500">🟢 Grüner Punkt neben Label = Live-Data aus Worker-Cache</p>
+        </div>
+      </details>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════ -->
+  <!-- REEL-TRACKER -->
+  <!-- ════════════════════════════════════ -->
+  <section id="tracker" class="glass rounded-2xl p-6 mb-6 help-section">
+    <h2 class="text-xl font-bold text-sunrise mb-4">📊 Reel-Tracker</h2>
+    <div class="space-y-3">
+      <details class="glass rounded-xl p-4">
+        <summary class="font-bold text-sm">Wie nutze ich den Auto-Tracker?</summary>
+        <div class="mt-3 text-sm text-gray-300 leading-relaxed">
+          <p>Der Auto-Tracker zeigt deine Reels <strong>automatisch</strong> aus der Meta API. Kein Screenshot-Upload mehr nötig!</p>
+          <ol class="space-y-2 mt-2 ml-2">
+            <li class="flex items-start gap-3"><span class="step-num">1</span><span>Brand-Tab wählen (Alle / Peaking / Hulk / Smash)</span></li>
+            <li class="flex items-start gap-3"><span class="step-num">2</span><span>Sortieren nach Datum / Likes / Comments</span></li>
+            <li class="flex items-start gap-3"><span class="step-num">3</span><span>Auf Reel klicken → öffnet Insta-Permalink</span></li>
+            <li class="flex items-start gap-3"><span class="step-num">4</span><span>Refresh-Button drücken für sofortiges Sync</span></li>
+          </ol>
+        </div>
+      </details>
+
+      <details class="glass rounded-xl p-4">
+        <summary class="font-bold text-sm">Was zeigt die Sparkline?</summary>
+        <div class="mt-3 text-sm text-gray-300 leading-relaxed">
+          <p>Die kleine Linie unter jedem Reel zeigt den <strong>Likes-Trend</strong> über die letzten Sync-Cycles. Grünes Delta = Wachstum, rotes Delta = stagniert.</p>
+          <p class="text-xs text-gray-500 mt-2">⚠️ Braucht mindestens 2 Sync-Cycles (12h+) für Daten.</p>
+        </div>
+      </details>
+
+      <details class="glass rounded-xl p-4">
+        <summary class="font-bold text-sm">Sync-Cycle: wie oft?</summary>
+        <div class="mt-3 text-sm text-gray-300 leading-relaxed">
+          <p>Alle <strong>6 Stunden</strong> automatisch via Cloudflare-Cron. Plus: Manual-Refresh-Button für sofortiges Sync.</p>
+        </div>
+      </details>
+
+      <details class="glass rounded-xl p-4">
+        <summary class="font-bold text-sm">Welche Daten kommen wann?</summary>
+        <div class="mt-3 text-sm text-gray-300 leading-relaxed">
+          <table class="text-xs w-full">
+            <tr class="border-b border-white/10"><td class="py-2"><strong>Likes + Comments</strong></td><td class="text-green-400">✅ JETZT</td></tr>
+            <tr class="border-b border-white/10"><td class="py-2"><strong>Caption + Thumbnail + Permalink</strong></td><td class="text-green-400">✅ JETZT</td></tr>
+            <tr class="border-b border-white/10"><td class="py-2"><strong>Reach + Impressions + Plays</strong></td><td class="text-yellow-400">🟡 nach Meta App-Review</td></tr>
+            <tr><td class="py-2"><strong>Saves + Shares + Watch-Time</strong></td><td class="text-yellow-400">🟡 nach Meta App-Review</td></tr>
+          </table>
+        </div>
+      </details>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════ -->
+  <!-- AI BRAIN -->
+  <!-- ════════════════════════════════════ -->
+  <section id="brain" class="glass rounded-2xl p-6 mb-6 help-section">
+    <h2 class="text-xl font-bold text-sunrise mb-4">🧠 AI Brain</h2>
+    <div class="space-y-3">
+      <details class="glass rounded-xl p-4">
+        <summary class="font-bold text-sm">Was ist AI Brain?</summary>
+        <div class="mt-3 text-sm text-gray-300 leading-relaxed">
+          <p>Alle <strong>Claude-Memos</strong> der Sessions — sortiert nach Brand (PEAKING/SMASH/hulk/Cross), Type (project/feedback/learning/reference), und Status (GO/PARK/DONE).</p>
+          <p class="mt-2">Plus: Live-Search, Timeline-View, Memo-Detail-Drawer mit Cross-Refs.</p>
+        </div>
+      </details>
+
+      <details class="glass rounded-xl p-4">
+        <summary class="font-bold text-sm">Wie filter ich?</summary>
+        <div class="mt-3 text-sm text-gray-300 leading-relaxed">
+          <ul class="space-y-1 ml-4 list-disc">
+            <li>Brand-Pills: Alle / 🚀 PEAKING / 💪 SMASH / 🌱 hulk / 🔗 Cross</li>
+            <li>Type-Pills: Project / Feedback / Learning / Reference / User</li>
+            <li>Status-Pills: GO / PARK / DONE / LIVE / BLOCKED</li>
+            <li>Search-Input: free-text in Title + Description</li>
+          </ul>
+        </div>
+      </details>
+
+      <details class="glass rounded-xl p-4">
+        <summary class="font-bold text-sm">Timeline-View?</summary>
+        <div class="mt-3 text-sm text-gray-300 leading-relaxed">
+          <p>Toggle „📅 Timeline" oben → Memos gruppiert nach Modified-Date (Heute / Gestern / Wochentag-Datum).</p>
+        </div>
+      </details>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════ -->
+  <!-- REEL-EDIT-ASSISTANT -->
+  <!-- ════════════════════════════════════ -->
+  <section id="reel-edit" class="glass rounded-2xl p-6 mb-6 help-section">
+    <h2 class="text-xl font-bold text-sunrise mb-4">✂️ Reel-Edit-Assistant</h2>
+    <div class="space-y-3">
+      <details class="glass rounded-xl p-4">
+        <summary class="font-bold text-sm">Wie nutze ich's?</summary>
+        <div class="mt-3 text-sm text-gray-300 leading-relaxed">
+          <ol class="space-y-2 ml-2">
+            <li class="flex items-start gap-3"><span class="step-num">1</span><span>Audio aus DaVinci exportieren (File → Render → „Audio Only" → MP3/M4A)</span></li>
+            <li class="flex items-start gap-3"><span class="step-num">2</span><span>Audio in Reel-Edit-Assistant droppen (max 24 MB)</span></li>
+            <li class="flex items-start gap-3"><span class="step-num">3</span><span>Sprache wählen (DE/EN/Auto) → „Transkribieren"</span></li>
+            <li class="flex items-start gap-3"><span class="step-num">4</span><span>SRT downloaden → in DaVinci importieren</span></li>
+          </ol>
+        </div>
+      </details>
+
+      <details class="glass rounded-xl p-4">
+        <summary class="font-bold text-sm">Warum Audio statt Video?</summary>
+        <div class="mt-3 text-sm text-gray-300 leading-relaxed">
+          <p>Aktuell Phase 1.7a — nur Untertitel-Extraktion. Video direkt wäre Phase 1.7c (Hetzner-Server + FFmpeg). Kommt bald.</p>
+          <p class="text-xs text-gray-500 mt-2">53% Zeitsparung pro Reel schon mit dieser Version!</p>
+        </div>
+      </details>
+
+      <details class="glass rounded-xl p-4">
+        <summary class="font-bold text-sm">Caption-Style-Preview</summary>
+        <div class="mt-3 text-sm text-gray-300 leading-relaxed">
+          <p>Nach Transcribe siehst du 3 Style-Mockups: <strong>Minimal</strong> (clean white), <strong>Bold</strong> (yellow shadow), <strong>Karaoke</strong> (word-highlight). Style-Picker via Inspector in DaVinci.</p>
+        </div>
+      </details>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════ -->
+  <!-- INSTA-SYNC -->
+  <!-- ════════════════════════════════════ -->
+  <section id="insta-sync" class="glass rounded-2xl p-6 mb-6 help-section">
+    <h2 class="text-xl font-bold text-sunrise mb-4">📡 Live Insta Sync</h2>
+    <div class="space-y-3">
+      <details class="glass rounded-xl p-4">
+        <summary class="font-bold text-sm">Was synct hier?</summary>
+        <div class="mt-3 text-sm text-gray-300 leading-relaxed">
+          <p>Alle 3 Brands (@peakingworld · @vegetarianhulk · @smashtheapp) — Profile-Stats, Reels, Captions. Alle 6h via Cloudflare-Cron auto, plus Manual-Refresh-Button.</p>
+        </div>
+      </details>
+
+      <details class="glass rounded-xl p-4">
+        <summary class="font-bold text-sm">Brand-Setup pro Account</summary>
+        <div class="mt-3 text-sm text-gray-300 leading-relaxed">
+          <p>Damit ein Insta-Account in PEAKING erscheint, müssen 4 Phasen erfüllt sein:</p>
+          <ol class="space-y-1 ml-4 mt-2">
+            <li>1. Insta-Konto auf <strong>Business-Mode</strong> (nicht Creator)</li>
+            <li>2. <strong>FB-Page</strong> existiert</li>
+            <li>3. <strong>Insta ↔ FB-Page</strong> verlinkt</li>
+            <li>4. <strong>App-Tester-Rolle</strong> in PEAKING-App akzeptiert</li>
+          </ol>
+        </div>
+      </details>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════ -->
+  <!-- TROUBLESHOOTING -->
+  <!-- ════════════════════════════════════ -->
+  <section id="troubleshooting" class="glass rounded-2xl p-6 mb-6 help-section" style="border:1px solid rgba(239,68,68,0.2)">
+    <h2 class="text-xl font-bold text-sunrise mb-4">🛠 Troubleshooting</h2>
+    <div class="space-y-3">
+      <details class="glass rounded-xl p-4">
+        <summary class="font-bold text-sm">„Session has expired" / Token-Fehler</summary>
+        <div class="mt-3 text-sm text-gray-300 leading-relaxed">
+          <p>Der Meta-Token ist abgelaufen (alle 60 Tage). Token-Refresh:</p>
+          <p><code>bash /tmp/peaking-token-convert.sh</code></p>
+          <p class="text-xs text-gray-500 mt-2">Bald: Auto-Refresh-Cron im Worker (nach META_APP_SECRET-Setup). Dann nie wieder manuell.</p>
+        </div>
+      </details>
+
+      <details class="glass rounded-xl p-4">
+        <summary class="font-bold text-sm">Stats zeigen falsche Zahlen</summary>
+        <div class="mt-3 text-sm text-gray-300 leading-relaxed">
+          <ol class="space-y-1 ml-4">
+            <li>1. Hard-Reload: Cmd+Shift+R</li>
+            <li>2. Service Worker leeren: DevTools → Application → SW → Unregister</li>
+            <li>3. Refresh-Button im Live Insta Sync</li>
+          </ol>
+        </div>
+      </details>
+
+      <details class="glass rounded-xl p-4">
+        <summary class="font-bold text-sm">Account-Switch zeigt alte Daten</summary>
+        <div class="mt-3 text-sm text-gray-300 leading-relaxed">
+          <p>Page-Reload nach Switch ist normal. Wenn Daten trotzdem nicht updaten: Cache leeren (siehe oben).</p>
+        </div>
+      </details>
+
+      <details class="glass rounded-xl p-4">
+        <summary class="font-bold text-sm">Reel-Edit: „File zu groß"</summary>
+        <div class="mt-3 text-sm text-gray-300 leading-relaxed">
+          <p>Max 24 MB (KV-Limit). Workaround: MP3-Bitrate auf 96kbps reduzieren (reicht für ~30 Min). In DaVinci: Audio-Render-Settings.</p>
+        </div>
+      </details>
+
+      <details class="glass rounded-xl p-4">
+        <summary class="font-bold text-sm">Reel-Edit: „REPLICATE error"</summary>
+        <div class="mt-3 text-sm text-gray-300 leading-relaxed">
+          <p>Whisper-Service kurz down. In 1-2 Min nochmal probieren.</p>
+        </div>
+      </details>
+
+      <details class="glass rounded-xl p-4">
+        <summary class="font-bold text-sm">DM an Sebi</summary>
+        <div class="mt-3 text-sm text-gray-300 leading-relaxed">
+          <p>Problem nicht hier dabei? <a href="https://instagram.com/peakingworld" target="_blank" class="neon underline">DM @peakingworld</a> — Sebi antwortet selbst.</p>
+        </div>
+      </details>
+    </div>
+  </section>
+
+  <!-- Bottom CTA -->
+  <div class="text-center text-xs text-gray-500 mt-8 py-6 border-t border-white/5">
+    <p>Always peaking. · <a href="../dashboard.html" class="neon hover:underline">← Zurück zum Dashboard</a></p>
+  </div>
+
+</div>
+
+<script src="../js/app.js"></script>
+<script>
+function filterHelp() {
+  const q = (document.getElementById('helpSearch').value || '').toLowerCase().trim();
+  document.querySelectorAll('.help-section').forEach(sec => {
+    const txt = sec.textContent.toLowerCase();
+    const detailsList = sec.querySelectorAll('details');
+    let anyMatch = false;
+    detailsList.forEach(d => {
+      const dt = d.textContent.toLowerCase();
+      if (!q || dt.includes(q)) {
+        d.style.display = '';
+        if (q) d.setAttribute('open', '');
+        anyMatch = true;
+      } else {
+        d.style.display = 'none';
+      }
+    });
+    sec.style.display = (anyMatch || !q) ? '' : 'none';
+  });
+}
+</script>
+</body>
+</html>
