@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self' https:; script-src 'self' 'unsafe-inline' 'unsafe-eval' https:; style-src 'self' 'unsafe-inline' https:; img-src 'self' data: blob: https:; font-src 'self' data: https:; connect-src 'self' https: wss:; upgrade-insecure-requests">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<title>🧠 AI Brain · PEAKING</title>
+<link rel="icon" href="../assets/logo.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="../assets/logo.svg">
+<link rel="manifest" href="../manifest.json">
+<meta name="theme-color" content="#FFA94D">
+<link rel="stylesheet" href="../assets/effects.css">
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+  body {
+    background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+    min-height: 100dvh;
+    color: white;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Inter, sans-serif;
+  }
+  .glass {
+    background: rgba(30, 41, 59, 0.6);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255,255,255,0.1);
+  }
+  .neon { color: #FFA94D; }
+  .text-sunrise {
+    background: linear-gradient(135deg, #FF6B6B, #FFA94D, #FFD43B);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+  }
+  input, select {
+    background: rgba(15, 23, 42, 0.6);
+    border: 1px solid rgba(255,255,255,0.15);
+    color: white;
+    font-family: inherit;
+  }
+  input:focus, select:focus { outline: none; border-color: #FFA94D; }
+  .filter-pill {
+    padding: 6px 14px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 600;
+    border: 1px solid rgba(255,255,255,0.15);
+    background: rgba(15,23,42,0.6);
+    color: #cbd5e1;
+    cursor: pointer;
+    transition: all 0.15s;
+    white-space: nowrap;
+  }
+  .filter-pill:hover { border-color: rgba(255,169,77,0.5); }
+  .filter-pill.active {
+    background: linear-gradient(135deg, #FFA94D, #FF6B6B);
+    color: #0f172a;
+    border-color: #FFA94D;
+    font-weight: 800;
+  }
+  .memo-card {
+    transition: all 0.15s;
+    cursor: pointer;
+  }
+  .memo-card:hover {
+    transform: translateY(-2px);
+    border-color: rgba(255,169,77,0.3);
+    box-shadow: 0 14px 30px -16px rgba(255,169,77,0.25);
+  }
+  .badge {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 6px;
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  .badge-project { background: rgba(96,165,250,0.15); color: #60a5fa; }
+  .badge-feedback { background: rgba(244,114,182,0.15); color: #f472b6; }
+  .badge-learning { background: rgba(167,139,250,0.15); color: #a78bfa; }
+  .badge-reference { background: rgba(74,222,128,0.15); color: #4ade80; }
+  .badge-user { background: rgba(252,211,77,0.15); color: #fcd34d; }
+  .badge-unknown { background: rgba(148,163,184,0.15); color: #94a3b8; }
+  .badge-go { background: rgba(34,197,94,0.15); color: #22c55e; }
+  .badge-park { background: rgba(252,211,77,0.15); color: #fcd34d; }
+  .badge-blocked { background: rgba(239,68,68,0.15); color: #ef4444; }
+  .badge-done { background: rgba(59,130,246,0.15); color: #3b82f6; }
+  .badge-live { background: rgba(255,169,77,0.12); color: #FFA94D; }
+  .badge-pause { background: rgba(148,163,184,0.15); color: #94a3b8; }
+  .brand-tag {
+    display: inline-block;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 9px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-right: 4px;
+  }
+  .brand-peaking { background: rgba(255,169,77,0.18); color: #FFA94D; }
+  .brand-smash { background: rgba(34,197,94,0.18); color: #22c55e; }
+  .brand-hulk { background: rgba(45,166,102,0.22); color: #4ade80; }
+  .brand-cross-brand { background: rgba(167,139,250,0.18); color: #a78bfa; }
+  .spin { animation: spin 1s linear infinite; display: inline-block; }
+  @keyframes spin { 100% { transform: rotate(360deg); } }
+</style>
+</head>
+<body class="px-4 md:px-8 py-6">
+<div class="max-w-6xl mx-auto">
+
+  <!-- Header -->
+  <header class="mb-6">
+    <a href="../dashboard.html" class="text-xs text-gray-400 hover:neon">← Dashboard</a>
+    <h1 class="text-3xl md:text-4xl font-black text-sunrise mt-2">🧠 AI Brain</h1>
+    <p class="text-sm text-gray-400 mt-1">Alle Memos · Brand-Strategie · Decisions · Learnings — alles an einem Ort</p>
+  </header>
+
+  <!-- Stats -->
+  <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
+    <div class="glass rounded-2xl p-4">
+      <div class="text-3xl font-black neon" id="statTotal">…</div>
+      <div class="text-xs text-gray-400">Memos Total</div>
+    </div>
+    <div class="glass rounded-2xl p-4">
+      <div class="text-3xl font-black" id="statGo">…</div>
+      <div class="text-xs text-gray-400">🟢 GO</div>
+    </div>
+    <div class="glass rounded-2xl p-4">
+      <div class="text-3xl font-black" id="statPark">…</div>
+      <div class="text-xs text-gray-400">🟡 PARK</div>
+    </div>
+    <div class="glass rounded-2xl p-4">
+      <div class="text-3xl font-black" id="statDone">…</div>
+      <div class="text-xs text-gray-400">✅ DONE</div>
+    </div>
+  </div>
+
+  <!-- Search -->
+  <div class="glass rounded-2xl p-3 mb-4">
+    <input type="text" id="search" placeholder="🔍 Suche in Title oder Description …" class="w-full px-4 py-3 rounded-xl text-sm">
+  </div>
+
+  <!-- Filter-Pills: Brands -->
+  <div class="mb-3">
+    <div class="text-[10px] uppercase tracking-wider text-gray-500 mb-2">Brand</div>
+    <div class="flex gap-2 flex-wrap" id="filterBrands">
+      <button class="filter-pill active" data-brand="all">Alle</button>
+      <button class="filter-pill" data-brand="peaking">🚀 PEAKING</button>
+      <button class="filter-pill" data-brand="smash">💪 SMASH</button>
+      <button class="filter-pill" data-brand="hulk">🌱 vegetarianhulk</button>
+      <button class="filter-pill" data-brand="cross-brand">🔗 Cross-Brand</button>
+    </div>
+  </div>
+
+  <!-- Filter-Pills: Type -->
+  <div class="mb-3">
+    <div class="text-[10px] uppercase tracking-wider text-gray-500 mb-2">Type</div>
+    <div class="flex gap-2 flex-wrap" id="filterTypes">
+      <button class="filter-pill active" data-type="all">Alle</button>
+      <button class="filter-pill" data-type="project">Project</button>
+      <button class="filter-pill" data-type="feedback">Feedback</button>
+      <button class="filter-pill" data-type="learning">Learning</button>
+      <button class="filter-pill" data-type="reference">Reference</button>
+      <button class="filter-pill" data-type="user">User</button>
+    </div>
+  </div>
+
+  <!-- Filter-Pills: Status -->
+  <div class="mb-5">
+    <div class="text-[10px] uppercase tracking-wider text-gray-500 mb-2">Status</div>
+    <div class="flex gap-2 flex-wrap" id="filterStatus">
+      <button class="filter-pill active" data-status="all">Alle</button>
+      <button class="filter-pill" data-status="go">🟢 GO</button>
+      <button class="filter-pill" data-status="park">🟡 PARK</button>
+      <button class="filter-pill" data-status="done">✅ DONE</button>
+      <button class="filter-pill" data-status="live">📝 LIVE</button>
+      <button class="filter-pill" data-status="blocked">🔴 BLOCKED</button>
+    </div>
+  </div>
+
+  <!-- Result Count + Sort -->
+  <div class="flex items-center justify-between mb-3 text-xs text-gray-500">
+    <div><span id="resultCount">…</span> Memos</div>
+    <div>
+      <select id="sortBy" class="rounded-lg px-2 py-1 text-xs">
+        <option value="modified">📅 Zuletzt geändert</option>
+        <option value="name">A-Z</option>
+        <option value="size">📏 Größe</option>
+      </select>
+    </div>
+  </div>
+
+  <!-- Memo Cards -->
+  <div id="memos" class="grid grid-cols-1 md:grid-cols-2 gap-3">
+    <div class="text-center text-gray-500 col-span-2 py-12"><span class="spin">⏳</span> Lade Brain-Index...</div>
+  </div>
+
+  <!-- Modal for memo detail -->
+  <div id="memoModal" class="fixed inset-0 z-50 hidden bg-black/70 backdrop-blur-sm flex items-end md:items-center justify-center p-4">
+    <div class="glass rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto p-6 relative">
+      <button onclick="closeModal()" class="absolute top-3 right-3 text-gray-400 hover:text-white text-2xl">×</button>
+      <div id="modalContent"></div>
+    </div>
+  </div>
+
+  <!-- Footer Info -->
+  <div class="mt-8 text-center text-xs text-gray-500">
+    <div>Last sync: <span id="lastSync">—</span></div>
+    <div class="mt-1">Update via: <code class="text-[10px]">python3 /tmp/gen-brain-index.py</code> + curl PUT /brain/index</div>
+  </div>
+
+</div>
+
+<script src="../js/app.js"></script>
+<script>
+  const API_BASE = 'https://peaking-ai-api.peaking.workers.dev';
+  const API_KEY = 'pk_peaking_2026_sebi_solo_x7k2m9';
+
+  let allMemos = [];
+  let filters = { brand: 'all', type: 'all', status: 'all', search: '' };
+  let sortBy = 'modified';
+
+  function escapeHtml(s) {
+    return String(s).replace(/[&<>"']/g, m => ({
+      '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;','\'':'&#39;'
+    }[m]));
+  }
+
+  function brandTags(brands) {
+    return brands.map(b => `<span class="brand-tag brand-${b}">${b === 'cross-brand' ? '🔗 Cross' : b === 'peaking' ? '🚀' : b === 'smash' ? '💪' : '🌱'} ${b}</span>`).join('');
+  }
+
+  function renderMemos() {
+    const search = filters.search.toLowerCase();
+    let list = allMemos.filter(m => {
+      if (filters.brand !== 'all' && !m.brands.includes(filters.brand)) return false;
+      if (filters.type !== 'all' && m.type !== filters.type) return false;
+      if (filters.status !== 'all' && m.status !== filters.status) return false;
+      if (search && !((m.name||'').toLowerCase().includes(search) || (m.description||'').toLowerCase().includes(search))) return false;
+      return true;
+    });
+
+    if (sortBy === 'modified') list.sort((a,b) => (b.modified||'').localeCompare(a.modified||''));
+    else if (sortBy === 'name') list.sort((a,b) => (a.name||'').localeCompare(b.name||''));
+    else if (sortBy === 'size') list.sort((a,b) => (b.size||0) - (a.size||0));
+
+    document.getElementById('resultCount').textContent = list.length;
+
+    const html = list.map(m => `
+      <div class="memo-card glass rounded-2xl p-4" onclick='openMemo(${JSON.stringify(m.slug).replace(/'/g, "&#39;")})'>
+        <div class="flex items-start justify-between gap-2 mb-2">
+          <div class="text-sm font-bold leading-snug flex-1">${escapeHtml(m.name || m.slug)}</div>
+          <span class="badge badge-${m.status}">${m.status}</span>
+        </div>
+        <div class="text-xs text-gray-400 mb-3 leading-relaxed line-clamp-3">${escapeHtml((m.description || '').slice(0, 200))}</div>
+        <div class="flex items-center justify-between flex-wrap gap-2">
+          <div>${brandTags(m.brands)}</div>
+          <div class="flex items-center gap-2">
+            <span class="badge badge-${m.type}">${m.type}</span>
+            <span class="text-[10px] text-gray-500">${m.modified}</span>
+          </div>
+        </div>
+      </div>
+    `).join('');
+
+    document.getElementById('memos').innerHTML = html || '<div class="text-center text-gray-500 col-span-2 py-12">Keine Memos für aktuellen Filter.</div>';
+  }
+
+  function openMemo(slug) {
+    const m = allMemos.find(x => x.slug === slug);
+    if (!m) return;
+    document.getElementById('modalContent').innerHTML = `
+      <div class="mb-3"><span class="badge badge-${m.status}">${m.status}</span> <span class="badge badge-${m.type}">${m.type}</span></div>
+      <h2 class="text-xl font-black text-sunrise mb-2">${escapeHtml(m.name || m.slug)}</h2>
+      <div class="text-sm text-gray-300 mb-4 leading-relaxed">${escapeHtml(m.description || '')}</div>
+      <div class="mb-4">${brandTags(m.brands)}</div>
+      <div class="grid grid-cols-2 gap-3 text-xs mb-4">
+        <div><span class="text-gray-500">Filename:</span><br><code class="text-[10px]">${m.filename}</code></div>
+        <div><span class="text-gray-500">Last modified:</span><br>${m.modified}</div>
+        <div><span class="text-gray-500">Size:</span><br>${(m.size/1024).toFixed(1)} KB</div>
+        <div><span class="text-gray-500">Slug:</span><br><code class="text-[10px]">${m.slug}</code></div>
+      </div>
+      <div class="text-xs text-gray-400 mt-4 border-t border-white/10 pt-3">
+        Memo-File liegt in <code class="text-[10px]">~/.claude/projects/-Users-sebastianwimmer/memory/</code>. In nächster Claude-Session: <code class="text-[10px]">Read ${m.filename}</code>
+      </div>
+    `;
+    document.getElementById('memoModal').classList.remove('hidden');
+  }
+
+  function closeModal() {
+    document.getElementById('memoModal').classList.add('hidden');
+  }
+  document.getElementById('memoModal').addEventListener('click', e => {
+    if (e.target.id === 'memoModal') closeModal();
+  });
+
+  // Event Listeners
+  document.getElementById('search').addEventListener('input', e => {
+    filters.search = e.target.value;
+    renderMemos();
+  });
+
+  document.getElementById('sortBy').addEventListener('change', e => {
+    sortBy = e.target.value;
+    renderMemos();
+  });
+
+  ['filterBrands', 'filterTypes', 'filterStatus'].forEach(id => {
+    const container = document.getElementById(id);
+    const key = id.replace('filter', '').toLowerCase().replace(/s$/, '');
+    container.addEventListener('click', e => {
+      if (!e.target.classList.contains('filter-pill')) return;
+      container.querySelectorAll('.filter-pill').forEach(b => b.classList.remove('active'));
+      e.target.classList.add('active');
+      filters[key === 'statu' ? 'status' : key] = e.target.dataset[key === 'statu' ? 'status' : key];
+      renderMemos();
+    });
+  });
+
+  // Load brain-index
+  async function loadBrain() {
+    try {
+      const r = await fetch(`${API_BASE}/brain/index`, {
+        headers: { 'X-Peaking-Key': API_KEY },
+      });
+      const data = await r.json();
+      if (!data.memos) throw new Error(data.error || 'No memos');
+      allMemos = data.memos;
+      document.getElementById('statTotal').textContent = data.count;
+      document.getElementById('statGo').textContent = allMemos.filter(m => m.status === 'go').length;
+      document.getElementById('statPark').textContent = allMemos.filter(m => m.status === 'park').length;
+      document.getElementById('statDone').textContent = allMemos.filter(m => m.status === 'done').length;
+      document.getElementById('lastSync').textContent = new Date(data.generated).toLocaleString('de-DE');
+      renderMemos();
+    } catch (e) {
+      document.getElementById('memos').innerHTML = `<div class="text-center text-red-400 col-span-2 py-12">Fehler: ${e.message}</div>`;
+    }
+  }
+
+  loadBrain();
+</script>
+</body>
+</html>
