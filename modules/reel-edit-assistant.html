@@ -87,6 +87,135 @@
     background: linear-gradient(135deg, #FFD43B, #FFA94D, #FF6B6B);
     color: #0f172a;
   }
+
+  /* Progress-Bar (Whisper) */
+  .progress-track {
+    width: 100%;
+    height: 6px;
+    background: rgba(255,255,255,0.07);
+    border-radius: 999px;
+    overflow: hidden;
+    margin-top: 16px;
+  }
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #FF6B6B, #FFA94D, #FFD43B);
+    background-size: 200% 100%;
+    width: 0%;
+    transition: width 0.6s ease;
+    animation: shimmer 2.4s linear infinite;
+  }
+  @keyframes shimmer { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
+
+  /* Audio Preview */
+  .audio-preview {
+    width: 100%;
+    margin-top: 12px;
+    border-radius: 12px;
+    background: rgba(15,23,42,0.6);
+  }
+  audio::-webkit-media-controls-panel {
+    background: rgba(30,41,59,0.85);
+  }
+
+  /* Caption-Style Previews */
+  .caption-stage {
+    aspect-ratio: 9 / 16;
+    max-height: 220px;
+    background: linear-gradient(135deg, #1e293b 0%, #0f172a 60%, #312e2a 100%);
+    border-radius: 14px;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    padding: 16px 10px;
+  }
+  .caption-stage::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at 30% 20%, rgba(255,169,77,0.15), transparent 60%),
+                radial-gradient(circle at 80% 80%, rgba(255,107,107,0.1), transparent 60%);
+    pointer-events: none;
+  }
+  .cap-minimal {
+    color: #fff;
+    font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', sans-serif;
+    font-weight: 600;
+    font-size: 14px;
+    text-align: center;
+    line-height: 1.25;
+    letter-spacing: -0.01em;
+  }
+  .cap-bold {
+    color: #FFD43B;
+    font-family: 'Impact', 'Arial Black', sans-serif;
+    font-weight: 900;
+    font-size: 18px;
+    text-align: center;
+    line-height: 1.05;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+    text-shadow: 0 2px 0 #000, 2px 2px 0 #000, -2px 2px 0 #000, 0 3px 8px rgba(0,0,0,0.7);
+  }
+  .cap-karaoke {
+    font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', sans-serif;
+    font-weight: 800;
+    font-size: 16px;
+    text-align: center;
+    line-height: 1.15;
+    color: #fff;
+    text-shadow: 0 2px 6px rgba(0,0,0,0.7);
+  }
+  .cap-karaoke .word {
+    display: inline-block;
+    margin: 0 2px;
+    background: linear-gradient(90deg, #fff 50%, #FFA94D 50%);
+    background-size: 200% 100%;
+    background-position: 100% 0;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+    animation: karaoke 3.6s linear infinite;
+  }
+  .cap-karaoke .word:nth-child(1) { animation-delay: 0s; }
+  .cap-karaoke .word:nth-child(2) { animation-delay: 0.45s; }
+  .cap-karaoke .word:nth-child(3) { animation-delay: 0.9s; }
+  .cap-karaoke .word:nth-child(4) { animation-delay: 1.35s; }
+  .cap-karaoke .word:nth-child(5) { animation-delay: 1.8s; }
+  @keyframes karaoke {
+    0%, 100% { background-position: 100% 0; }
+    8%, 80% { background-position: 0 0; }
+  }
+  .style-label {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #94a3b8;
+    margin-bottom: 6px;
+    font-weight: 700;
+  }
+
+  /* Success-Hint */
+  .next-hint {
+    border: 1px solid rgba(255,169,77,0.25);
+    background: linear-gradient(135deg, rgba(255,169,77,0.06), rgba(255,107,107,0.04));
+    border-radius: 14px;
+    padding: 14px 16px;
+    margin-top: 14px;
+    font-size: 13px;
+    line-height: 1.55;
+    color: #e2e8f0;
+  }
+  .next-hint code {
+    background: rgba(15,23,42,0.7);
+    padding: 1px 6px;
+    border-radius: 4px;
+    font-size: 12px;
+    color: #FFA94D;
+  }
 </style>
 </head>
 <body class="px-4 md:px-8 py-6">
@@ -129,13 +258,17 @@
   <section id="transcribeSection" class="mb-6 hidden">
     <h2 class="text-lg font-bold mb-3"><span class="step-num">2</span>Transkription starten</h2>
     <div class="glass rounded-2xl p-5">
-      <div class="flex items-center gap-3 mb-4">
+      <div class="flex items-center gap-3 mb-2">
         <div class="text-3xl">🎵</div>
         <div class="flex-1 min-w-0">
           <div class="font-bold" id="fileName">—</div>
           <div class="text-xs text-gray-400" id="fileMeta">—</div>
         </div>
       </div>
+      <!-- Audio-Preview -->
+      <audio id="audioPreview" class="audio-preview" controls preload="metadata" style="display:none"></audio>
+      <div class="text-[10px] text-gray-500 mt-1 mb-3" id="previewHint" style="display:none">↑ Kurz reinhören — richtiges File?</div>
+
       <div class="flex gap-2">
         <label class="text-xs text-gray-400 flex items-center gap-2">
           Sprache:
@@ -153,10 +286,14 @@
   </section>
 
   <!-- Step 3: Loading-State -->
-  <section id="loadingSection" class="mb-6 hidden text-center py-12">
-    <div class="text-5xl spin mb-4">⏳</div>
-    <div class="text-lg font-bold">Whisper-AI läuft...</div>
-    <div class="text-sm text-gray-400 mt-1">~30 Sek pro Minute Audio</div>
+  <section id="loadingSection" class="mb-6 hidden">
+    <div class="glass rounded-2xl p-8 text-center">
+      <div class="text-5xl spin mb-4">⏳</div>
+      <div class="text-lg font-bold" id="progressText">Audio analysiert...</div>
+      <div class="text-sm text-gray-400 mt-1">~30 Sek pro Minute Audio</div>
+      <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+      <div class="text-[10px] text-gray-500 mt-3" id="progressElapsed">0s</div>
+    </div>
   </section>
 
   <!-- Step 4: Result -->
@@ -194,6 +331,40 @@
       </div>
       <div id="chunksList" class="max-h-96 overflow-y-auto"></div>
     </div>
+
+    <!-- Caption-Style Preview -->
+    <div class="glass rounded-2xl p-4 mt-4">
+      <div class="text-xs uppercase tracking-wider text-gray-500 mb-3">So könnten deine Captions aussehen</div>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+        <div>
+          <div class="style-label">Minimal</div>
+          <div class="caption-stage"><div class="cap-minimal" id="capMinimal">Mach hin. Heute ist der Tag.</div></div>
+          <div class="text-[10px] text-gray-500 mt-2">Clean · Vlog-Style · Apple-Aesthetic</div>
+        </div>
+        <div>
+          <div class="style-label">Bold</div>
+          <div class="caption-stage"><div class="cap-bold" id="capBold">MACH HIN HEUTE</div></div>
+          <div class="text-[10px] text-gray-500 mt-2">Viral · MrBeast · Hook-Reels</div>
+        </div>
+        <div>
+          <div class="style-label">Karaoke</div>
+          <div class="caption-stage"><div class="cap-karaoke" id="capKaraoke">
+            <span class="word">Mach</span><span class="word">hin</span><span class="word">jeden</span><span class="word">verdammten</span><span class="word">Tag</span>
+          </div></div>
+          <div class="text-[10px] text-gray-500 mt-2">Wort-Highlight · TikTok-Native</div>
+        </div>
+      </div>
+      <div class="text-[10px] text-gray-500 mt-3">Tipp: Style wird in DaVinci via Subtitle-Inspector gesetzt — SRT ist style-agnostisch.</div>
+    </div>
+
+    <!-- Next-Steps Hint (shown after SRT download) -->
+    <div id="nextHint" class="next-hint hidden">
+      <div class="font-bold mb-2 neon">→ Was als nächstes</div>
+      <div>1. In DaVinci: <code>File → Import → Subtitle</code> → SRT auswählen</div>
+      <div>2. Subtitle-Track auf Timeline ziehen (über Video-Spur)</div>
+      <div>3. Optional: Style anpassen via <code>Inspector</code> (Font, Color, Size, Stroke)</div>
+      <div class="text-xs text-gray-400 mt-2">Pro-Tip: Style oben als Referenz nehmen — "Bold"-Look ist Sebis Default.</div>
+    </div>
   </section>
 
   <!-- Error-State -->
@@ -214,6 +385,15 @@
 
   let currentAudioUrl = null;
   let currentResult = null;
+  let progressTimer = null;
+  let progressElapsedTimer = null;
+  const MAX_SIZE_BYTES = 24 * 1024 * 1024;
+  const PROGRESS_STEPS = [
+    'Audio analysiert...',
+    'Sprache erkannt...',
+    'Untertitel werden gebaut...',
+    'Fast fertig...'
+  ];
 
   // ────────────────────────────────────────
   // HELPERS
@@ -269,8 +449,9 @@
 
   async function handleFile(file) {
     hideError();
-    if (file.size > 24 * 1024 * 1024) {
-      showError(`File zu groß: ${fmtSize(file.size)}. Max 24 MB (KV-Limit). Audio kürzen oder MP3 mit niedrigerer Bitrate exportieren.`);
+    // SYNC size-check vor FileReader (spart RAM + zeigt Fehler sofort)
+    if (file.size > MAX_SIZE_BYTES) {
+      showError(`File zu groß: ${fmtSize(file.size)} (max 24 MB). Tipp: MP3 mit 96kbps reicht für ~30 Min — re-export aus DaVinci/Audacity.`);
       return;
     }
 
@@ -304,15 +485,77 @@
         document.getElementById('uploadStatus').innerHTML = `✅ Hochgeladen: <code class="text-xs">${uploadData.id.slice(0,12)}…</code>`;
         document.getElementById('fileName').textContent = file.name;
         document.getElementById('fileMeta').textContent = `${fmtSize(file.size)} · ${file.type || 'audio'}`;
+
+        // Audio-Preview: lokales blob für instant playback (vermeidet CORS / Latency)
+        const preview = document.getElementById('audioPreview');
+        try {
+          if (preview.dataset.blobUrl) URL.revokeObjectURL(preview.dataset.blobUrl);
+          const blobUrl = URL.createObjectURL(file);
+          preview.src = blobUrl;
+          preview.dataset.blobUrl = blobUrl;
+          preview.style.display = 'block';
+          document.getElementById('previewHint').style.display = 'block';
+        } catch (e) {
+          // Fallback: public URL
+          preview.src = currentAudioUrl;
+          preview.style.display = 'block';
+        }
+
         document.getElementById('transcribeSection').classList.remove('hidden');
         document.getElementById('uploadSection').classList.remove('step-active');
         document.getElementById('transcribeSection').classList.add('step-active');
       } catch (err) {
-        showError(`Upload-Fehler: ${err.message}`);
+        showError(humanizeError(err.message || String(err)));
         document.getElementById('uploadStatus').classList.add('hidden');
       }
     };
     reader.readAsDataURL(file);
+  }
+
+  // ────────────────────────────────────────
+  // ERROR HUMANIZER
+  // ────────────────────────────────────────
+  function humanizeError(raw) {
+    const s = String(raw || '');
+    const up = s.toUpperCase();
+    if (up.includes('REPLICATE')) return 'Whisper-Service kurz down — in 1 Min nochmal probieren.';
+    if (up.includes('MISSING_TOKEN') || up.includes('NO_TOKEN')) return 'Token-Problem (Backend) — sag Sebi.';
+    if (up.includes('413') || up.includes('TOO LARGE')) return 'File zu groß für den Worker — MP3 mit 96kbps re-exportieren.';
+    if (up.includes('NETWORK') || up.includes('FAILED TO FETCH')) return 'Netzwerk-Hänger — WLAN prüfen, nochmal versuchen.';
+    return s.length > 140 ? s.slice(0,140) + '…' : s;
+  }
+
+  // ────────────────────────────────────────
+  // PROGRESS-UX (Whisper Polling-Cycle)
+  // ────────────────────────────────────────
+  function startProgress() {
+    const text = document.getElementById('progressText');
+    const fill = document.getElementById('progressFill');
+    const elapsed = document.getElementById('progressElapsed');
+    let i = 0;
+    let secs = 0;
+    text.textContent = PROGRESS_STEPS[0];
+    fill.style.width = '12%';
+    elapsed.textContent = '0s';
+    progressTimer = setInterval(() => {
+      i = (i + 1) % PROGRESS_STEPS.length;
+      text.textContent = PROGRESS_STEPS[i];
+      // Fake-Progress: asymptotisch gegen 92% (echte Completion setzt 100%)
+      const target = Math.min(92, 12 + (i + 1) * 22);
+      fill.style.width = target + '%';
+    }, 4000);
+    progressElapsedTimer = setInterval(() => {
+      secs += 1;
+      elapsed.textContent = secs + 's';
+    }, 1000);
+  }
+  function stopProgress(complete = false) {
+    if (progressTimer) clearInterval(progressTimer);
+    if (progressElapsedTimer) clearInterval(progressElapsedTimer);
+    progressTimer = progressElapsedTimer = null;
+    if (complete) {
+      document.getElementById('progressFill').style.width = '100%';
+    }
   }
 
   // ────────────────────────────────────────
@@ -323,6 +566,7 @@
     hideError();
     document.getElementById('transcribeSection').classList.add('hidden');
     document.getElementById('loadingSection').classList.remove('hidden');
+    startProgress();
 
     const language = document.getElementById('language').value;
 
@@ -333,19 +577,27 @@
         body: JSON.stringify({ audioUrl: currentAudioUrl, language }),
       });
       const data = await res.json();
-      document.getElementById('loadingSection').classList.add('hidden');
 
       if (!data.ok) {
-        showError(data.error || 'Transkription fehlgeschlagen');
+        stopProgress(false);
+        document.getElementById('loadingSection').classList.add('hidden');
+        showError(humanizeError(data.error || 'Transkription fehlgeschlagen'));
         document.getElementById('transcribeSection').classList.remove('hidden');
         return;
       }
 
-      currentResult = data;
-      renderResult(data);
+      stopProgress(true);
+      // Kurze "Fertig"-Anzeige bevor wir weiterspringen
+      document.getElementById('progressText').textContent = '✅ Fertig!';
+      setTimeout(() => {
+        document.getElementById('loadingSection').classList.add('hidden');
+        currentResult = data;
+        renderResult(data);
+      }, 350);
     } catch (err) {
+      stopProgress(false);
       document.getElementById('loadingSection').classList.add('hidden');
-      showError(`Fehler: ${err.message}`);
+      showError(humanizeError(err.message));
       document.getElementById('transcribeSection').classList.remove('hidden');
     }
   }
@@ -377,7 +629,30 @@
       `;
     }).join('');
 
+    // Caption-Style Previews mit echtem Sample aus Transcript befüllen
+    populateCaptionPreviews(chunks);
+
     showToast(`✅ ${chunks.length} Chunks · ${words} Wörter`);
+  }
+
+  function populateCaptionPreviews(chunks) {
+    // Pick first non-empty chunk with reasonable length
+    let sample = '';
+    for (const c of chunks) {
+      const t = (c.text || '').trim();
+      if (t.length > 6) { sample = t; break; }
+    }
+    if (!sample) return;
+    // Cap auf ~38 Zeichen für mobile-readability
+    const short = sample.length > 38 ? sample.slice(0, 38).replace(/\s\S*$/, '') + '…' : sample;
+    document.getElementById('capMinimal').textContent = short;
+    document.getElementById('capBold').textContent = short.toUpperCase().replace(/…$/, '');
+    // Karaoke: 5 erste Wörter
+    const words = short.replace(/[.,!?…]/g, '').split(/\s+/).filter(Boolean).slice(0, 5);
+    if (words.length) {
+      document.getElementById('capKaraoke').innerHTML = words
+        .map(w => `<span class="word">${escapeHtml(w)}</span>`).join('');
+    }
   }
 
   function escapeHtml(s) {
@@ -401,6 +676,7 @@
     a.click();
     URL.revokeObjectURL(url);
     showToast('📥 SRT downloaded — in DaVinci importieren!');
+    document.getElementById('nextHint').classList.remove('hidden');
   }
 
   function copyText() {
@@ -417,6 +693,16 @@
     document.getElementById('resultSection').classList.add('hidden');
     document.getElementById('uploadSection').classList.add('step-active');
     document.getElementById('transcribeSection').classList.remove('step-active');
+    document.getElementById('nextHint').classList.add('hidden');
+    // Audio-Preview cleanup
+    const preview = document.getElementById('audioPreview');
+    if (preview.dataset.blobUrl) {
+      URL.revokeObjectURL(preview.dataset.blobUrl);
+      delete preview.dataset.blobUrl;
+    }
+    preview.src = '';
+    preview.style.display = 'none';
+    document.getElementById('previewHint').style.display = 'none';
     hideError();
   }
 </script>
