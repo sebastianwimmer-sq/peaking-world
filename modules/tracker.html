@@ -66,15 +66,68 @@
     <p class="text-gray-400">⛰️ PEAKING · <span class="neon font-bold">Always peaking.</span></p>
   </div>
 
-  <!-- PEAKING Auto-Analyzer -->
-  <div class="rounded-3xl p-6 mb-8" style="background: linear-gradient(135deg, rgba(255, 107, 107, 0.12), rgba(255, 212, 59, 0.12)); border: 1px solid rgba(255, 169, 77, 0.3);">
-    <div class="flex items-center gap-3 mb-4">
-      <div class="text-3xl">📸</div>
-      <div>
-        <h2 class="text-2xl font-bold">PEAKING Auto-Analyzer</h2>
-        <p class="text-gray-400 text-sm">Screenshot → KI-Analyse → Tracker-Daten in 60 Sek</p>
+  <!-- 🟢 AUTO-TRACKER LIVE (v1.9.5 — Meta API direkt, kein Screenshot mehr) -->
+  <div class="rounded-3xl p-6 mb-6" style="background: linear-gradient(135deg, rgba(34,197,94,0.10), rgba(255,169,77,0.06)); border: 1px solid rgba(34,197,94,0.30);">
+    <div class="flex items-start gap-3 mb-4 flex-wrap">
+      <div class="text-3xl">🟢</div>
+      <div class="flex-1 min-w-0">
+        <h2 class="text-2xl font-bold">Auto-Tracker <span class="text-xs font-normal text-green-400">· LIVE via Meta API</span></h2>
+        <p class="text-gray-400 text-sm">Reels werden automatisch alle 6h gesynct — Likes + Comments + Captions live. Kein Screenshot mehr nötig.</p>
       </div>
+      <button id="syncNowBtn" onclick="autoTrackerRefresh()" class="rounded-xl px-4 py-2 text-xs font-bold" style="background: linear-gradient(135deg,#FFD43B,#FFA94D,#FF6B6B); color:#0f172a">🔄 Refresh</button>
     </div>
+
+    <!-- Brand-Tabs -->
+    <div class="flex gap-2 mb-4 flex-wrap">
+      <button class="auto-brand-pill active" data-brand="all">Alle</button>
+      <button class="auto-brand-pill" data-brand="peaking">🚀 @peakingworld</button>
+      <button class="auto-brand-pill" data-brand="hulk">🌱 @vegetarianhulk</button>
+      <button class="auto-brand-pill" data-brand="smash">💪 @smashtheapp</button>
+    </div>
+
+    <!-- Sync-Status -->
+    <div class="text-xs text-gray-500 mb-3 flex items-center gap-2 flex-wrap">
+      <span>Letzter Sync: <span id="autoLastSync" class="neon font-bold">…</span></span>
+      <span class="text-gray-700">·</span>
+      <span><span id="autoReelCount">…</span> Reels im Cache</span>
+      <span class="text-gray-700">·</span>
+      <span>Sort:</span>
+      <select id="autoSortBy" class="bg-slate-800 rounded px-2 py-1 text-white text-xs border border-white/10" onchange="autoTrackerRender()">
+        <option value="date">Neueste zuerst</option>
+        <option value="likes">Likes desc</option>
+        <option value="comments">Comments desc</option>
+      </select>
+    </div>
+
+    <!-- Reel-Grid -->
+    <div id="autoTrackerGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+      <div class="col-span-full text-center text-gray-500 py-8 text-sm">⏳ Lade Reels...</div>
+    </div>
+  </div>
+
+  <style>
+    .auto-brand-pill { padding:6px 14px; border-radius:999px; font-size:12px; font-weight:600; border:1px solid rgba(255,255,255,0.15); background:rgba(15,23,42,0.6); color:#cbd5e1; cursor:pointer; transition:all 0.15s; white-space:nowrap; }
+    .auto-brand-pill:hover { border-color: rgba(255,169,77,0.5); }
+    .auto-brand-pill.active { background: linear-gradient(135deg,#FFA94D,#FF6B6B); color:#0f172a; border-color:#FFA94D; font-weight:800; }
+    .auto-reel-card { background:rgba(15,23,42,0.5); border:1px solid rgba(255,255,255,0.08); border-radius:14px; overflow:hidden; transition:all 0.2s; cursor:pointer; }
+    .auto-reel-card:hover { transform: translateY(-2px); border-color: rgba(255,169,77,0.3); box-shadow: 0 14px 24px -14px rgba(255,169,77,0.25); }
+    .auto-reel-thumb { width:100%; aspect-ratio:9/16; object-fit:cover; background:#1e293b; }
+    .auto-reel-pill { display:inline-flex; align-items:center; gap:4px; padding:2px 8px; border-radius:999px; font-size:10px; font-weight:700; }
+    .pill-brand-peaking { background:rgba(255,169,77,0.18); color:#FFA94D; }
+    .pill-brand-hulk { background:rgba(74,222,128,0.18); color:#4ade80; }
+    .pill-brand-smash { background:rgba(34,197,94,0.18); color:#22c55e; }
+  </style>
+
+  <!-- 📸 LEGACY: Screenshot-Workflow (deprecated, nur als Fallback für Pre-Sync-Reels) -->
+  <details class="rounded-3xl p-6 mb-8" style="background: linear-gradient(135deg, rgba(255, 107, 107, 0.06), rgba(255, 212, 59, 0.04)); border: 1px solid rgba(255, 169, 77, 0.15);">
+    <summary class="cursor-pointer flex items-center gap-3 select-none">
+      <div class="text-2xl opacity-70">📸</div>
+      <div class="flex-1">
+        <h2 class="text-lg font-bold opacity-80">Screenshot-Analyzer <span class="text-xs font-normal text-gray-500">· Legacy / Backup</span></h2>
+        <p class="text-gray-500 text-xs">Nur falls Auto-Tracker mal hängt oder für Pre-Phase-B-Reels. Click zum Aufklappen.</p>
+      </div>
+    </summary>
+    <div class="mt-4"></div>
 
     <div class="bg-slate-900/50 rounded-2xl p-5 mb-4">
       <h3 class="font-bold mb-3 flex items-center gap-2">🎯 So funktioniert's:</h3>
@@ -116,7 +169,7 @@
     <div class="mt-4 p-4 bg-orange-900/20 border border-orange-500/30 rounded-2xl text-sm">
       💡 <b>Pro-Tipp:</b> Mach die Screenshots 24-48h nach dem Posten — dann sind die Daten "stabil" und vergleichbar zu deinen vorherigen Reels.
     </div>
-  </div>
+  </details>
 
 
   <!-- Quick Stats -->
@@ -808,6 +861,126 @@ fillPillarSelect();
 loadData().then(() => {
   preloadFirstReel();
 });
+
+// ════════════════════════════════════════════════════════════════
+// 🟢 AUTO-TRACKER LIVE (v1.9.5) — Meta API direkt
+// ════════════════════════════════════════════════════════════════
+const AT_API = 'https://peaking-ai-api.peaking.workers.dev';
+const AT_KEY = 'pk_peaking_2026_sebi_solo_x7k2m9';
+let _autoReels = [];
+let _autoBrandFilter = 'all';
+
+const BRAND_TO_LABEL = { peaking: '🚀', hulk: '🌱', smash: '💪' };
+const IG_TO_BRAND = {
+  '17841417585584501': 'peaking',
+  '17841400047364825': 'hulk',
+  '17841434019480243': 'smash',
+};
+
+function _autoRelativeTime(iso) {
+  if (!iso) return 'noch nie';
+  const min = Math.floor((Date.now() - new Date(iso).getTime()) / 60000);
+  if (min < 1) return 'gerade eben';
+  if (min < 60) return `vor ${min} Min`;
+  const h = Math.floor(min / 60);
+  if (h < 24) return `vor ${h} Std`;
+  return `vor ${Math.floor(h / 24)} Tagen`;
+}
+
+function _autoEscapeHtml(s) {
+  return String(s || '').replace(/[&<>"']/g, m => ({
+    '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;','\'':'&#39;'
+  }[m]));
+}
+
+async function autoTrackerLoad() {
+  try {
+    const r = await fetch(`${AT_API}/insta/reels-list`, {
+      headers: { 'X-Peaking-Key': AT_KEY },
+    });
+    const data = await r.json();
+    _autoReels = data.reels || [];
+    document.getElementById('autoReelCount').textContent = _autoReels.length;
+    document.getElementById('autoLastSync').textContent = _autoRelativeTime(data.lastSync?.syncedAt);
+    autoTrackerRender();
+  } catch (e) {
+    document.getElementById('autoTrackerGrid').innerHTML = `<div class="col-span-full text-center text-red-400 py-6 text-sm">❌ Fehler: ${_autoEscapeHtml(e.message)}</div>`;
+  }
+}
+
+function autoTrackerRender() {
+  let list = [..._autoReels];
+  if (_autoBrandFilter !== 'all') {
+    list = list.filter(r => IG_TO_BRAND[r.igUserId] === _autoBrandFilter);
+  }
+
+  const sort = document.getElementById('autoSortBy').value;
+  if (sort === 'date') list.sort((a,b) => (b.timestamp||'').localeCompare(a.timestamp||''));
+  else if (sort === 'likes') list.sort((a,b) => (b.like_count||0) - (a.like_count||0));
+  else if (sort === 'comments') list.sort((a,b) => (b.comments_count||0) - (a.comments_count||0));
+
+  const grid = document.getElementById('autoTrackerGrid');
+  if (list.length === 0) {
+    grid.innerHTML = '<div class="col-span-full text-center text-gray-500 py-8 text-sm">Keine Reels für aktuellen Filter. Warte aufs nächste Cron-Sync oder klick Refresh.</div>';
+    return;
+  }
+
+  grid.innerHTML = list.map(r => {
+    const brand = IG_TO_BRAND[r.igUserId] || 'peaking';
+    const brandEmoji = BRAND_TO_LABEL[brand] || '📡';
+    const date = (r.timestamp || '').slice(0, 10);
+    const captionShort = (r.caption || '').slice(0, 100) + ((r.caption||'').length > 100 ? '…' : '');
+    const isReel = r.media_product_type === 'REELS';
+    const thumb = r.thumbnail_url || r.media_url;
+    return `
+      <div class="auto-reel-card" onclick="window.open('${_autoEscapeHtml(r.permalink || '#')}', '_blank')">
+        ${thumb ? `<img class="auto-reel-thumb" src="${_autoEscapeHtml(thumb)}" alt="Reel" loading="lazy" onerror="this.style.display='none'">` : ''}
+        <div class="p-3">
+          <div class="flex items-center justify-between gap-2 mb-2">
+            <span class="auto-reel-pill pill-brand-${brand}">${brandEmoji} ${brand}</span>
+            <span class="text-[10px] text-gray-500">${date}</span>
+          </div>
+          <div class="text-xs text-gray-300 mb-3 leading-snug line-clamp-3">${_autoEscapeHtml(captionShort) || '<span class="text-gray-600 italic">— keine Caption —</span>'}</div>
+          <div class="flex items-center gap-3 text-xs">
+            <span class="neon font-bold">❤️ ${(r.like_count||0).toLocaleString('de-DE')}</span>
+            <span class="text-gray-400">💬 ${r.comments_count||0}</span>
+            ${isReel ? '<span class="text-gray-500 text-[10px]">🎬 REEL</span>' : '<span class="text-gray-500 text-[10px]">📷 POST</span>'}
+          </div>
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
+async function autoTrackerRefresh() {
+  const btn = document.getElementById('syncNowBtn');
+  btn.disabled = true;
+  btn.textContent = '⏳ Sync läuft...';
+  try {
+    for (const b of ['peaking','hulk','smash']) {
+      await fetch(`${AT_API}/insta/sync-reels?brand=${b}&limit=25&onlyReels=false`, {
+        method: 'POST',
+        headers: { 'X-Peaking-Key': AT_KEY },
+      });
+    }
+  } catch (e) {}
+  btn.disabled = false;
+  btn.textContent = '🔄 Refresh';
+  await autoTrackerLoad();
+}
+
+// Brand-Tab-Click-Handler
+document.querySelectorAll('.auto-brand-pill').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.auto-brand-pill').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    _autoBrandFilter = btn.dataset.brand;
+    autoTrackerRender();
+  });
+});
+
+// Auto-load on page-ready
+autoTrackerLoad();
 </script>
 
 </body>
