@@ -192,29 +192,55 @@
   // ────────────────────────────────────────────
   // RENDER
   // ────────────────────────────────────────────
+  function fmt(n) {
+    if (n == null) return '—';
+    if (n >= 1000000) return (n / 1000000).toFixed(1) + 'M';
+    if (n >= 1000) return (n / 1000).toFixed(1) + 'K';
+    return String(n);
+  }
+
   function renderBrandCard(b) {
     const meta = BRAND_META[b.name] || { emoji: '📡', color: '#FFA94D' };
     const syncedAt = b.lastSync?.syncedAt;
     const reelCount = b.reelCount || 0;
+    const p = b.profile || {};
+    const followers = p.followers_count;
+    const media = p.media_count;
+    const picUrl = p.profile_picture_url;
+
+    const avatar = picUrl
+      ? `<img src="${picUrl}" class="profile-pic" alt="${b.label}" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"><div class="text-4xl" style="display:none;">${meta.emoji}</div>`
+      : `<div class="text-4xl">${meta.emoji}</div>`;
 
     return `
       <div class="brand-card glass rounded-2xl p-5" data-brand="${b.name}">
         <div class="flex items-center gap-3 mb-4">
-          <div class="text-4xl">${meta.emoji}</div>
+          ${avatar}
           <div class="flex-1 min-w-0">
             <div class="font-bold text-base truncate">${b.label}</div>
             <div class="text-xs text-gray-400">${b.configured ? 'API ✅' : '⚠️ nicht konfiguriert'}</div>
           </div>
         </div>
 
-        <div class="grid grid-cols-2 gap-3 mb-4">
+        <div class="grid grid-cols-2 gap-3 mb-3">
           <div>
-            <div class="stat-num neon">${reelCount}</div>
-            <div class="stat-label">Reels gecacht</div>
+            <div class="stat-num neon">${fmt(followers)}</div>
+            <div class="stat-label">Followers</div>
           </div>
           <div>
-            <div class="stat-num">${b.lastSync?.count ?? '—'}</div>
-            <div class="stat-label">Last-Sync-Count</div>
+            <div class="stat-num">${fmt(media)}</div>
+            <div class="stat-label">Posts gesamt</div>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-2 gap-3 mb-4 pt-3" style="border-top:1px solid rgba(255,255,255,0.08);">
+          <div>
+            <div class="stat-num" style="font-size:16px;">${reelCount}</div>
+            <div class="stat-label">Reels im Cache</div>
+          </div>
+          <div>
+            <div class="stat-num" style="font-size:16px;">${b.lastSync?.totalSynced ?? b.lastSync?.count ?? '—'}</div>
+            <div class="stat-label">Last-Sync (all)</div>
           </div>
         </div>
 

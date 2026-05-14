@@ -368,6 +368,49 @@
 <script>
 SmashApp.requireAuth();
 
+// ============ AUTO-SYNC FROM WORKER (Meta-API → localStorage) ============
+// Pull fresh reels from Cloudflare-KV on login. Throttled: 1× pro 5 Min pro Account.
+(function autoSyncFromWorker() {
+  if (!SmashApp.syncFromWorker) return;
+  const acc = SmashApp.getCurrentAccount();
+  const key = 'smash:sync:lastWorkerPull:' + acc;
+  const last = parseInt(localStorage.getItem(key) || '0', 10);
+  if (Date.now() - last < 5 * 60 * 1000) return; // throttle 5 min
+  SmashApp.syncFromWorker(acc).then(r => {
+    if (r.ok) {
+      localStorage.setItem(key, String(Date.now()));
+      if (r.merged > 0) {
+        console.log(`[Auto-Sync] ${r.merged} neue Reels von Meta-API für ${acc}`);
+      }
+    } else {
+      console.warn('[Auto-Sync]', r.error);
+    }
+  });
+})();
+
+// ============ LIVE FOLLOWERS — pull from Worker-Profile (Meta API) ============
+(async function showLiveFollowers() {
+  if (!SmashApp.getWorkerProfile) return;
+  try {
+    const profile = await SmashApp.getWorkerProfile();
+    if (!profile || profile.followers_count == null) return;
+    const el = document.getElementById('followerCount');
+    if (el) {
+      const fc = profile.followers_count;
+      el.textContent = fc >= 1000 ? (fc / 1000).toFixed(1) + 'K' : String(fc);
+      el.title = `Live von Meta API · ${fc} Follower · ${new Date(profile.fetchedAt).toLocaleString('de-DE')}`;
+      // Add live-dot indicator
+      const parent = el.parentElement;
+      if (parent && !parent.querySelector('.live-dot')) {
+        const dot = document.createElement('span');
+        dot.className = 'live-dot';
+        dot.style.cssText = 'display:inline-block;width:6px;height:6px;border-radius:50%;background:#22c55e;box-shadow:0 0 6px #22c55e;margin-left:4px;vertical-align:middle;';
+        parent.querySelector('.text-gray-400')?.appendChild(dot);
+      }
+    }
+  } catch (e) {}
+})();
+
 // ============ UI PREFS (apply early) ============
 (function applyUIPrefs() {
   function pref(k, def) { try { return JSON.parse(localStorage.getItem('smash:pref:'+k)) ?? def; } catch(e){ return def; } }

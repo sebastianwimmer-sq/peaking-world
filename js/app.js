@@ -5,7 +5,7 @@
 
 // App-Version — bump bei jedem Feature-Push (MINOR) oder Polish (PATCH)
 // Wird automatisch in alle Elemente mit id="appVersion" oder [data-app-version] gesetzt
-window.APP_VERSION = 'v1.7.0';
+window.APP_VERSION = 'v1.7.1';
 
 if (typeof document !== 'undefined') {
   document.addEventListener('DOMContentLoaded', () => {
@@ -487,8 +487,93 @@ const SmashApp = (function() {
     return reels.filter(r => new Date(r.date) >= weekStart).length;
   }
 
+  // ════════════════════════════════════════════
+  // WORKER-SYNC — bridge Cloudflare-KV → localStorage
+  // ════════════════════════════════════════════
+  const PEAKING_API_BASE = 'https://peaking-ai-api.peaking.workers.dev';
+  const PEAKING_API_KEY = 'pk_peaking_2026_sebi_solo_x7k2m9';
+
+  // Map account-key (localStorage) → brand-alias (Worker)
+  const ACCOUNT_TO_BRAND = {
+    vegetarianhulk: 'hulk',
+    peakingworld: 'peaking',
+  };
+
+  // Pull reels from Worker KV → merge into localStorage smash:<account>:reels
+  async function syncFromWorker(accountKey) {
+    accountKey = accountKey || getCurrentAccount();
+    const brand = ACCOUNT_TO_BRAND[accountKey];
+    if (!brand) return { ok: false, error: `Unknown account "${accountKey}"` };
+
+    try {
+      const url = `${PEAKING_API_BASE}/insta/reels-list?brand=${brand}`;
+      const r = await fetch(url, {
+        headers: { 'X-Peaking-Key': PEAKING_API_KEY },
+      });
+      const data = await r.json();
+      if (data.error) return { ok: false, error: data.error };
+
+      const workerReels = data.reels || [];
+      const localReels = getDataForAccount(accountKey, 'reels', []);
+
+      // Merge by permalink: Worker = source-of-truth for items with permalink
+      const byPermalink = new Map();
+      localReels.forEach(r => { if (r.permalink) byPermalink.set(r.permalink, r); });
+
+      let mergedCount = 0;
+      const merged = [...localReels];
+      for (const wr of workerReels) {
+        if (!wr.permalink) continue;
+        if (byPermalink.has(wr.permalink)) continue;
+        merged.push({
+          id: 'ig-' + wr.id,
+          date: wr.timestamp?.slice(0, 10),
+          permalink: wr.permalink,
+          thumbnail: wr.thumbnail_url,
+          mediaUrl: wr.media_url,
+          caption: wr.caption || '',
+          likes: wr.like_count || 0,
+          comments: wr.comments_count || 0,
+          mediaType: wr.media_type,
+          isReel: wr.media_product_type === 'REELS',
+          source: 'meta-api',
+          syncedAt: wr.syncedAt,
+        });
+        mergedCount++;
+      }
+
+      if (mergedCount > 0) setDataForAccount(accountKey, 'reels', merged);
+
+      return {
+        ok: true,
+        merged: mergedCount,
+        totalLocal: merged.length,
+        totalWorker: workerReels.length,
+        lastWorkerSync: data.lastSync?.syncedAt,
+      };
+    } catch (e) {
+      return { ok: false, error: e.message };
+    }
+  }
+
+  async function getWorkerProfile(accountKey) {
+    accountKey = accountKey || getCurrentAccount();
+    const brand = ACCOUNT_TO_BRAND[accountKey];
+    if (!brand) return null;
+    try {
+      const r = await fetch(`${PEAKING_API_BASE}/insta/dashboard`, {
+        headers: { 'X-Peaking-Key': PEAKING_API_KEY },
+      });
+      const data = await r.json();
+      const b = (data.brands || []).find(x => x.name === brand);
+      return b?.profile || null;
+    } catch (e) {
+      return null;
+    }
+  }
+
   // ============ PUBLIC API ============
-  
+
   return {
     // Auth
     login,
@@ -537,7 +622,11 @@ const SmashApp = (function() {
     // Analytics
     getPillarStats,
     getStreak,
-    getThisWeekPostCount
+    getThisWeekPostCount,
+
+    // Worker-Sync (KV ↔ localStorage)
+    syncFromWorker,
+    getWorkerProfile,
   };
 })();
 
