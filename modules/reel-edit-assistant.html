@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self' https:; script-src 'self' 'unsafe-inline' 'unsafe-eval' https:; style-src 'self' 'unsafe-inline' https:; img-src 'self' data: blob: https:; font-src 'self' data: https:; connect-src 'self' https: wss:; media-src 'self' data: blob: https:; upgrade-insecure-requests">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<title>✂️ Reel-Edit-Assistant · PEAKING</title>
+<link rel="icon" href="../assets/logo.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="../assets/logo.svg">
+<link rel="manifest" href="../manifest.json">
+<meta name="theme-color" content="#FFA94D">
+<link rel="stylesheet" href="../assets/effects.css">
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+  body {
+    background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+    min-height: 100dvh;
+    color: white;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Inter, sans-serif;
+  }
+  .glass {
+    background: rgba(30, 41, 59, 0.6);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255,255,255,0.1);
+  }
+  .neon { color: #FFA94D; }
+  .text-sunrise {
+    background: linear-gradient(135deg, #FF6B6B, #FFA94D, #FFD43B);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+  }
+  .btn-primary {
+    background: linear-gradient(135deg, #FFD43B, #FFA94D, #FF6B6B);
+    color: #0f172a;
+    transition: transform 0.12s, box-shadow 0.25s;
+    font-weight: 800;
+  }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 14px 36px rgba(255,169,77,0.5); }
+  .btn-primary:disabled { opacity: 0.5; cursor: not-allowed; transform: none; box-shadow: none; }
+  .btn-ghost {
+    background: rgba(15,23,42,0.7);
+    border: 1px solid rgba(255,255,255,0.15);
+    color: #cbd5e1;
+    transition: all 0.15s;
+  }
+  .btn-ghost:hover { border-color: rgba(255,169,77,0.5); color: #FFA94D; }
+  .drop-zone {
+    border: 2px dashed rgba(255,169,77,0.3);
+    transition: all 0.2s;
+  }
+  .drop-zone.drag-over {
+    border-color: #FFA94D;
+    background: rgba(255,169,77,0.05);
+  }
+  .chunk-row {
+    padding: 8px 12px;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    font-size: 13px;
+    line-height: 1.5;
+  }
+  .chunk-row:hover { background: rgba(255,169,77,0.05); }
+  .timestamp {
+    color: #FFA94D;
+    font-family: 'Menlo', monospace;
+    font-size: 11px;
+    font-weight: 700;
+    white-space: nowrap;
+  }
+  .spin { animation: spin 1s linear infinite; display: inline-block; }
+  @keyframes spin { 100% { transform: rotate(360deg); } }
+  .step-num {
+    width: 28px; height: 28px;
+    border-radius: 50%;
+    background: rgba(255,169,77,0.15);
+    color: #FFA94D;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    font-size: 14px;
+    margin-right: 8px;
+  }
+  .step-active .step-num {
+    background: linear-gradient(135deg, #FFD43B, #FFA94D, #FF6B6B);
+    color: #0f172a;
+  }
+</style>
+</head>
+<body class="px-4 md:px-8 py-6">
+<div class="max-w-4xl mx-auto">
+
+  <!-- Header -->
+  <header class="mb-6">
+    <a href="../dashboard.html" class="text-xs text-gray-400 hover:neon">← Dashboard</a>
+    <h1 class="text-3xl md:text-4xl font-black text-sunrise mt-2">✂️ Reel-Edit-Assistant</h1>
+    <p class="text-sm text-gray-400 mt-1">Audio → Whisper → SRT-Untertitel · 53% Zeitsparung pro Reel</p>
+  </header>
+
+  <!-- How-it-works -->
+  <div class="glass rounded-2xl p-4 mb-6 text-sm">
+    <div class="text-xs uppercase tracking-wider text-gray-500 mb-2">So funktioniert's</div>
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-3 text-xs">
+      <div><span class="step-num">1</span>Audio aus DaVinci/QuickTime exportieren (MP3/M4A)</div>
+      <div><span class="step-num">2</span>Hier hochladen (max 24 MB)</div>
+      <div><span class="step-num">3</span>Auto-Transkription via Whisper-AI</div>
+      <div><span class="step-num">4</span>SRT downloaden → in DaVinci importieren</div>
+    </div>
+  </div>
+
+  <!-- Step 1: Audio-Upload -->
+  <section id="uploadSection" class="step-active mb-6">
+    <h2 class="text-lg font-bold mb-3"><span class="step-num">1</span>Audio hochladen</h2>
+    <div id="dropZone" class="drop-zone glass rounded-2xl p-8 text-center cursor-pointer">
+      <input type="file" id="audioInput" accept="audio/*,video/mp4" class="hidden">
+      <div class="text-5xl mb-3">🎙</div>
+      <div class="font-bold mb-1">Drop Audio-File hier</div>
+      <div class="text-xs text-gray-400">MP3, M4A, WAV, MP4 · max 24 MB · DE/EN-Auto-Detect</div>
+      <button onclick="document.getElementById('audioInput').click()" class="btn-ghost rounded-xl px-4 py-2 text-xs mt-4">
+        oder File auswählen
+      </button>
+    </div>
+    <div id="uploadStatus" class="mt-3 text-sm text-gray-400 hidden"></div>
+  </section>
+
+  <!-- Step 2: Transcribe-Action -->
+  <section id="transcribeSection" class="mb-6 hidden">
+    <h2 class="text-lg font-bold mb-3"><span class="step-num">2</span>Transkription starten</h2>
+    <div class="glass rounded-2xl p-5">
+      <div class="flex items-center gap-3 mb-4">
+        <div class="text-3xl">🎵</div>
+        <div class="flex-1 min-w-0">
+          <div class="font-bold" id="fileName">—</div>
+          <div class="text-xs text-gray-400" id="fileMeta">—</div>
+        </div>
+      </div>
+      <div class="flex gap-2">
+        <label class="text-xs text-gray-400 flex items-center gap-2">
+          Sprache:
+          <select id="language" class="bg-slate-800 rounded px-2 py-1 text-white text-xs border border-white/10">
+            <option value="de">Deutsch</option>
+            <option value="en">English</option>
+            <option value="auto">Auto-Detect</option>
+          </select>
+        </label>
+        <button id="transcribeBtn" onclick="startTranscribe()" class="btn-primary rounded-xl px-5 py-2 text-sm ml-auto">
+          🚀 Transkribieren
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Step 3: Loading-State -->
+  <section id="loadingSection" class="mb-6 hidden text-center py-12">
+    <div class="text-5xl spin mb-4">⏳</div>
+    <div class="text-lg font-bold">Whisper-AI läuft...</div>
+    <div class="text-sm text-gray-400 mt-1">~30 Sek pro Minute Audio</div>
+  </section>
+
+  <!-- Step 4: Result -->
+  <section id="resultSection" class="hidden">
+    <h2 class="text-lg font-bold mb-3"><span class="step-num">3</span>Untertitel & SRT</h2>
+
+    <!-- Stats -->
+    <div class="glass rounded-2xl p-4 mb-4 grid grid-cols-3 gap-3 text-center">
+      <div>
+        <div class="text-2xl font-black neon" id="statChunks">0</div>
+        <div class="text-[10px] uppercase text-gray-500">Chunks</div>
+      </div>
+      <div>
+        <div class="text-2xl font-black neon" id="statWords">0</div>
+        <div class="text-[10px] uppercase text-gray-500">Wörter</div>
+      </div>
+      <div>
+        <div class="text-2xl font-black neon" id="statDuration">0s</div>
+        <div class="text-[10px] uppercase text-gray-500">Dauer</div>
+      </div>
+    </div>
+
+    <!-- Actions -->
+    <div class="flex flex-wrap gap-2 mb-4">
+      <button onclick="downloadSrt()" class="btn-primary rounded-xl px-4 py-2 text-sm">📥 SRT herunterladen</button>
+      <button onclick="copyText()" class="btn-ghost rounded-xl px-4 py-2 text-sm">📋 Transcript kopieren</button>
+      <button onclick="resetAll()" class="btn-ghost rounded-xl px-4 py-2 text-sm">🔄 Neues Audio</button>
+    </div>
+
+    <!-- Transcript Preview -->
+    <div class="glass rounded-2xl overflow-hidden">
+      <div class="px-4 py-3 border-b border-white/5 flex items-center justify-between">
+        <div class="text-xs uppercase tracking-wider text-gray-500">Transcript-Preview</div>
+        <div class="text-[10px] text-gray-500">Klick auf Zeile → kopieren</div>
+      </div>
+      <div id="chunksList" class="max-h-96 overflow-y-auto"></div>
+    </div>
+  </section>
+
+  <!-- Error-State -->
+  <div id="errorBox" class="glass rounded-2xl p-4 mb-4 hidden border border-red-500/40">
+    <div class="text-red-400 text-sm" id="errorMsg"></div>
+  </div>
+
+  <!-- Toast -->
+  <div id="toast" class="fixed bottom-6 left-1/2 -translate-x-1/2 hidden rounded-xl px-5 py-3 text-sm font-bold z-50"></div>
+
+</div>
+
+<script src="../js/app.js"></script>
+<script src="../js/asset-library.js"></script>
+<script>
+  const API_BASE = 'https://peaking-ai-api.peaking.workers.dev';
+  const API_KEY = 'pk_peaking_2026_sebi_solo_x7k2m9';
+
+  let currentAudioUrl = null;
+  let currentResult = null;
+
+  // ────────────────────────────────────────
+  // HELPERS
+  // ────────────────────────────────────────
+  function showToast(msg, isError = false) {
+    const el = document.getElementById('toast');
+    el.textContent = msg;
+    el.classList.remove('hidden');
+    el.style.background = isError ? 'rgba(220,38,38,0.9)' : 'rgba(34,197,94,0.9)';
+    el.style.color = '#fff';
+    setTimeout(() => el.classList.add('hidden'), 3000);
+  }
+
+  function showError(msg) {
+    document.getElementById('errorMsg').textContent = msg;
+    document.getElementById('errorBox').classList.remove('hidden');
+  }
+
+  function hideError() {
+    document.getElementById('errorBox').classList.add('hidden');
+  }
+
+  function fmtTime(sec) {
+    if (sec == null) return '0:00';
+    const m = Math.floor(sec / 60);
+    const s = Math.floor(sec % 60);
+    return `${m}:${String(s).padStart(2,'0')}`;
+  }
+
+  function fmtSize(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / (1024*1024)).toFixed(1) + ' MB';
+  }
+
+  // ────────────────────────────────────────
+  // STEP 1: UPLOAD
+  // ────────────────────────────────────────
+  const dropZone = document.getElementById('dropZone');
+  const audioInput = document.getElementById('audioInput');
+
+  dropZone.addEventListener('click', () => audioInput.click());
+  dropZone.addEventListener('dragover', e => { e.preventDefault(); dropZone.classList.add('drag-over'); });
+  dropZone.addEventListener('dragleave', () => dropZone.classList.remove('drag-over'));
+  dropZone.addEventListener('drop', e => {
+    e.preventDefault();
+    dropZone.classList.remove('drag-over');
+    if (e.dataTransfer.files[0]) handleFile(e.dataTransfer.files[0]);
+  });
+  audioInput.addEventListener('change', e => {
+    if (e.target.files[0]) handleFile(e.target.files[0]);
+  });
+
+  async function handleFile(file) {
+    hideError();
+    if (file.size > 24 * 1024 * 1024) {
+      showError(`File zu groß: ${fmtSize(file.size)}. Max 24 MB (KV-Limit). Audio kürzen oder MP3 mit niedrigerer Bitrate exportieren.`);
+      return;
+    }
+
+    document.getElementById('uploadStatus').classList.remove('hidden');
+    document.getElementById('uploadStatus').innerHTML = '⏳ Hochladen...';
+
+    // Convert to base64 data-URL
+    const reader = new FileReader();
+    reader.onload = async (e) => {
+      const dataUrl = e.target.result;
+
+      try {
+        // Upload to asset-library (KV-backed)
+        const uploadRes = await fetch(`${API_BASE}/assets/upload`, {
+          method: 'POST',
+          headers: { 'X-Peaking-Key': API_KEY, 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            dataUrl,
+            brand: 'audio',
+            tag: 'reel-edit',
+            filename: file.name,
+          }),
+        });
+        const uploadData = await uploadRes.json();
+        if (!uploadData.ok && !uploadData.id) {
+          throw new Error(uploadData.error || 'Upload fehlgeschlagen');
+        }
+
+        currentAudioUrl = `${API_BASE}/assets/${uploadData.id}`;
+
+        document.getElementById('uploadStatus').innerHTML = `✅ Hochgeladen: <code class="text-xs">${uploadData.id.slice(0,12)}…</code>`;
+        document.getElementById('fileName').textContent = file.name;
+        document.getElementById('fileMeta').textContent = `${fmtSize(file.size)} · ${file.type || 'audio'}`;
+        document.getElementById('transcribeSection').classList.remove('hidden');
+        document.getElementById('uploadSection').classList.remove('step-active');
+        document.getElementById('transcribeSection').classList.add('step-active');
+      } catch (err) {
+        showError(`Upload-Fehler: ${err.message}`);
+        document.getElementById('uploadStatus').classList.add('hidden');
+      }
+    };
+    reader.readAsDataURL(file);
+  }
+
+  // ────────────────────────────────────────
+  // STEP 2: TRANSCRIBE
+  // ────────────────────────────────────────
+  async function startTranscribe() {
+    if (!currentAudioUrl) return;
+    hideError();
+    document.getElementById('transcribeSection').classList.add('hidden');
+    document.getElementById('loadingSection').classList.remove('hidden');
+
+    const language = document.getElementById('language').value;
+
+    try {
+      const res = await fetch(`${API_BASE}/whisper/transcribe`, {
+        method: 'POST',
+        headers: { 'X-Peaking-Key': API_KEY, 'Content-Type': 'application/json' },
+        body: JSON.stringify({ audioUrl: currentAudioUrl, language }),
+      });
+      const data = await res.json();
+      document.getElementById('loadingSection').classList.add('hidden');
+
+      if (!data.ok) {
+        showError(data.error || 'Transkription fehlgeschlagen');
+        document.getElementById('transcribeSection').classList.remove('hidden');
+        return;
+      }
+
+      currentResult = data;
+      renderResult(data);
+    } catch (err) {
+      document.getElementById('loadingSection').classList.add('hidden');
+      showError(`Fehler: ${err.message}`);
+      document.getElementById('transcribeSection').classList.remove('hidden');
+    }
+  }
+
+  // ────────────────────────────────────────
+  // STEP 3: RESULT
+  // ────────────────────────────────────────
+  function renderResult(data) {
+    document.getElementById('resultSection').classList.remove('hidden');
+
+    const chunks = data.chunks || [];
+    const words = (data.text || '').split(/\s+/).filter(Boolean).length;
+    const lastEnd = chunks.length > 0 ? (chunks[chunks.length - 1].timestamp?.[1] || 0) : 0;
+
+    document.getElementById('statChunks').textContent = chunks.length;
+    document.getElementById('statWords').textContent = words;
+    document.getElementById('statDuration').textContent = fmtTime(lastEnd);
+
+    const list = document.getElementById('chunksList');
+    list.innerHTML = chunks.map(c => {
+      const start = fmtTime(c.timestamp?.[0]);
+      const end = fmtTime(c.timestamp?.[1]);
+      const text = (c.text || '').trim();
+      return `
+        <div class="chunk-row flex gap-3 items-start cursor-pointer" onclick="copyChunk(this)">
+          <span class="timestamp">${start}-${end}</span>
+          <span class="flex-1">${escapeHtml(text)}</span>
+        </div>
+      `;
+    }).join('');
+
+    showToast(`✅ ${chunks.length} Chunks · ${words} Wörter`);
+  }
+
+  function escapeHtml(s) {
+    return String(s).replace(/[&<>"']/g, m => ({
+      '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;','\'':'&#39;'
+    }[m]));
+  }
+
+  function copyChunk(el) {
+    navigator.clipboard.writeText(el.textContent.trim());
+    showToast('📋 Chunk kopiert');
+  }
+
+  function downloadSrt() {
+    if (!currentResult?.srt) return;
+    const blob = new Blob([currentResult.srt], { type: 'application/x-subrip' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `${(document.getElementById('fileName').textContent || 'reel').replace(/\.[^.]+$/,'')}.srt`;
+    a.click();
+    URL.revokeObjectURL(url);
+    showToast('📥 SRT downloaded — in DaVinci importieren!');
+  }
+
+  function copyText() {
+    navigator.clipboard.writeText(currentResult?.text || '');
+    showToast('📋 Voller Transcript kopiert');
+  }
+
+  function resetAll() {
+    currentAudioUrl = null;
+    currentResult = null;
+    audioInput.value = '';
+    document.getElementById('uploadStatus').classList.add('hidden');
+    document.getElementById('transcribeSection').classList.add('hidden');
+    document.getElementById('resultSection').classList.add('hidden');
+    document.getElementById('uploadSection').classList.add('step-active');
+    document.getElementById('transcribeSection').classList.remove('step-active');
+    hideError();
+  }
+</script>
+</body>
+</html>
