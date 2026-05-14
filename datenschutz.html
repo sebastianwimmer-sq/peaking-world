@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self' https:; script-src 'self' 'unsafe-inline' 'unsafe-eval' https:; style-src 'self' 'unsafe-inline' https:; img-src 'self' data: blob: https:; font-src 'self' data: https:; connect-src 'self' https: wss:; upgrade-insecure-requests">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Datenschutzerklärung — peaking.world</title>
+<meta name="description" content="Datenschutzerklärung gemäß DSGVO.">
+<link rel="icon" href="assets/logo.svg" type="image/svg+xml">
+<meta name="theme-color" content="#FFA94D">
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+  body {
+    background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+    color: #e2e8f0;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Inter, sans-serif;
+    min-height: 100dvh;
+    line-height: 1.65;
+  }
+  .text-sunrise {
+    background: linear-gradient(135deg, #FF6B6B, #FFA94D, #FFD43B);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  h2 { margin-top: 30px; margin-bottom: 10px; font-weight: 800; font-size: 18px; color: #FFA94D; }
+  h3 { margin-top: 18px; margin-bottom: 6px; font-weight: 700; font-size: 14px; color: #cbd5e1; }
+  p { margin-bottom: 12px; color: #cbd5e1; font-size: 14px; }
+  ul { margin-bottom: 12px; padding-left: 22px; font-size: 14px; color: #cbd5e1; }
+  li { margin-bottom: 6px; }
+  a { color: #FFA94D; text-decoration: underline; }
+  a:hover { color: #FFD43B; }
+  .topbar { padding: 14px 0; border-bottom: 1px solid rgba(255,255,255,0.08); margin-bottom: 24px; display: flex; align-items: center; justify-content: space-between; }
+  .brand { font-weight: 900; letter-spacing: 0.5px; color: #FFA94D; text-decoration: none; }
+  table { width:100%; font-size: 13px; margin-bottom: 14px; border-collapse: collapse; }
+  th, td { padding: 8px; text-align: left; border-bottom: 1px solid rgba(255,255,255,0.06); vertical-align: top; }
+  th { color: #FFA94D; font-weight: 700; }
+</style>
+</head>
+<body class="px-6 md:px-10 py-6">
+<main class="max-w-3xl mx-auto">
+  <header class="topbar">
+    <a href="/" class="brand">⛰ PEAKING</a>
+    <div class="text-xs text-gray-500 uppercase tracking-wider">Datenschutz</div>
+  </header>
+
+  <h1 class="text-4xl font-black text-sunrise mb-6">Datenschutzerklärung</h1>
+
+  <h2>1. Datenschutz auf einen Blick</h2>
+  <h3>Allgemeine Hinweise</h3>
+  <p>
+    Diese Hinweise geben einen einfachen Überblick darüber, was mit deinen personenbezogenen Daten passiert, wenn du PEAKING (peaking.world) nutzt. Personenbezogene Daten sind alle Daten, mit denen du persönlich identifiziert werden kannst.
+  </p>
+
+  <h3>Verantwortliche Stelle</h3>
+  <p>
+    Verantwortlich für die Datenverarbeitung ist Sebastian Wimmer. Kontaktdaten siehe <a href="impressum.html">Impressum</a>.
+  </p>
+
+  <h2>2. Welche Daten verarbeitet PEAKING</h2>
+
+  <h3>2a. Login-Daten</h3>
+  <p>
+    PEAKING ist passwortgeschützt. Das Passwort wird ausschließlich als SHA-256-Hash im Browser verifiziert (kein Server-Speicher). Eine 24h-Session wird in localStorage gespeichert.
+  </p>
+  <p>
+    <strong>Rechtsgrundlage:</strong> Art. 6 Abs. 1 lit. f DSGVO (berechtigtes Interesse — Schutz vor unbefugtem Zugriff)
+  </p>
+
+  <h3>2b. Instagram-Daten via Meta Graph API</h3>
+  <p>
+    Wenn du deine Instagram-Accounts mit PEAKING verbindest, ruft PEAKING folgende Daten via Meta Graph API ab:
+  </p>
+  <ul>
+    <li>Profile-Daten (Name, Profilbild, Follower-Anzahl, Media-Anzahl)</li>
+    <li>Deine eigenen Reels/Posts (Caption, Thumbnail, Likes, Comments, Permalink, Timestamp)</li>
+    <li>Bei zugelassener Meta-App-Review: Insights (Reach, Plays, Saves, Shares)</li>
+  </ul>
+  <p>
+    Diese Daten werden in Cloudflare KV (EU-Region) gespeichert für maximal 30 Tage. Du behältst die volle Kontrolle und kannst Verbindungen jederzeit über das Meta-Dashboard widerrufen.
+  </p>
+  <p>
+    <strong>Rechtsgrundlage:</strong> Art. 6 Abs. 1 lit. a DSGVO (Einwilligung via Meta OAuth-Flow)
+  </p>
+
+  <h3>2c. User-generierte Inhalte (Asset-Library, Inbox, Brain)</h3>
+  <p>
+    PEAKING speichert Inhalte, die du selbst einträgst (Ideen, Notizen, Bilder, Audio-Files):
+  </p>
+  <ul>
+    <li>Idea-Inbox-Items: in Cloudflare KV gespeichert (verschlüsselt at rest)</li>
+    <li>Asset-Library: Bilder als base64 in Cloudflare KV</li>
+    <li>Reel-Edit-Audio: temporär bis Transkription abgeschlossen</li>
+  </ul>
+  <p>
+    Speicherdauer: bis zur Löschung durch den User oder maximal 90 Tage Inaktivität.
+  </p>
+
+  <h2>3. Auftragsverarbeiter (Sub-Processors)</h2>
+  <table>
+    <thead>
+      <tr><th>Dienst</th><th>Zweck</th><th>Standort</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Cloudflare Workers + KV</td><td>Hosting, API, Storage</td><td>EU-Region (DE)</td></tr>
+      <tr><td>GitHub Pages</td><td>Static-Hosting</td><td>USA (SCC)</td></tr>
+      <tr><td>Plausible Analytics</td><td>Anonyme Nutzungsstatistik</td><td>EU (DE)</td></tr>
+      <tr><td>Anthropic (Claude API)</td><td>KI-Text-Generierung</td><td>USA (SCC)</td></tr>
+      <tr><td>Replicate (Flux, Recraft, Whisper)</td><td>KI-Bild/Audio</td><td>USA (SCC)</td></tr>
+      <tr><td>Meta (Graph API)</td><td>Instagram-Daten</td><td>USA (SCC)</td></tr>
+    </tbody>
+  </table>
+  <p>
+    Für Drittstaaten-Transfers in die USA werden EU-Standardvertragsklauseln (Standard Contractual Clauses, Module 2) als Garantien gemäß Art. 46 DSGVO verwendet.
+  </p>
+
+  <h2>4. KI-gestützte Verarbeitung (EU AI-Act, ab 02/2026)</h2>
+  <p>
+    PEAKING ist ein KI-gestütztes Tool im Sinne des EU AI-Acts (Limited-Risk-Kategorie). Generierte Inhalte (Bilder, Texte, Untertitel) werden klar als KI-generiert gekennzeichnet. Der User entscheidet selbst, ob er sie veröffentlicht. Transparenzpflichten nach Art. 50 AI-Act werden eingehalten.
+  </p>
+
+  <h2>5. Deine Rechte</h2>
+  <p>
+    Du hast jederzeit das Recht auf:
+  </p>
+  <ul>
+    <li>Auskunft über deine gespeicherten Daten (Art. 15 DSGVO)</li>
+    <li>Berichtigung unrichtiger Daten (Art. 16 DSGVO)</li>
+    <li>Löschung deiner Daten (Art. 17 DSGVO) — kontaktiere <a href="mailto:info@peaking.world">info@peaking.world</a></li>
+    <li>Einschränkung der Verarbeitung (Art. 18 DSGVO)</li>
+    <li>Datenübertragbarkeit (Art. 20 DSGVO)</li>
+    <li>Widerspruch gegen Verarbeitung (Art. 21 DSGVO)</li>
+    <li>Beschwerde bei einer Aufsichtsbehörde (Art. 77 DSGVO)</li>
+  </ul>
+
+  <h2>6. Cookies + Lokale Speicherung</h2>
+  <p>
+    PEAKING verwendet keine Tracking-Cookies. Es werden nur technisch notwendige Daten im Browser-localStorage gespeichert (Login-Session, Account-Auswahl, Cache der angeforderten Daten).
+  </p>
+  <p>
+    Plausible Analytics (auf welcome.html + login.html) verwendet keine Cookies, keine Cross-Site-Tracking. Server-Region: EU.
+  </p>
+
+  <h2>7. Datensicherheit (TOM)</h2>
+  <p>
+    PEAKING setzt folgende technische und organisatorische Maßnahmen ein:
+  </p>
+  <ul>
+    <li>HTTPS-Only (Strict-Transport-Security aktiv)</li>
+    <li>Content-Security-Policy (CSP) gegen XSS</li>
+    <li>Auth via X-Peaking-Key zwischen Frontend und Worker</li>
+    <li>Cloudflare WAF + DDoS-Schutz</li>
+    <li>KV-Storage verschlüsselt at rest (Cloudflare-Standard)</li>
+    <li>Daily-Budget-Cap auf externe API-Calls (Schutz vor Kosten-Explosion)</li>
+  </ul>
+
+  <h2>8. Änderungen dieser Datenschutzerklärung</h2>
+  <p>
+    Diese Datenschutzerklärung kann angepasst werden, um aktuellen rechtlichen Anforderungen zu entsprechen. Die aktuelle Version ist immer auf peaking.world/datenschutz.html verfügbar.
+  </p>
+  <p>
+    Stand: 2026-05-15
+  </p>
+
+  <div class="mt-10 mb-6 text-xs text-gray-500 border-t border-white/5 pt-4">
+    <a href="impressum.html" class="mr-3">Impressum</a> ·
+    <a href="agb.html" class="mx-3">AGB</a> ·
+    <a href="/" class="ml-3">← Zurück</a>
+  </div>
+</main>
+</body>
+</html>
