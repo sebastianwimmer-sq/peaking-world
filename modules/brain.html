@@ -208,11 +208,14 @@
     <div class="text-center text-gray-500 col-span-2 py-12"><span class="spin">⏳</span> Lade Brain-Index...</div>
   </div>
 
-  <!-- Modal for memo detail -->
-  <div id="memoModal" class="fixed inset-0 z-50 hidden bg-black/70 backdrop-blur-sm flex items-end md:items-center justify-center p-4">
-    <div class="glass rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto p-6 relative">
-      <button onclick="closeModal()" class="absolute top-3 right-3 text-gray-400 hover:text-white text-2xl">×</button>
-      <div id="modalContent"></div>
+  <!-- Drawer for memo detail (slide-in from right) -->
+  <div id="memoDrawer" class="fixed inset-0 z-50 hidden bg-black/70 backdrop-blur-sm transition-opacity">
+    <div id="memoDrawerInner" class="absolute right-0 top-0 h-full w-full md:w-[640px] bg-slate-900/95 backdrop-blur-xl border-l border-white/10 overflow-y-auto p-6 transform translate-x-full transition-transform duration-300">
+      <div class="flex items-center justify-between mb-4">
+        <span class="text-xs text-gray-500">PEAKING Brain</span>
+        <button onclick="closeDrawer()" class="text-gray-400 hover:text-white text-2xl leading-none">×</button>
+      </div>
+      <div id="drawerContent"></div>
     </div>
   </div>
 
@@ -282,29 +285,71 @@
   function openMemo(slug) {
     const m = allMemos.find(x => x.slug === slug);
     if (!m) return;
-    document.getElementById('modalContent').innerHTML = `
-      <div class="mb-3"><span class="badge badge-${m.status}">${m.status}</span> <span class="badge badge-${m.type}">${m.type}</span></div>
-      <h2 class="text-xl font-black text-sunrise mb-2">${escapeHtml(m.name || m.slug)}</h2>
-      <div class="text-sm text-gray-300 mb-4 leading-relaxed">${escapeHtml(m.description || '')}</div>
-      <div class="mb-4">${brandTags(m.brands)}</div>
-      <div class="grid grid-cols-2 gap-3 text-xs mb-4">
-        <div><span class="text-gray-500">Filename:</span><br><code class="text-[10px]">${m.filename}</code></div>
-        <div><span class="text-gray-500">Last modified:</span><br>${m.modified}</div>
-        <div><span class="text-gray-500">Size:</span><br>${(m.size/1024).toFixed(1)} KB</div>
-        <div><span class="text-gray-500">Slug:</span><br><code class="text-[10px]">${m.slug}</code></div>
+
+    // Find related memos: same brand + nearest type
+    const related = allMemos
+      .filter(x => x.slug !== m.slug)
+      .filter(x => x.brands.some(b => m.brands.includes(b)))
+      .filter(x => x.type === m.type || x.status === m.status)
+      .slice(0, 5);
+
+    document.getElementById('drawerContent').innerHTML = `
+      <div class="mb-3 flex flex-wrap gap-2 items-center">
+        <span class="badge badge-${m.status}">${m.status}</span>
+        <span class="badge badge-${m.type}">${m.type}</span>
+        ${brandTags(m.brands)}
       </div>
-      <div class="text-xs text-gray-400 mt-4 border-t border-white/10 pt-3">
-        Memo-File liegt in <code class="text-[10px]">~/.claude/projects/-Users-sebastianwimmer/memory/</code>. In nächster Claude-Session: <code class="text-[10px]">Read ${m.filename}</code>
+      <h2 class="text-2xl font-black text-sunrise mb-3 leading-tight">${escapeHtml(m.name || m.slug)}</h2>
+      <div class="text-sm text-gray-200 mb-5 leading-relaxed whitespace-pre-line">${escapeHtml(m.description || '')}</div>
+
+      <div class="grid grid-cols-2 gap-3 text-xs mb-5 glass rounded-xl p-3">
+        <div><span class="text-gray-500">Last modified:</span><br><span class="neon font-bold">${m.modified}</span></div>
+        <div><span class="text-gray-500">Size:</span><br>${(m.size/1024).toFixed(1)} KB</div>
+        <div class="col-span-2"><span class="text-gray-500">File:</span><br><code class="text-[10px] text-gray-300 break-all">${m.filename}</code></div>
+      </div>
+
+      ${related.length ? `
+        <div class="mb-4">
+          <div class="text-xs uppercase tracking-wider text-gray-500 mb-2">🔗 Verwandte Memos (${related.length})</div>
+          <div class="space-y-2">
+            ${related.map(r => `
+              <a href="#" onclick="event.preventDefault(); openMemo('${r.slug}')" class="block glass rounded-xl p-3 hover:border-orange-300/40 transition cursor-pointer" style="border:1px solid rgba(255,255,255,0.05)">
+                <div class="flex items-center gap-2 mb-1">
+                  <span class="badge badge-${r.status}" style="font-size:9px">${r.status}</span>
+                  <span class="text-xs font-bold flex-1">${escapeHtml(r.name || r.slug)}</span>
+                </div>
+                <div class="text-[10px] text-gray-400 line-clamp-2">${escapeHtml((r.description||'').slice(0,140))}</div>
+              </a>
+            `).join('')}
+          </div>
+        </div>
+      ` : ''}
+
+      <div class="text-xs text-gray-400 mt-6 border-t border-white/10 pt-3">
+        Memo liegt lokal in <code class="text-[10px]">~/.claude/projects/...memory/</code>. <br>
+        Nächste Claude-Session: <code class="text-[10px] text-gray-300">Read ${m.filename}</code> oder einfach Topic erwähnen.
       </div>
     `;
-    document.getElementById('memoModal').classList.remove('hidden');
+
+    const drawer = document.getElementById('memoDrawer');
+    drawer.classList.remove('hidden');
+    setTimeout(() => {
+      document.getElementById('memoDrawerInner').classList.remove('translate-x-full');
+    }, 10);
   }
 
-  function closeModal() {
-    document.getElementById('memoModal').classList.add('hidden');
+  function closeDrawer() {
+    document.getElementById('memoDrawerInner').classList.add('translate-x-full');
+    setTimeout(() => {
+      document.getElementById('memoDrawer').classList.add('hidden');
+    }, 300);
   }
-  document.getElementById('memoModal').addEventListener('click', e => {
-    if (e.target.id === 'memoModal') closeModal();
+  document.getElementById('memoDrawer').addEventListener('click', e => {
+    if (e.target.id === 'memoDrawer') closeDrawer();
+  });
+  // ESC closes drawer
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape' && !document.getElementById('memoDrawer').classList.contains('hidden')) closeDrawer();
   });
 
   // Event Listeners
