@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
+  <title>PEAKING — Always peaking. (Mix-A2 Mark, 64×64)</title>
+  <defs>
+    <radialGradient id="sunDisk" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#FFE066" stop-opacity="0.95"></stop>
+      <stop offset="40%" stop-color="#FFD43B" stop-opacity="0.8"></stop>
+      <stop offset="70%" stop-color="#FFA94D" stop-opacity="0.5"></stop>
+      <stop offset="92%" stop-color="#FF6B6B" stop-opacity="0.2"></stop>
+      <stop offset="100%" stop-color="transparent"></stop>
+    </radialGradient>
+    <linearGradient id="pyrLight" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FF8E5A"></stop>
+      <stop offset="100%" stop-color="#C73E3E"></stop>
+    </linearGradient>
+    <linearGradient id="pyrDark" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#5C1F1F"></stop>
+      <stop offset="100%" stop-color="#2A0E0E"></stop>
+    </linearGradient>
+    <filter id="pyrGlow" x="-15%" y="-15%" width="130%" height="130%">
+      <feGaussianBlur stdDeviation="0.4" result="b"></feGaussianBlur>
+      <feMerge><feMergeNode in="b"></feMergeNode><feMergeNode in="SourceGraphic"></feMergeNode></feMerge>
+    </filter>
+  </defs>
+  
+  <circle cx="32" cy="34" r="26" fill="url(#sunDisk)"></circle>
+  
+  <g filter="url(#pyrGlow)">
+    <path d="M 32 8 L 56 56 L 32 56 Z" fill="url(#pyrDark)"></path>
+    <path d="M 32 8 L 8 56 L 32 56 Z" fill="url(#pyrLight)"></path>
+    <line x1="32" y1="8" x2="32" y2="56" stroke="#FFD43B" stroke-width="0.6" stroke-opacity="0.85" stroke-linecap="round"></line>
+  </g>
+</svg>

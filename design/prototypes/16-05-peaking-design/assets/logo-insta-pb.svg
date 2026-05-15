@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 320" fill="none">
+  <title>PEAKING Logo Insta-PB — 320×320 mit Solid-BG für Profile-Crop</title>
+  <defs>
+    
+    <radialGradient id="bgGradient" cx="50%" cy="50%" r="65%">
+      <stop offset="0%" stop-color="#1e1b4b"></stop>
+      <stop offset="60%" stop-color="#0f172a"></stop>
+      <stop offset="100%" stop-color="#000"></stop>
+    </radialGradient>
+    
+    <radialGradient id="sunRayD" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#FFE066" stop-opacity="1"></stop>
+      <stop offset="35%" stop-color="#FFD43B" stop-opacity="0.95"></stop>
+      <stop offset="65%" stop-color="#FFA94D" stop-opacity="0.7"></stop>
+      <stop offset="90%" stop-color="#FF6B6B" stop-opacity="0.3"></stop>
+      <stop offset="100%" stop-color="transparent"></stop>
+    </radialGradient>
+    
+    <linearGradient id="pyrLightI" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FF8E5A"></stop>
+      <stop offset="100%" stop-color="#C73E3E"></stop>
+    </linearGradient>
+    <linearGradient id="pyrDarkI" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#5C1F1F"></stop>
+      <stop offset="100%" stop-color="#1A0808"></stop>
+    </linearGradient>
+    
+    <filter id="pyrGlowI" x="-15%" y="-15%" width="130%" height="130%">
+      <feGaussianBlur stdDeviation="2" result="b"></feGaussianBlur>
+      <feMerge><feMergeNode in="b"></feMergeNode><feMergeNode in="SourceGraphic"></feMergeNode></feMerge>
+    </filter>
+  </defs>
+
+  
+  <rect width="320" height="320" fill="url(#bgGradient)"></rect>
+
+  
+  <circle cx="160" cy="160" r="125" fill="url(#sunRayD)"></circle>
+
+  
+  <g filter="url(#pyrGlowI)">
+    
+    <path d="M 160 60 L 240 260 L 160 260 Z" fill="url(#pyrDarkI)"></path>
+    
+    <path d="M 160 60 L 80 260 L 160 260 Z" fill="url(#pyrLightI)"></path>
+    
+    <line x1="160" y1="60" x2="160" y2="260" stroke="#FFD43B" stroke-width="2.5" stroke-opacity="0.9" stroke-linecap="round"></line>
+    
+    <circle cx="160" cy="60" r="3" fill="#FFE066" opacity="0.95"></circle>
+  </g>
+</svg>
