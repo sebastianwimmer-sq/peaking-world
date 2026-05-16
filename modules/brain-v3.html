@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self' https:; script-src 'self' 'unsafe-inline' 'unsafe-eval' https:; style-src 'self' 'unsafe-inline' https:; img-src 'self' data: blob: https:; font-src 'self' data: https:; connect-src 'self' https: wss:; upgrade-insecure-requests">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1,viewport-fit=cover">
+<title>🧠 Brain V3 · PEAKING</title>
+<meta name="theme-color" content="#0e1518">
+<link rel="icon" href="../assets/logo.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="../assets/logo.svg">
+<link rel="manifest" href="../manifest.json">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@1,500;1,600&family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  html, body {
+    margin: 0; padding: 0;
+    min-height: 100dvh;
+    background: #0e1518;
+    color: #fff;
+    font-family: 'Inter', -apple-system, system-ui, sans-serif;
+    overflow: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+  * { box-sizing: border-box; }
+  ::-webkit-scrollbar { width: 8px; height: 8px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.08); border-radius: 99px; }
+  ::-webkit-scrollbar-thumb:hover { background: rgba(255,169,77,0.3); }
+
+  #root { width: 100%; height: 100dvh; }
+  .bv3-loading {
+    position: fixed; inset: 0;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Playfair Display', Georgia, serif;
+    font-style: italic; font-size: 18px;
+    color: rgba(255, 169, 77, 0.6);
+  }
+
+  /* iOS safe-area */
+  body { padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left); }
+</style>
+</head>
+<body>
+
+<div id="root">
+  <div class="bv3-loading">⛰️ &nbsp;Brain wird geladen …</div>
+</div>
+
+<!-- Auth gate — re-uses PEAKING SmashApp -->
+<script src="../js/app.js"></script>
+<script>
+  // Block direct access if not logged in
+  if (typeof SmashApp !== 'undefined' && !SmashApp.isAuthenticated()) {
+    window.location.replace('../index.html?next=' + encodeURIComponent(location.pathname));
+  }
+</script>
+
+<!-- React + Babel CDN -->
+<script src="https://unpkg.com/react@18.3.1/umd/react.production.min.js" crossorigin></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.production.min.js" crossorigin></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" crossorigin></script>
+
+<!-- Brain V3 modules (order matters: data → atoms → chrome → items → app) -->
+<script type="text/babel" src="brain-v3/brain-v3-data.jsx"></script>
+<script type="text/babel" src="brain-v3/brain-v3-atoms.jsx"></script>
+<script type="text/babel" src="brain-v3/brain-v3-chrome.jsx"></script>
+<script type="text/babel" src="brain-v3/brain-v3-items.jsx"></script>
+<script type="text/babel" src="brain-v3/brain-v3-app.jsx"></script>
+
+</body>
+</html>
