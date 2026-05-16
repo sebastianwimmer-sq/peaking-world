@@ -1,0 +1,1423 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>peaking · brain · KW 20 recap</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Playfair+Display:ital,wght@1,500;1,600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+
+<style>
+/* ─────────────────────────────────────────────────────
+   PEAKING · Brain V3 · Sunday Recap
+─────────────────────────────────────────────────────── */
+:root {
+  --bg-0: #07090c;
+  --bg-1: #0a0f12;
+  --bg-2: #121820;
+  --surface: rgba(255,255,255,0.035);
+  --surface-hi: rgba(255,255,255,0.06);
+  --line: rgba(255,255,255,0.07);
+  --line-hi: rgba(255, 169, 77, 0.20);
+  --text: #f5ecdf;
+  --text-2: rgba(245, 236, 223, 0.62);
+  --text-3: rgba(245, 236, 223, 0.34);
+
+  --sun-1: #ff6b6b;
+  --sun-2: #ffa94d;
+  --sun-3: #ffd43b;
+  --sunrise: linear-gradient(135deg, #ff6b6b 0%, #ffa94d 55%, #ffd43b 100%);
+
+  --good: #5ddc8a;
+  --bad: #f87171;
+
+  --pad: 20px;
+}
+
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+html { background: var(--bg-0); }
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  font-feature-settings: 'ss01', 'cv11';
+  color: var(--text);
+  background:
+    radial-gradient(120% 70% at 50% -10%, rgba(255, 169, 77, 0.18), transparent 60%),
+    radial-gradient(80% 40% at 50% 8%, rgba(255, 107, 107, 0.10), transparent 65%),
+    linear-gradient(180deg, var(--bg-1) 0%, var(--bg-0) 60%);
+  background-attachment: fixed;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer; padding: 0; }
+input { font: inherit; color: inherit; background: none; border: 0; padding: 0; outline: none; }
+::selection { background: rgba(255, 169, 77, 0.4); color: #1a0f0a; }
+
+/* ─── ambient ─── */
+.amb {
+  position: fixed; inset: 0; pointer-events: none; z-index: 0;
+  overflow: hidden;
+}
+.amb__horizon {
+  position: absolute; left: 50%; top: -20vh;
+  transform: translateX(-50%);
+  width: 110vw; height: 65vh; max-width: 1400px;
+  border-radius: 50%;
+  background: radial-gradient(closest-side, rgba(255, 212, 59, 0.16), rgba(255, 107, 107, 0.05) 55%, transparent 75%);
+  filter: blur(40px);
+}
+.amb__grain {
+  position: absolute; inset: 0;
+  background-image:
+    radial-gradient(rgba(255,255,255,0.012) 1px, transparent 1px),
+    radial-gradient(rgba(255,170,77,0.020) 1px, transparent 1px);
+  background-size: 3px 3px, 7px 7px;
+  background-position: 0 0, 1px 1px;
+  mix-blend-mode: screen;
+  opacity: 0.7;
+}
+
+.page {
+  position: relative; z-index: 1;
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 28px var(--pad) 80px;
+}
+
+/* ─── nav ─── */
+.nav {
+  display: flex; align-items: center; justify-content: space-between;
+  padding-bottom: 24px;
+  position: sticky; top: 0; z-index: 30;
+  background: linear-gradient(180deg, var(--bg-0) 0%, var(--bg-0) 60%, rgba(7,9,12,0));
+  padding-top: calc(8px + env(safe-area-inset-top, 0px));
+}
+.brand {
+  display: inline-flex; align-items: center; gap: 10px;
+  font-weight: 800; letter-spacing: 1.4px; font-size: 12px;
+}
+.brand__dot {
+  width: 9px; height: 9px; border-radius: 50%;
+  background: var(--sunrise);
+  box-shadow: 0 0 12px rgba(255, 169, 77, 0.7);
+}
+.brand__path { color: var(--text-2); font-weight: 600; }
+
+.nav__back {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: 12px; color: var(--text-2);
+  padding: 6px 10px; border-radius: 999px;
+  border: 1px solid var(--line);
+  background: var(--surface);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+
+/* ─── hero ─── */
+.hero {
+  padding: 28px 4px 28px;
+  text-align: left;
+}
+.hero__eyebrow {
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+  font-size: 15px;
+  color: var(--sun-2);
+  margin-bottom: 14px;
+  letter-spacing: 0.4px;
+}
+.hero__title {
+  margin: 0;
+  font-size: clamp(44px, 11vw, 88px);
+  font-weight: 800;
+  line-height: 0.95;
+  letter-spacing: -3px;
+  text-wrap: balance;
+}
+.hero__title-grad {
+  background: var(--sunrise);
+  -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+  font-style: italic;
+}
+.hero__meta {
+  margin-top: 22px;
+  display: flex; align-items: center; gap: 14px;
+  flex-wrap: wrap;
+  font-size: 13px; color: var(--text-2);
+}
+.hero__meta-mono {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.5px;
+  color: var(--text);
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+}
+.hero__sub {
+  margin: 16px 0 0;
+  font-size: 15px; line-height: 1.55;
+  color: var(--text-2);
+  max-width: 520px;
+  text-wrap: pretty;
+}
+
+/* ─── scroll-snap sections (mobile only) ─── */
+@media (max-width: 720px) {
+  .snap {
+    scroll-snap-align: start;
+    scroll-margin-top: 8px;
+  }
+  .page {
+    scroll-snap-type: y proximity;
+  }
+}
+
+/* ─── section label ─── */
+.sect {
+  margin-top: 56px;
+  margin-bottom: 18px;
+  display: flex; align-items: baseline; justify-content: space-between;
+  gap: 14px; flex-wrap: wrap;
+}
+.sect__num {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px; letter-spacing: 1.5px;
+  color: var(--sun-2); font-weight: 500;
+  margin-bottom: 6px; text-transform: uppercase;
+}
+.sect__title {
+  margin: 0;
+  font-size: 28px; font-weight: 800; letter-spacing: -0.9px;
+  line-height: 1.05;
+  text-wrap: balance;
+}
+.sect__sub {
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+  font-size: 14px; color: var(--text-2);
+  max-width: 280px; text-align: right;
+}
+@media (max-width: 540px) {
+  .sect__sub { text-align: left; max-width: 100%; }
+}
+
+/* ─── hero stats ─── */
+.hstats {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+  margin-top: 6px;
+}
+@media (min-width: 540px) { .hstats { grid-template-columns: repeat(3, 1fr); gap: 14px; } }
+
+.hstat {
+  --reveal: 0;
+  position: relative;
+  padding: 22px 22px 20px;
+  border-radius: 22px;
+  background:
+    radial-gradient(140% 80% at 100% 0%, rgba(255, 169, 77, 0.10), transparent 60%),
+    linear-gradient(180deg, rgba(255,255,255,0.045), rgba(255,255,255,0.012)),
+    rgba(255, 255, 255, 0.025);
+  border: 1px solid rgba(255, 169, 77, 0.14);
+  backdrop-filter: blur(28px) saturate(170%);
+  -webkit-backdrop-filter: blur(28px) saturate(170%);
+  overflow: hidden;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.07),
+    0 18px 40px -20px rgba(0,0,0,0.55);
+  opacity: var(--reveal);
+  transform: translateY(calc((1 - var(--reveal)) * 18px));
+  transition: opacity .55s ease, transform .55s cubic-bezier(.2,.85,.25,1.1);
+}
+.hstat::before {
+  content: ""; position: absolute; inset: 0; pointer-events: none;
+  border-radius: inherit;
+  background: linear-gradient(180deg, rgba(255,255,255,0.10), transparent 30%);
+  opacity: 0.7;
+}
+.hstat__label {
+  font-size: 11px; letter-spacing: 1.3px; text-transform: uppercase;
+  color: var(--text-2); font-weight: 600;
+}
+.hstat__val {
+  margin-top: 14px;
+  font-size: 48px; font-weight: 800; letter-spacing: -2px;
+  line-height: 1;
+}
+.hstat__val--grad {
+  background: var(--sunrise);
+  -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+}
+.hstat__val--alt { font-size: 30px; letter-spacing: -0.8px; }
+.hstat__val--alt .hstat__val-tag {
+  display: block;
+  font-size: 12px; font-weight: 600; letter-spacing: 0.4px;
+  color: var(--text-2); margin-top: 6px;
+  font-family: 'JetBrains Mono', monospace;
+}
+.hstat__foot {
+  margin-top: 14px;
+  display: flex; align-items: center; justify-content: space-between;
+  font-size: 11px; color: var(--text-2);
+}
+.hstat__chip {
+  display: inline-flex; align-items: center; gap: 4px;
+  padding: 3px 8px; border-radius: 999px;
+  font-size: 10.5px; font-weight: 700;
+}
+.hstat__chip--up   { color: var(--good); background: rgba(93,220,138,0.10); border: 1px solid rgba(93,220,138,0.24); }
+.hstat__chip--down { color: var(--bad);  background: rgba(248,113,113,0.10); border: 1px solid rgba(248,113,113,0.24); }
+.hstat__chip--neu  { color: var(--text); background: rgba(255,255,255,0.04); border: 1px solid var(--line); }
+
+.hstat__spark { display: block; width: 90px; height: 24px; }
+
+/* ─── reels lists ─── */
+.reels {
+  display: flex; flex-direction: column;
+  gap: 12px;
+}
+.reel {
+  --reveal: 0;
+  position: relative;
+  display: grid;
+  grid-template-columns: 80px 1fr auto;
+  gap: 16px;
+  padding: 14px;
+  border-radius: 18px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  backdrop-filter: blur(20px) saturate(160%);
+  -webkit-backdrop-filter: blur(20px) saturate(160%);
+  align-items: center;
+  opacity: var(--reveal);
+  transform: translateY(calc((1 - var(--reveal)) * 14px));
+  transition: opacity .5s ease, transform .5s cubic-bezier(.2,.85,.25,1.1), border-color .25s ease;
+}
+.reel:hover { border-color: rgba(255, 169, 77, 0.30); }
+
+.reel--dim {
+  opacity: calc(var(--reveal) * 0.72);
+  background: rgba(255,255,255,0.015);
+  border-color: rgba(255,255,255,0.04);
+  filter: saturate(0.6);
+}
+.reel--dim:hover { filter: saturate(1); opacity: var(--reveal); }
+
+.reel__rank {
+  position: absolute; top: -8px; left: -8px;
+  width: 28px; height: 28px; border-radius: 50%;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px; font-weight: 700;
+  display: grid; place-items: center;
+  background: var(--sunrise); color: #1a0f0a;
+  box-shadow: 0 6px 14px -4px rgba(255, 107, 107, 0.5);
+}
+.reel--dim .reel__rank {
+  background: rgba(248, 113, 113, 0.18);
+  color: var(--bad);
+  border: 1px solid rgba(248, 113, 113, 0.3);
+  box-shadow: none;
+}
+
+.reel__thumb {
+  width: 80px; aspect-ratio: 9 / 16;
+  border-radius: 10px;
+  background-size: cover; background-position: center;
+  position: relative;
+  flex-shrink: 0;
+}
+.reel__thumb::after {
+  content: ""; position: absolute; inset: 0; border-radius: inherit;
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,0.06);
+}
+
+.reel__body { min-width: 0; }
+.reel__cap {
+  font-size: 13.5px; font-weight: 600; line-height: 1.4;
+  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-wrap: pretty;
+  margin-bottom: 8px;
+}
+.reel__meta {
+  display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+  font-size: 11px; color: var(--text-2);
+}
+.tag {
+  display: inline-flex; align-items: center;
+  padding: 2px 8px;
+  border-radius: 6px;
+  font-size: 10px; font-weight: 700; letter-spacing: 0.4px;
+  text-transform: uppercase;
+}
+.tag--food  { background: rgba(255, 122, 61, 0.14); color: #ffb077; border: 1px solid rgba(255, 122, 61, 0.30); }
+.tag--lift  { background: rgba(93, 220, 138, 0.10); color: #88e8a8; border: 1px solid rgba(93, 220, 138, 0.22); }
+.tag--build { background: rgba(120, 180, 255, 0.10); color: #92c0ff; border: 1px solid rgba(120, 180, 255, 0.22); }
+.tag--howto { background: rgba(220, 150, 255, 0.10); color: #d4a8ff; border: 1px solid rgba(220, 150, 255, 0.22); }
+.tag--story { background: rgba(255, 200, 100, 0.10); color: #f0c878; border: 1px solid rgba(255, 200, 100, 0.22); }
+
+.reel__num {
+  text-align: right;
+  flex-shrink: 0;
+}
+.reel__num-big {
+  font-size: 22px; font-weight: 800; letter-spacing: -0.6px;
+  line-height: 1;
+}
+.reel__num-big--grad {
+  background: var(--sunrise);
+  -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+}
+.reel__num-big--bad {
+  background: linear-gradient(135deg, #f87171, #fda4a4);
+  -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+}
+.reel__num-lab {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9.5px; letter-spacing: 0.6px;
+  color: var(--text-3); text-transform: uppercase;
+  margin-top: 4px;
+}
+
+@media (max-width: 480px) {
+  .reel { grid-template-columns: 72px 1fr; gap: 12px; padding: 12px; }
+  .reel__num { grid-column: 1 / -1; display: flex; justify-content: space-between; align-items: baseline; padding-top: 6px; border-top: 1px dashed var(--line); }
+  .reel__num-lab { margin-top: 0; }
+}
+
+/* ─── AI summary ─── */
+.ai {
+  --reveal: 0;
+  position: relative;
+  padding: 28px 26px;
+  border-radius: 24px;
+  background:
+    radial-gradient(80% 80% at 0% 0%, rgba(255, 107, 107, 0.10), transparent 55%),
+    radial-gradient(60% 80% at 100% 100%, rgba(255, 212, 59, 0.07), transparent 55%),
+    linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.01));
+  border: 1px solid rgba(255, 169, 77, 0.22);
+  backdrop-filter: blur(28px) saturate(170%);
+  -webkit-backdrop-filter: blur(28px) saturate(170%);
+  overflow: hidden;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.07), 0 24px 60px -30px rgba(255, 107, 107, 0.20);
+  opacity: var(--reveal);
+  transform: translateY(calc((1 - var(--reveal)) * 16px));
+  transition: opacity .55s ease, transform .55s cubic-bezier(.2,.85,.25,1.1);
+}
+.ai__head {
+  display: flex; align-items: center; gap: 10px;
+  margin-bottom: 16px;
+}
+.ai__icon {
+  width: 32px; height: 32px; border-radius: 10px;
+  background: var(--sunrise);
+  display: grid; place-items: center;
+  font-size: 14px;
+  color: #1a0f0a; font-weight: 800;
+  box-shadow: 0 8px 16px -6px rgba(255, 107, 107, 0.5);
+}
+.ai__title {
+  font-size: 13px; font-weight: 700; letter-spacing: 0.4px;
+  text-transform: uppercase;
+  color: var(--text);
+}
+.ai__title-sub {
+  display: block;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px; font-weight: 500;
+  color: var(--text-3); letter-spacing: 0.6px;
+  text-transform: none;
+  margin-top: 2px;
+}
+.ai__body {
+  font-size: 18px;
+  line-height: 1.55;
+  color: var(--text);
+  letter-spacing: -0.2px;
+  text-wrap: pretty;
+  min-height: 4em; /* prevent jump while typing */
+}
+@media (min-width: 720px) { .ai__body { font-size: 20px; } }
+.ai__pillar-up {
+  background: var(--sunrise);
+  -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+  font-weight: 800;
+}
+.ai__pillar-down {
+  color: var(--bad);
+  font-weight: 700;
+}
+.ai__caret {
+  display: inline-block;
+  width: 8px; height: 1.1em;
+  background: var(--sun-2);
+  vertical-align: -3px;
+  margin-left: 2px;
+  animation: blink 1s steps(2, end) infinite;
+  border-radius: 1px;
+}
+@keyframes blink { 50% { opacity: 0; } }
+.ai__caret.is-done { animation: none; opacity: 0; }
+.ai__foot {
+  margin-top: 18px;
+  padding-top: 16px;
+  border-top: 1px dashed var(--line);
+  display: flex; gap: 12px; align-items: center; flex-wrap: wrap;
+  font-size: 11px; color: var(--text-3);
+  font-family: 'JetBrains Mono', monospace;
+}
+
+/* ─── plan ─── */
+.plan {
+  --reveal: 0;
+  padding: 22px;
+  border-radius: 22px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  backdrop-filter: blur(24px) saturate(160%);
+  -webkit-backdrop-filter: blur(24px) saturate(160%);
+  opacity: var(--reveal);
+  transform: translateY(calc((1 - var(--reveal)) * 16px));
+  transition: opacity .55s ease, transform .55s cubic-bezier(.2,.85,.25,1.1);
+}
+.plan__list {
+  display: flex; flex-direction: column; gap: 10px;
+}
+.plan__row {
+  display: grid;
+  grid-template-columns: 36px 1fr auto;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 14px;
+  border-radius: 14px;
+  background: rgba(255,255,255,0.025);
+  border: 1px solid var(--line);
+  transition: border-color .2s ease, background .2s ease;
+}
+.plan__row:focus-within {
+  border-color: rgba(255, 169, 77, 0.4);
+  background: rgba(255, 169, 77, 0.04);
+}
+.plan__n {
+  width: 36px; height: 36px; border-radius: 12px;
+  background: rgba(255, 169, 77, 0.10);
+  border: 1px solid rgba(255, 169, 77, 0.28);
+  display: grid; place-items: center;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px; font-weight: 700; color: var(--sun-2);
+}
+.plan__input {
+  width: 100%;
+  font-size: 14.5px;
+  font-weight: 500;
+  color: var(--text);
+  line-height: 1.4;
+}
+.plan__input::placeholder { color: var(--text-3); font-weight: 400; }
+.plan__src {
+  font-size: 10px; font-family: 'JetBrains Mono', monospace;
+  color: var(--text-3);
+  white-space: nowrap;
+  padding: 3px 7px; border-radius: 6px;
+  background: rgba(255,255,255,0.025);
+  border: 1px solid var(--line);
+}
+.plan__foot {
+  margin-top: 16px;
+  padding-top: 14px;
+  border-top: 1px dashed var(--line);
+  display: flex; gap: 10px; align-items: center; justify-content: space-between;
+  flex-wrap: wrap;
+  font-size: 11px; color: var(--text-3);
+}
+.plan__save {
+  padding: 8px 14px;
+  border-radius: 10px;
+  background: var(--surface-hi);
+  border: 1px solid var(--line);
+  color: var(--text);
+  font-size: 12px; font-weight: 600;
+}
+.plan__save.is-saved {
+  background: rgba(93, 220, 138, 0.10);
+  border-color: rgba(93, 220, 138, 0.28);
+  color: var(--good);
+}
+
+/* ─── share bar ─── */
+.share {
+  position: sticky; bottom: 16px;
+  margin-top: 56px;
+  padding: 0 4px;
+  z-index: 10;
+}
+.share__inner {
+  display: flex; align-items: center; gap: 12px;
+  padding: 12px 12px 12px 18px;
+  border-radius: 22px;
+  background: rgba(12, 16, 22, 0.7);
+  border: 1px solid rgba(255, 169, 77, 0.20);
+  backdrop-filter: blur(24px) saturate(170%);
+  -webkit-backdrop-filter: blur(24px) saturate(170%);
+  box-shadow: 0 20px 50px -20px rgba(0,0,0,0.65), inset 0 1px 0 rgba(255,255,255,0.06);
+}
+.share__copy {
+  flex: 1; min-width: 0;
+  font-size: 12px; color: var(--text-2); line-height: 1.4;
+}
+.share__copy b { color: var(--text); font-weight: 700; }
+.share__btn {
+  padding: 12px 18px;
+  border-radius: 14px;
+  font-size: 13px; font-weight: 700;
+  color: #1a0f0a;
+  background: var(--sunrise);
+  box-shadow: 0 10px 24px -8px rgba(255, 107, 107, 0.55);
+  display: inline-flex; align-items: center; gap: 8px;
+  transition: transform .15s ease, box-shadow .15s ease;
+  white-space: nowrap;
+}
+.share__btn:hover { transform: translateY(-1px); }
+.share__btn:active { transform: scale(0.96); }
+.share__btn.is-busy { pointer-events: none; opacity: 0.7; }
+
+/* ─── foot quote ─── */
+.foot-quote {
+  margin-top: 48px;
+  text-align: center;
+  padding: 28px 12px;
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+  font-size: 20px;
+  color: var(--text-2);
+  text-wrap: balance;
+}
+.foot-quote b {
+  background: var(--sunrise);
+  -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+  font-style: italic; font-weight: 700;
+}
+.foot-mono {
+  display: block;
+  margin-top: 10px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  color: var(--text-3);
+  letter-spacing: 0.6px;
+}
+
+/* tooltip after PNG download */
+.toast {
+  position: fixed;
+  bottom: 92px; left: 50%; transform: translate(-50%, 20px);
+  padding: 10px 16px;
+  border-radius: 12px;
+  background: rgba(20, 12, 8, 0.9);
+  border: 1px solid rgba(93, 220, 138, 0.3);
+  color: var(--good);
+  font-size: 12px; font-weight: 600;
+  z-index: 100;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .25s ease, transform .25s ease;
+  backdrop-filter: blur(20px);
+}
+.toast.is-show { opacity: 1; transform: translate(-50%, 0); }
+
+/* offscreen canvas */
+.render-canvas { position: fixed; left: -99999px; top: 0; }
+</style>
+</head>
+<body>
+
+<div class="amb" aria-hidden="true">
+  <div class="amb__horizon"></div>
+  <div class="amb__grain"></div>
+</div>
+
+<main class="page">
+
+  <!-- NAV -->
+  <nav class="nav">
+    <a class="brand" href="#">
+      <span class="brand__dot"></span>
+      <span>PEAKING</span>
+      <span class="brand__path">/ brain</span>
+    </a>
+    <a class="nav__back" href="#">← Dashboard</a>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero snap" aria-labelledby="h-title">
+    <div class="hero__eyebrow">Sunday-Recap · 17. Mai 2026 · 21:00</div>
+    <h1 class="hero__title" id="h-title">
+      Deine <span class="hero__title-grad">Woche</span>.
+      <br />
+      KW 20.
+    </h1>
+    <p class="hero__sub">
+      Vier Tage gepostet, zwei Patterns identifiziert, ein Pillar driftet. Hier ist was die Daten sagen — und was du nächste Woche probieren solltest.
+    </p>
+    <div class="hero__meta">
+      <span class="hero__meta-mono">11.–17. Mai</span>
+      <span>·</span>
+      <span>4 / 7 Tage aktiv</span>
+      <span>·</span>
+      <span>924K Plays</span>
+    </div>
+  </section>
+
+  <!-- HERO STATS -->
+  <section class="hstats snap" aria-label="Wochen-Hero-Stats">
+    <article class="hstat" data-reveal>
+      <div class="hstat__label">Reels gepostet</div>
+      <div class="hstat__val"><span class="hstat__val--grad" data-count="4">0</span></div>
+      <div class="hstat__foot">
+        <span class="hstat__chip hstat__chip--down">↓ 2 vs. KW 19</span>
+        <svg class="hstat__spark" viewBox="0 0 90 24" preserveAspectRatio="none" aria-hidden="true">
+          <defs>
+            <linearGradient id="sp1" x1="0" x2="1"><stop offset="0%" stop-color="#ff6b6b"/><stop offset="100%" stop-color="#ffd43b"/></linearGradient>
+          </defs>
+          <path d="M0,8 L15,4 L30,6 L45,3 L60,8 L75,14 L90,12" fill="none" stroke="url(#sp1)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+          <circle cx="90" cy="12" r="2.4" fill="#ffd43b"/>
+        </svg>
+      </div>
+    </article>
+
+    <article class="hstat" data-reveal>
+      <div class="hstat__label">Avg-Engagement</div>
+      <div class="hstat__val"><span class="hstat__val--grad" data-count="12.4" data-fmt="pct">0%</span></div>
+      <div class="hstat__foot">
+        <span class="hstat__chip hstat__chip--up">↑ 2.1pp</span>
+        <span>⌀ Branche 5.2%</span>
+      </div>
+    </article>
+
+    <article class="hstat" data-reveal>
+      <div class="hstat__label">Top-Hook</div>
+      <div class="hstat__val hstat__val--alt">
+        <span class="hstat__val--grad">POV-Reveal</span>
+        <span class="hstat__val-tag">2.4× lift · n=8 reels</span>
+      </div>
+      <div class="hstat__foot">
+        <span class="hstat__chip hstat__chip--up">★ neuer #1</span>
+        <span>aus 6 Patterns destilliert</span>
+      </div>
+    </article>
+  </section>
+
+  <!-- WHAT WORKED -->
+  <section class="snap" aria-label="Was hat gefunkt">
+    <div class="sect">
+      <div>
+        <div class="sect__num">02 · GEFUNKT</div>
+        <h2 class="sect__title">Was hat <em style="font-style:italic;background:var(--sunrise);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;">gefunkt</em></h2>
+      </div>
+      <div class="sect__sub">Top-3 nach Engagement-Lift gegen deine Baseline.</div>
+    </div>
+
+    <div class="reels" id="reels-up">
+      <!-- injected -->
+    </div>
+  </section>
+
+  <!-- WHAT DIDN'T -->
+  <section class="snap" aria-label="Was nicht">
+    <div class="sect">
+      <div>
+        <div class="sect__num">03 · NICHT GEZÜNDET</div>
+        <h2 class="sect__title">Was <em style="color:#f87171;font-style:italic;">nicht</em></h2>
+      </div>
+      <div class="sect__sub">Drei Reels, drei Hypothesen — nicht Strafe, nur Daten.</div>
+    </div>
+
+    <div class="reels" id="reels-down">
+      <!-- injected -->
+    </div>
+  </section>
+
+  <!-- AI SUMMARY -->
+  <section class="snap" aria-label="AI-Zusammenfassung">
+    <div class="sect">
+      <div>
+        <div class="sect__num">04 · AI-COACH</div>
+        <h2 class="sect__title">Das Muster.</h2>
+      </div>
+      <div class="sect__sub">Aus 42 Reels über 6 Wochen, p&lt;0.05.</div>
+    </div>
+
+    <article class="ai" data-reveal id="ai-card">
+      <div class="ai__head">
+        <div class="ai__icon">✦</div>
+        <div>
+          <div class="ai__title">Coach-Read · KW 20</div>
+          <span class="ai__title-sub">model: brain-v3 · sample n=42 · 7:58 UTC</span>
+        </div>
+      </div>
+      <div class="ai__body" id="ai-body">
+        <!-- typed in -->
+      </div>
+      <div class="ai__foot">
+        <span>evidence_ids: r03, r07, r08, r10 · build_hypothesis_id: H-22</span>
+      </div>
+    </article>
+  </section>
+
+  <!-- PLAN -->
+  <section class="snap" aria-label="Plan KW 21">
+    <div class="sect">
+      <div>
+        <div class="sect__num">05 · INTENT</div>
+        <h2 class="sect__title">Plan für <span class="hero__title-grad" style="font-size:inherit;">KW 21</span></h2>
+      </div>
+      <div class="sect__sub">Drei Zeilen. Was du Montag um 8 Uhr lesen wirst.</div>
+    </div>
+
+    <article class="plan" data-reveal>
+      <div class="plan__list">
+        <div class="plan__row">
+          <div class="plan__n">01</div>
+          <input class="plan__input" placeholder="z.B. Zwei POV-Reveal-Reels für Smash"
+                 value="Zwei POV-Reveal-Reels für Smash — Mi 19:48 + Fr 21:10" />
+          <span class="plan__src">↑ aus Top-Hook</span>
+        </div>
+        <div class="plan__row">
+          <div class="plan__n">02</div>
+          <input class="plan__input" placeholder="z.B. Studio-Build-Reel mit Visual-Payoff bei s4"
+                 value="Studio-Build-Reel mit Visual-Payoff bei s4, nicht s9" />
+          <span class="plan__src">↑ aus Hypothese</span>
+        </div>
+        <div class="plan__row">
+          <div class="plan__n">03</div>
+          <input class="plan__input" placeholder="z.B. Hulk Mobility-Series weiterfahren"
+                 value="Hulk Mobility-Series weiterfahren — eine pro Woche" />
+          <span class="plan__src">↑ aus Save-Pattern</span>
+        </div>
+      </div>
+      <div class="plan__foot">
+        <span>Wird Mo 8:00 als Brief geliefert · auto-versioned</span>
+        <button class="plan__save" id="plan-save">Speichern</button>
+      </div>
+    </article>
+  </section>
+
+  <!-- FOOT QUOTE -->
+  <div class="foot-quote">
+    „The climb <b>is</b> the peak."
+    <span class="foot-mono">— Always peaking. · brain_v3.0.1</span>
+  </div>
+
+  <!-- SHARE BAR -->
+  <div class="share">
+    <div class="share__inner">
+      <div class="share__copy">
+        <b>Share Recap</b> · 1080 × 1920 PNG · perfekt für Stories.
+      </div>
+      <button class="share__btn" id="share-btn">
+        <span>↗</span>
+        <span>Share Recap</span>
+      </button>
+    </div>
+  </div>
+
+</main>
+
+<div class="toast" id="toast">✓ recap_KW20.png exportiert</div>
+<canvas class="render-canvas" id="render-canvas" width="1080" height="1920"></canvas>
+
+<script>
+/* ─────────────────────────────────────────────────────
+   DATA
+─────────────────────────────────────────────────────── */
+const UP = [
+  { id: 'r-up-1', cap: 'POV: dein Friday-Night-Smash-Burger ist fertig. Doppelt patty, single regret.',
+    brand: 'Smash', tag: 'food', tagLabel: 'Food',
+    metric: '+92%', sub: 'vs. ⌀', plays: '412K', eng: '18.9%', hue: 22 },
+  { id: 'r-up-2', cap: 'How-To: vom Brief zur Reel-Edit in 90 Sekunden. Mein Setup, mein Cut, meine 3 Fails.',
+    brand: 'Peaking', tag: 'howto', tagLabel: 'How-To',
+    metric: '+58%', sub: 'vs. ⌀', plays: '169K', eng: '16.1%', hue: 280 },
+  { id: 'r-up-3', cap: 'Coach-Reaction zum World-Record-Lift. Diese drei Sekunden waren teurer als Marketing.',
+    brand: 'Hulk', tag: 'lift', tagLabel: 'Lift',
+    metric: '+34%', sub: 'vs. ⌀', plays: '218K', eng: '14.2%', hue: 142 },
+];
+
+const DOWN = [
+  { id: 'r-dn-1', cap: 'Studio-Build-Out Day 14. Drywall ist drin, Akustik-Panels kommen Montag.',
+    brand: 'Peaking', tag: 'build', tagLabel: 'Build',
+    metric: '−32%', sub: 'vs. Erwartung', plays: '55K', eng: '9.4%', hue: 220 },
+  { id: 'r-dn-2', cap: 'Hinter den Kulissen vom letzten Shoot. Drei Tage, ein Generator-Fail, zwei gute Takes.',
+    brand: 'Peaking', tag: 'story', tagLabel: 'Story',
+    metric: '−21%', sub: 'vs. ⌀', plays: '64K', eng: '8.9%', hue: 38 },
+  { id: 'r-dn-3', cap: 'Powerlifting drop day. 220kg auf der Stange — und der Sound war weg.',
+    brand: 'Hulk', tag: 'lift', tagLabel: 'Lift',
+    metric: '−14%', sub: 'Audio-Fail', plays: '92K', eng: '8.7%', hue: 162 },
+];
+
+const AI_SCRIPT = [
+  { t: 'Du climbst stark in ', kind: 'plain' },
+  { t: 'POV-Food', kind: 'up' },
+  { t: ' (3.1× lift, n=8). Save-Rate ist 3.7× über deiner Baseline — Friday-Slot trägt, halten.', kind: 'plain' },
+  { t: ' Aber ', kind: 'plain' },
+  { t: 'Studio-Build', kind: 'down' },
+  { t: ' verliert: Completion fällt bei s4 auf 8% (Baseline 18%), Visual-Payoff sitzt bei 0:09 und das ist zu spät.', kind: 'plain' },
+  { t: ' Versuch nächste Woche: ', kind: 'plain' },
+  { t: 'einen Build-Reel mit dem fertigen Raum als Hook', kind: 'up' },
+  { t: ' und schneide rückwärts. Same Pattern wie POV-Food — Produkt zuerst, Prozess danach.', kind: 'plain' },
+];
+
+/* ─────────────────────────────────────────────────────
+   SVG THUMB PLACEHOLDER (data URI, hue-tinted)
+─────────────────────────────────────────────────────── */
+function thumbStyle(hue) {
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 360" preserveAspectRatio="none">
+    <defs>
+      <linearGradient id="bg" x1="0" x2="0" y1="0" y2="1">
+        <stop offset="0%" stop-color="oklch(0.32 0.12 ${hue})"/>
+        <stop offset="55%" stop-color="oklch(0.20 0.08 ${hue + 10})"/>
+        <stop offset="100%" stop-color="oklch(0.10 0.04 ${hue - 20})"/>
+      </linearGradient>
+      <radialGradient id="sun" cx="0.5" cy="0.30" r="0.28">
+        <stop offset="0%" stop-color="#ffe9c8"/>
+        <stop offset="55%" stop-color="#ffaa3d"/>
+        <stop offset="100%" stop-color="#ff7a3d" stop-opacity="0.5"/>
+      </radialGradient>
+    </defs>
+    <rect width="200" height="360" fill="url(#bg)"/>
+    <circle cx="100" cy="100" r="34" fill="url(#sun)"/>
+    <path d="M0,360 L0,260 L36,220 L72,250 L110,200 L150,235 L188,210 L200,222 L200,360 Z"
+      fill="oklch(0.08 0.03 ${hue})" opacity="0.85"/>
+    <path d="M0,360 L0,295 L40,275 L78,290 L115,265 L150,285 L186,272 L200,278 L200,360 Z"
+      fill="oklch(0.05 0.02 ${hue})"/>
+  </svg>`.replace(/\s+/g, ' ');
+  return `background-image: url("data:image/svg+xml;utf8,${encodeURIComponent(svg)}")`;
+}
+
+/* ─────────────────────────────────────────────────────
+   RENDER REEL LISTS
+─────────────────────────────────────────────────────── */
+function reelHTML(r, rank, dim) {
+  return `
+    <article class="reel ${dim ? 'reel--dim' : ''}" data-reveal>
+      <div class="reel__rank">${rank}</div>
+      <div class="reel__thumb" style="${thumbStyle(r.hue)}"></div>
+      <div class="reel__body">
+        <div class="reel__cap">${r.cap}</div>
+        <div class="reel__meta">
+          <span class="tag tag--${r.tag}">${r.tagLabel}</span>
+          <span>${r.brand}</span>
+          <span style="color:var(--text-3)">·</span>
+          <span>${r.plays} plays · ${r.eng} eng</span>
+        </div>
+      </div>
+      <div class="reel__num">
+        <div class="reel__num-big ${dim ? 'reel__num-big--bad' : 'reel__num-big--grad'}">${r.metric}</div>
+        <div class="reel__num-lab">${r.sub}</div>
+      </div>
+    </article>
+  `;
+}
+document.getElementById('reels-up').innerHTML   = UP.map((r, i) => reelHTML(r, '0' + (i + 1), false)).join('');
+document.getElementById('reels-down').innerHTML = DOWN.map((r, i) => reelHTML(r, '0' + (i + 1), true)).join('');
+
+/* ─────────────────────────────────────────────────────
+   REVEAL ON SCROLL — IntersectionObserver
+─────────────────────────────────────────────────────── */
+const seen = new WeakSet();
+const io = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (!e.isIntersecting || seen.has(e.target)) return;
+    seen.add(e.target);
+    requestAnimationFrame(() => e.target.style.setProperty('--reveal', '1'));
+
+    // animate count if applicable
+    const num = e.target.querySelector('[data-count]');
+    if (num) animateCount(num);
+
+    // if AI card → type out
+    if (e.target.id === 'ai-card') typeAI();
+  });
+}, { threshold: 0.18, rootMargin: '0px 0px -40px 0px' });
+
+document.querySelectorAll('[data-reveal]').forEach(el => io.observe(el));
+
+/* ─────────────────────────────────────────────────────
+   COUNT-UP
+─────────────────────────────────────────────────────── */
+function animateCount(el) {
+  const target = parseFloat(el.dataset.count);
+  const fmt = el.dataset.fmt;
+  const dur = 1200;
+  const t0 = performance.now();
+  const ease = (x) => 1 - Math.pow(1 - x, 3);
+  function tick(now) {
+    const p = Math.min(1, (now - t0) / dur);
+    const v = target * ease(p);
+    if (fmt === 'pct') el.textContent = v.toFixed(1) + '%';
+    else el.textContent = String(Math.round(v));
+    if (p < 1) requestAnimationFrame(tick);
+    else el.textContent = fmt === 'pct' ? target.toFixed(1) + '%' : String(target);
+  }
+  requestAnimationFrame(tick);
+}
+
+/* ─────────────────────────────────────────────────────
+   AI TYPING — subtle, word-by-word
+─────────────────────────────────────────────────────── */
+let aiTyped = false;
+async function typeAI() {
+  if (aiTyped) return; aiTyped = true;
+  const body = document.getElementById('ai-body');
+  body.innerHTML = '';
+  const caret = document.createElement('span');
+  caret.className = 'ai__caret';
+  body.appendChild(caret);
+
+  for (const seg of AI_SCRIPT) {
+    const span = document.createElement('span');
+    if (seg.kind === 'up')   span.className = 'ai__pillar-up';
+    if (seg.kind === 'down') span.className = 'ai__pillar-down';
+    body.insertBefore(span, caret);
+    const words = seg.t.split(/(\s+)/);
+    for (const w of words) {
+      span.appendChild(document.createTextNode(w));
+      // subtle pacing: longer pause on period, shorter on space
+      const last = w.slice(-1);
+      let pause = 38;
+      if (/\s/.test(w)) pause = 18;
+      if (last === '.' || last === ',' || last === '—') pause = 220;
+      if (w.length > 8) pause = 60;
+      await new Promise(r => setTimeout(r, pause));
+    }
+  }
+  caret.classList.add('is-done');
+}
+
+/* ─────────────────────────────────────────────────────
+   PLAN SAVE
+─────────────────────────────────────────────────────── */
+document.getElementById('plan-save').addEventListener('click', (e) => {
+  const btn = e.currentTarget;
+  btn.classList.add('is-saved');
+  btn.textContent = '✓ Gespeichert';
+  setTimeout(() => { btn.classList.remove('is-saved'); btn.textContent = 'Speichern'; }, 1800);
+});
+
+/* ─────────────────────────────────────────────────────
+   SHARE RECAP — render 1080 × 1920 PNG via canvas
+─────────────────────────────────────────────────────── */
+const SHARE_DATA = {
+  kw: 20,
+  date: '11.–17. Mai 2026',
+  stats: [
+    { l: 'Reels gepostet', v: '4' },
+    { l: 'Avg-Engagement', v: '12.4%' },
+    { l: 'Top-Hook', v: 'POV-Reveal' },
+  ],
+  up: UP.map((r, i) => ({ rank: i + 1, brand: r.brand, tag: r.tagLabel, hue: r.hue,
+    cap: r.cap, metric: r.metric, plays: r.plays })),
+  down: DOWN.map((r, i) => ({ rank: i + 1, brand: r.brand, tag: r.tagLabel, hue: r.hue,
+    cap: r.cap, metric: r.metric, plays: r.plays })),
+};
+
+function roundRect(ctx, x, y, w, h, r) {
+  ctx.beginPath();
+  ctx.moveTo(x + r, y);
+  ctx.arcTo(x + w, y, x + w, y + h, r);
+  ctx.arcTo(x + w, y + h, x, y + h, r);
+  ctx.arcTo(x, y + h, x, y, r);
+  ctx.arcTo(x, y, x + w, y, r);
+  ctx.closePath();
+}
+
+function drawSunSilhouette(ctx, x, y, w, h, hue) {
+  ctx.save();
+  ctx.beginPath();
+  roundRect(ctx, x, y, w, h, 16);
+  ctx.clip();
+
+  // bg gradient
+  const bg = ctx.createLinearGradient(x, y, x, y + h);
+  bg.addColorStop(0,    `oklch(0.32 0.12 ${hue})`);
+  bg.addColorStop(0.55, `oklch(0.20 0.08 ${hue + 10})`);
+  bg.addColorStop(1,    `oklch(0.10 0.04 ${hue - 20})`);
+  ctx.fillStyle = bg;
+  ctx.fillRect(x, y, w, h);
+
+  // sun
+  const cx = x + w / 2, cy = y + h * 0.32, r = Math.min(w, h) * 0.20;
+  const sun = ctx.createRadialGradient(cx, cy, 0, cx, cy, r * 1.6);
+  sun.addColorStop(0,   '#ffe9c8');
+  sun.addColorStop(0.55,'#ffaa3d');
+  sun.addColorStop(1,   'rgba(255, 122, 61, 0)');
+  ctx.fillStyle = sun;
+  ctx.fillRect(x, y, w, h);
+
+  // mountain back
+  ctx.fillStyle = `oklch(0.08 0.03 ${hue})`;
+  ctx.globalAlpha = 0.85;
+  ctx.beginPath();
+  ctx.moveTo(x, y + h);
+  ctx.lineTo(x, y + h * 0.70);
+  ctx.lineTo(x + w * 0.18, y + h * 0.58);
+  ctx.lineTo(x + w * 0.36, y + h * 0.68);
+  ctx.lineTo(x + w * 0.55, y + h * 0.50);
+  ctx.lineTo(x + w * 0.75, y + h * 0.65);
+  ctx.lineTo(x + w * 0.94, y + h * 0.56);
+  ctx.lineTo(x + w, y + h * 0.60);
+  ctx.lineTo(x + w, y + h);
+  ctx.closePath();
+  ctx.fill();
+
+  ctx.globalAlpha = 1;
+  ctx.fillStyle = `oklch(0.05 0.02 ${hue})`;
+  ctx.beginPath();
+  ctx.moveTo(x, y + h);
+  ctx.lineTo(x, y + h * 0.82);
+  ctx.lineTo(x + w * 0.20, y + h * 0.76);
+  ctx.lineTo(x + w * 0.40, y + h * 0.82);
+  ctx.lineTo(x + w * 0.58, y + h * 0.75);
+  ctx.lineTo(x + w * 0.75, y + h * 0.80);
+  ctx.lineTo(x + w * 0.94, y + h * 0.76);
+  ctx.lineTo(x + w, y + h * 0.78);
+  ctx.lineTo(x + w, y + h);
+  ctx.closePath();
+  ctx.fill();
+
+  ctx.restore();
+}
+
+function drawShareCanvas() {
+  const c = document.getElementById('render-canvas');
+  const ctx = c.getContext('2d');
+  const W = 1080, H = 1920;
+  c.width = W; c.height = H;
+
+  // background
+  const bg = ctx.createLinearGradient(0, 0, 0, H);
+  bg.addColorStop(0, '#121820');
+  bg.addColorStop(0.4, '#0a0f12');
+  bg.addColorStop(1, '#07090c');
+  ctx.fillStyle = bg;
+  ctx.fillRect(0, 0, W, H);
+
+  // ambient sun
+  const sun = ctx.createRadialGradient(W / 2, -100, 0, W / 2, -100, 800);
+  sun.addColorStop(0, 'rgba(255, 212, 59, 0.30)');
+  sun.addColorStop(0.4, 'rgba(255, 107, 107, 0.10)');
+  sun.addColorStop(1, 'rgba(255, 107, 107, 0)');
+  ctx.fillStyle = sun;
+  ctx.fillRect(0, 0, W, 900);
+
+  // grain
+  for (let i = 0; i < 800; i++) {
+    ctx.fillStyle = `rgba(255, 245, 235, ${Math.random() * 0.025})`;
+    ctx.fillRect(Math.random() * W, Math.random() * H, 2, 2);
+  }
+
+  const PAD = 70;
+  let cursor = 110;
+
+  // brand bar
+  ctx.fillStyle = '#ff6b6b';
+  ctx.beginPath();
+  ctx.arc(PAD + 10, cursor, 9, 0, Math.PI * 2);
+  ctx.fillStyle = '#ffa94d';
+  ctx.fill();
+  ctx.fillStyle = '#f5ecdf';
+  ctx.font = '700 22px Inter, sans-serif';
+  ctx.textBaseline = 'middle';
+  ctx.fillText('PEAKING', PAD + 32, cursor);
+  ctx.fillStyle = 'rgba(245, 236, 223, 0.55)';
+  ctx.font = '500 18px Inter, sans-serif';
+  ctx.fillText('· brain · sunday recap', PAD + 152, cursor + 1);
+  cursor += 80;
+
+  // eyebrow
+  ctx.fillStyle = '#ffa94d';
+  ctx.font = 'italic 500 30px "Playfair Display", serif';
+  ctx.textBaseline = 'alphabetic';
+  ctx.fillText('Sunday-Recap · 17. Mai · 21:00', PAD, cursor);
+  cursor += 50;
+
+  // headline
+  ctx.fillStyle = '#f5ecdf';
+  ctx.font = '800 124px Inter, sans-serif';
+  ctx.fillText('Deine', PAD, cursor + 95);
+  cursor += 110;
+
+  // gradient "Woche"
+  const wgrad = ctx.createLinearGradient(PAD, cursor, PAD + 400, cursor + 110);
+  wgrad.addColorStop(0, '#ff6b6b');
+  wgrad.addColorStop(0.55, '#ffa94d');
+  wgrad.addColorStop(1, '#ffd43b');
+  ctx.fillStyle = wgrad;
+  ctx.font = 'italic 800 124px Inter, sans-serif';
+  ctx.fillText('Woche.', PAD, cursor + 95);
+  cursor += 130;
+
+  ctx.fillStyle = '#f5ecdf';
+  ctx.font = '800 124px Inter, sans-serif';
+  ctx.fillText('KW 20.', PAD, cursor + 95);
+  cursor += 170;
+
+  // meta
+  ctx.fillStyle = 'rgba(245, 236, 223, 0.62)';
+  ctx.font = '500 26px Inter, sans-serif';
+  ctx.fillText(`${SHARE_DATA.date}  ·  4 / 7 Tage aktiv  ·  924K Plays`, PAD, cursor);
+  cursor += 70;
+
+  // ── HERO STATS ROW ──
+  const sw = (W - PAD * 2 - 28) / 3, sh = 200;
+  SHARE_DATA.stats.forEach((s, i) => {
+    const sx = PAD + i * (sw + 14);
+    // card
+    ctx.save();
+    roundRect(ctx, sx, cursor, sw, sh, 24);
+    ctx.fillStyle = 'rgba(255,255,255,0.03)';
+    ctx.fill();
+    ctx.strokeStyle = 'rgba(255, 169, 77, 0.18)';
+    ctx.lineWidth = 2;
+    ctx.stroke();
+    ctx.restore();
+
+    // top highlight
+    ctx.save();
+    roundRect(ctx, sx, cursor, sw, 80, 24);
+    ctx.clip();
+    const hl = ctx.createLinearGradient(sx, cursor, sx, cursor + 80);
+    hl.addColorStop(0, 'rgba(255,255,255,0.08)');
+    hl.addColorStop(1, 'rgba(255,255,255,0)');
+    ctx.fillStyle = hl;
+    ctx.fillRect(sx, cursor, sw, 80);
+    ctx.restore();
+
+    // label
+    ctx.fillStyle = 'rgba(245, 236, 223, 0.62)';
+    ctx.font = '600 20px Inter, sans-serif';
+    ctx.fillText(s.l.toUpperCase(), sx + 28, cursor + 50);
+
+    // value
+    const vgrad = ctx.createLinearGradient(sx, cursor, sx + sw, cursor + sh);
+    vgrad.addColorStop(0, '#ff6b6b');
+    vgrad.addColorStop(0.55, '#ffa94d');
+    vgrad.addColorStop(1, '#ffd43b');
+    ctx.fillStyle = vgrad;
+    const big = s.v.length > 6;
+    ctx.font = big ? '800 50px Inter, sans-serif' : '800 76px Inter, sans-serif';
+    ctx.fillText(s.v, sx + 28, cursor + (big ? 145 : 158));
+  });
+  cursor += sh + 56;
+
+  // ── SECTION: GEFUNKT ──
+  drawSectionHead(ctx, '02 · GEFUNKT', 'Was hat gefunkt', PAD, cursor);
+  cursor += 80;
+
+  SHARE_DATA.up.forEach((r) => {
+    cursor = drawReelRow(ctx, r, PAD, cursor, false);
+  });
+  cursor += 30;
+
+  // ── SECTION: NICHT ──
+  drawSectionHead(ctx, '03 · NICHT GEZÜNDET', 'Was nicht', PAD, cursor);
+  cursor += 80;
+
+  SHARE_DATA.down.forEach((r) => {
+    cursor = drawReelRow(ctx, r, PAD, cursor, true);
+  });
+  cursor += 30;
+
+  // ── AI INSIGHT box (compact) ──
+  const ay = cursor;
+  const aw = W - PAD * 2, ah = 180;
+  ctx.save();
+  roundRect(ctx, PAD, ay, aw, ah, 24);
+  // sunrise tint
+  const ag = ctx.createLinearGradient(PAD, ay, PAD + aw, ay + ah);
+  ag.addColorStop(0, 'rgba(255, 107, 107, 0.10)');
+  ag.addColorStop(1, 'rgba(255, 212, 59, 0.02)');
+  ctx.fillStyle = ag;
+  ctx.fill();
+  ctx.strokeStyle = 'rgba(255, 169, 77, 0.30)';
+  ctx.lineWidth = 2;
+  ctx.stroke();
+  ctx.restore();
+
+  ctx.fillStyle = '#ffa94d';
+  ctx.font = 'italic 500 22px "Playfair Display", serif';
+  ctx.fillText('✦ Coach-Read', PAD + 28, ay + 48);
+
+  ctx.fillStyle = '#f5ecdf';
+  ctx.font = '700 28px Inter, sans-serif';
+  wrapText(ctx,
+    'Du climbst stark in POV-Food. Studio-Build verliert. Versuch: Build-Reel mit fertigem Raum als Hook.',
+    PAD + 28, ay + 90, aw - 56, 38);
+
+  cursor = ay + ah + 60;
+
+  // ── FOOTER ──
+  ctx.fillStyle = 'rgba(245, 236, 223, 0.32)';
+  ctx.font = '400 22px "JetBrains Mono", monospace';
+  ctx.fillText('peaking.world/brain · always peaking.', PAD, H - 90);
+
+  ctx.fillStyle = 'rgba(245, 236, 223, 0.62)';
+  ctx.font = 'italic 500 26px "Playfair Display", serif';
+  const quote = '„The climb is the peak."';
+  const qw = ctx.measureText(quote).width;
+  ctx.fillText(quote, W - PAD - qw, H - 90);
+}
+
+function drawSectionHead(ctx, num, title, x, y) {
+  ctx.fillStyle = '#ffa94d';
+  ctx.font = '500 22px "JetBrains Mono", monospace';
+  ctx.fillText(num, x, y + 4);
+  ctx.fillStyle = '#f5ecdf';
+  ctx.font = '800 42px Inter, sans-serif';
+  ctx.fillText(title, x, y + 56);
+}
+
+function drawReelRow(ctx, r, x, y, dim) {
+  const W = 1080;
+  const rowW = W - x * 2, rowH = 150;
+
+  ctx.save();
+  roundRect(ctx, x, y, rowW, rowH, 20);
+  ctx.fillStyle = dim ? 'rgba(255,255,255,0.012)' : 'rgba(255,255,255,0.03)';
+  ctx.fill();
+  ctx.strokeStyle = dim ? 'rgba(255,255,255,0.04)' : 'rgba(255,255,255,0.07)';
+  ctx.lineWidth = 2;
+  ctx.stroke();
+  ctx.restore();
+
+  // rank pill
+  const rx = x - 4, ry = y - 4, rs = 44;
+  if (dim) {
+    ctx.fillStyle = 'rgba(248, 113, 113, 0.18)';
+  } else {
+    const rgrad = ctx.createLinearGradient(rx, ry, rx + rs, ry + rs);
+    rgrad.addColorStop(0, '#ff6b6b');
+    rgrad.addColorStop(0.55, '#ffa94d');
+    rgrad.addColorStop(1, '#ffd43b');
+    ctx.fillStyle = rgrad;
+  }
+  ctx.beginPath();
+  ctx.arc(rx + rs / 2, ry + rs / 2, rs / 2, 0, Math.PI * 2);
+  ctx.fill();
+  ctx.fillStyle = dim ? '#f87171' : '#1a0f0a';
+  ctx.font = '700 19px "JetBrains Mono", monospace';
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  ctx.fillText('0' + r.rank, rx + rs / 2, ry + rs / 2 + 1);
+  ctx.textAlign = 'left';
+  ctx.textBaseline = 'alphabetic';
+
+  // thumb
+  const tx = x + 24, ty = y + 18, tw = 80, th = rowH - 36;
+  drawSunSilhouette(ctx, tx, ty, tw, th, r.hue);
+  if (dim) {
+    ctx.save();
+    roundRect(ctx, tx, ty, tw, th, 16);
+    ctx.clip();
+    ctx.fillStyle = 'rgba(10, 15, 18, 0.45)';
+    ctx.fillRect(tx, ty, tw, th);
+    ctx.restore();
+  }
+
+  // caption
+  const captionX = tx + tw + 28;
+  const captionW = rowW - (captionX - x) - 230;
+
+  ctx.fillStyle = dim ? 'rgba(245, 236, 223, 0.48)' : '#f5ecdf';
+  ctx.font = '600 24px Inter, sans-serif';
+  wrapText(ctx, r.cap, captionX, y + 50, captionW, 30, 2);
+
+  // meta line
+  ctx.fillStyle = 'rgba(245, 236, 223, 0.55)';
+  ctx.font = '500 18px Inter, sans-serif';
+  ctx.fillText(`${r.brand}  ·  ${r.tag}  ·  ${r.plays}`, captionX, y + rowH - 30);
+
+  // metric
+  if (dim) {
+    ctx.fillStyle = '#f87171';
+  } else {
+    const mg = ctx.createLinearGradient(0, y, 0, y + rowH);
+    mg.addColorStop(0, '#ff6b6b');
+    mg.addColorStop(0.55, '#ffa94d');
+    mg.addColorStop(1, '#ffd43b');
+    ctx.fillStyle = mg;
+  }
+  ctx.font = '800 50px Inter, sans-serif';
+  ctx.textAlign = 'right';
+  ctx.fillText(r.metric, x + rowW - 28, y + 78);
+  ctx.textAlign = 'left';
+
+  return y + rowH + 14;
+}
+
+function wrapText(ctx, text, x, y, maxW, lineH, maxLines = 3) {
+  const words = text.split(' ');
+  let line = '';
+  let lines = 0;
+  for (const w of words) {
+    if (lines >= maxLines - 1) {
+      const test = line + (line ? ' ' : '') + w;
+      if (ctx.measureText(test + '…').width > maxW) {
+        ctx.fillText(line.trimEnd() + '…', x, y);
+        return;
+      }
+      line = test;
+      continue;
+    }
+    const test = line + (line ? ' ' : '') + w;
+    if (ctx.measureText(test).width > maxW && line) {
+      ctx.fillText(line, x, y);
+      line = w;
+      y += lineH;
+      lines++;
+    } else {
+      line = test;
+    }
+  }
+  ctx.fillText(line, x, y);
+}
+
+/* trigger */
+document.getElementById('share-btn').addEventListener('click', async (e) => {
+  const btn = e.currentTarget;
+  btn.classList.add('is-busy');
+  btn.innerHTML = '<span>⏳</span><span>rendere…</span>';
+  // wait for fonts
+  if (document.fonts && document.fonts.ready) {
+    try { await document.fonts.ready; } catch (err) {}
+  }
+  // tick to let UI update
+  await new Promise(r => setTimeout(r, 60));
+  drawShareCanvas();
+  const c = document.getElementById('render-canvas');
+  c.toBlob((blob) => {
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'recap_KW20.png';
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    setTimeout(() => URL.revokeObjectURL(url), 2000);
+    // toast
+    const toast = document.getElementById('toast');
+    toast.classList.add('is-show');
+    setTimeout(() => toast.classList.remove('is-show'), 2400);
+    // restore button
+    btn.classList.remove('is-busy');
+    btn.innerHTML = '<span>↗</span><span>Share Recap</span>';
+  }, 'image/png');
+});
+</script>
+</body>
+</html>
