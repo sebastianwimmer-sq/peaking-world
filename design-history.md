@@ -12,7 +12,7 @@ Tracking welche Claude-Design-Outputs wann integriert wurden.
 
 ## History
 
-(noch keine Imports — wird bei jedem Design-Integration-Run ergaenzt)
+| 2026-05-18 | Full Design System V8 (Brain V3, Reel Tracker, Coach Brief, Insta Insights, Hero Variants, 20 preview components) | PEAKING Design System-8.zip (70 files) | — | retroactive archive, latest of 8 iterations |
 
 ---
 
