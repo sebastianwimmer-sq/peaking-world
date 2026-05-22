@@ -93,10 +93,10 @@ fi
 
 # ============ 3. SHA-256-HASH-SYNC (LOGIN) ============
 print_section "SHA-256-Hash-Sync (kritisch!)"
-EXPECTED_HASH=$(echo -n "SMW1508!" | shasum -a 256 | awk '{print $1}')
+EXPECTED_HASH=$(echo -n muHriz-7tojdo-jiqkaz | shasum -a 256 | awk '{print $1}')
 ACTUAL_HASH=$(grep "PASSWORD_HASH" js/app.js | grep -oE '[a-f0-9]{64}' | head -1 || echo "MISSING")
 if [ "$ACTUAL_HASH" = "$EXPECTED_HASH" ]; then
-  print_ok "PASSWORD_HASH stimmt für SMW1508!"
+  print_ok "PASSWORD_HASH stimmt für konfigurierten PW!"
 else
   print_err "PASSWORD_HASH mismatch!"
   echo "    Expected: $EXPECTED_HASH"

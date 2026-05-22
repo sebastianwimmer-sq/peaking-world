@@ -5,16 +5,13 @@
 
 const SmashApp = (function() {
   
-  // Password hash for SMW1508! 
-  // Generated via: 
-  // crypto.subtle.digest('SHA-256', new TextEncoder().encode('SMW1508!')).then(h => 
-  //   console.log(Array.from(new Uint8Array(h)).map(b => b.toString(16).padStart(2,'0')).join('')))
-  // !!! CLAUDE CODE: Bitte beim Build neu generieren falls Passwort geändert wird !!!
-  const PASSWORD_HASH = "3c1ebcc7778d422c056ee4447d05915087782d1e080c36d399e53227bbc17e0c";
+  // SHA-256 PW-Hash (rotiert via ~/rotate-peaking-pw.sh).
+  // Klartext NIEMALS hier dokumentieren — Apple Passwords ist Single-Source-of-Truth.
+  const PASSWORD_HASH = "d091baf203f69e4bb2d54d6212de699f653314a8da936bbf5188b9cd5e934a91";
 
   // Admin-Layer: 2. Passwort fuer /admin Backstage (Hash-only, kein Plaintext).
   // Aenderung: PW lokal generieren via SHA-256 + hier eintragen.
-  const ADMIN_PASSWORD_HASH = "21c74da7767acab0b475ab89514860ff7ab7e354733a28f985b4db4aaab738c7";
+  const ADMIN_PASSWORD_HASH = "d091baf203f69e4bb2d54d6212de699f653314a8da936bbf5188b9cd5e934a91";
   const ADMIN_SESSION_DURATION_MS = 7 * 24 * 60 * 60 * 1000; // 7 Tage
 
   const SESSION_DURATION_MS = 24 * 60 * 60 * 1000; // 24h
