@@ -12,7 +12,7 @@ const SmashApp = (function() {
   // !!! CLAUDE CODE: Bitte beim Build neu generieren falls Passwort geändert wird !!!
   const PASSWORD_HASH = "3c1ebcc7778d422c056ee4447d05915087782d1e080c36d399e53227bbc17e0c";
 
-  // Admin-Layer: 2. Passwort fuer /admin Backstage. PW = "peaking-admin-1508!"
+  // Admin-Layer: 2. Passwort fuer /admin Backstage (Hash-only, kein Plaintext).
   // Aenderung: PW lokal generieren via SHA-256 + hier eintragen.
   const ADMIN_PASSWORD_HASH = "21c74da7767acab0b475ab89514860ff7ab7e354733a28f985b4db4aaab738c7";
   const ADMIN_SESSION_DURATION_MS = 7 * 24 * 60 * 60 * 1000; // 7 Tage
