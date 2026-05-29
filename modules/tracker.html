@@ -295,6 +295,62 @@
         <input type="text" id="audio" placeholder="z.B. Discipline - Hellblade" class="w-full p-3 rounded-xl">
       </div>
 
+      <!-- 📊 Insight-Felder (optional · aus Meta-Insights 2026) -->
+      <div class="md:col-span-2 mt-2 pt-3 border-t border-white/10">
+        <p class="text-sm font-semibold text-orange-400">📊 Insight-Felder (optional · aus Meta-Insights)</p>
+        <p class="text-xs text-gray-500">Leer lassen wenn nicht vorhanden — alte Reels bleiben kompatibel.</p>
+      </div>
+
+      <div>
+        <label class="block text-sm text-gray-400 mb-1">⏭️ Skip-Rate (%)</label>
+        <input type="number" step="0.1" id="skipRate" min="0" max="100" placeholder="77.5" class="w-full p-3 rounded-xl">
+      </div>
+
+      <div>
+        <label class="block text-sm text-gray-400 mb-1">👤 Profilaktivitäten (Profil-Besuche)</label>
+        <input type="number" id="profileVisits" placeholder="12" class="w-full p-3 rounded-xl">
+      </div>
+
+      <div>
+        <label class="block text-sm text-gray-400 mb-1">📲 Reach von Followern (%)</label>
+        <input type="number" step="0.1" id="followerReach" min="0" max="100" placeholder="35.6" class="w-full p-3 rounded-xl">
+      </div>
+
+      <div>
+        <label class="block text-sm text-gray-400 mb-1">🌐 Reach Non-Follower (%)</label>
+        <input type="number" step="0.1" id="nonFollowerReach" min="0" max="100" placeholder="64.4" class="w-full p-3 rounded-xl">
+      </div>
+
+      <div>
+        <label class="block text-sm text-gray-400 mb-1">📍 Source: Feed (%)</label>
+        <input type="number" step="0.1" id="sourceFeed" min="0" max="100" placeholder="22.0" class="w-full p-3 rounded-xl">
+      </div>
+
+      <div>
+        <label class="block text-sm text-gray-400 mb-1">📍 Source: Stories (%)</label>
+        <input type="number" step="0.1" id="sourceStories" min="0" max="100" placeholder="8.0" class="w-full p-3 rounded-xl">
+      </div>
+
+      <div>
+        <label class="block text-sm text-gray-400 mb-1">📍 Source: Reels-Tab (%)</label>
+        <input type="number" step="0.1" id="sourceReelsTab" min="0" max="100" placeholder="60.0" class="w-full p-3 rounded-xl">
+      </div>
+
+      <div>
+        <label class="block text-sm text-gray-400 mb-1">📍 Source: Profil (%)</label>
+        <input type="number" step="0.1" id="sourceProfile" min="0" max="100" placeholder="10.0" class="w-full p-3 rounded-xl">
+      </div>
+
+      <div>
+        <label class="block text-sm text-gray-400 mb-1">👥 Audience Männer (%)</label>
+        <input type="number" step="0.1" id="audienceMale" min="0" max="100" placeholder="68.0" class="w-full p-3 rounded-xl">
+      </div>
+
+      <div>
+        <label class="block text-sm text-gray-400 mb-1">👥 Audience Frauen (%)</label>
+        <input type="number" step="0.1" id="audienceFemale" min="0" max="100" placeholder="32.0" class="w-full p-3 rounded-xl">
+      </div>
+
       <div class="md:col-span-2">
         <label class="block text-sm text-gray-400 mb-1">Notizen (Was hat gut/schlecht funktioniert?)</label>
         <textarea id="notes" rows="2" placeholder="z.B. Hook war zu subtil, Watch Time niedrig" class="w-full p-3 rounded-xl"></textarea>
@@ -334,6 +390,25 @@
     </div>
   </div>
 
+  <!-- Insight-Charts (neu · Meta-Insights 2026) -->
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+    <div class="glass rounded-3xl p-6">
+      <h3 class="text-xl font-bold mb-4">⏭️ Skip-Rate-Trend</h3>
+      <canvas id="skipChart"></canvas>
+      <p id="skipEmpty" class="text-gray-500 italic text-sm hidden">Noch keine Skip-Rate-Daten.</p>
+    </div>
+    <div class="glass rounded-3xl p-6">
+      <h3 class="text-xl font-bold mb-4">👥 Audience Gender-Split (⌀)</h3>
+      <canvas id="genderChart"></canvas>
+      <p id="genderEmpty" class="text-gray-500 italic text-sm hidden">Noch keine Gender-Daten.</p>
+    </div>
+    <div class="glass rounded-3xl p-6">
+      <h3 class="text-xl font-bold mb-4">📍 Source-Breakdown (⌀)</h3>
+      <canvas id="sourceChart"></canvas>
+      <p id="sourceEmpty" class="text-gray-500 italic text-sm hidden">Noch keine Source-Daten.</p>
+    </div>
+  </div>
+
   <!-- Reel List -->
   <div class="glass rounded-3xl p-6">
     <h2 class="text-2xl font-bold mb-4">📋 Alle Reels</h2>
@@ -366,7 +441,7 @@
 SmashApp.requireAuth();
 
 let reels = [];
-let viewsChart, pillarChart;
+let viewsChart, pillarChart, skipChart, genderChart, sourceChart;
 
 // Load data on start
 function loadData() {
@@ -400,6 +475,17 @@ async function addReel() {
     saves: parseInt(document.getElementById('saves').value) || 0,
     shares: parseInt(document.getElementById('shares').value) || 0,
     followers: parseInt(document.getElementById('followers').value) || 0,
+    // 📊 Insight-Felder (optional · Meta-Insights 2026) — leer = null/0, alte Reels bleiben kompatibel
+    skipRate: parseFloat(document.getElementById('skipRate')?.value) || null,
+    followerReach: parseFloat(document.getElementById('followerReach')?.value) || null,
+    nonFollowerReach: parseFloat(document.getElementById('nonFollowerReach')?.value) || null,
+    sourceFeed: parseFloat(document.getElementById('sourceFeed')?.value) || null,
+    sourceStories: parseFloat(document.getElementById('sourceStories')?.value) || null,
+    sourceReelsTab: parseFloat(document.getElementById('sourceReelsTab')?.value) || null,
+    sourceProfile: parseFloat(document.getElementById('sourceProfile')?.value) || null,
+    audienceMale: parseFloat(document.getElementById('audienceMale')?.value) || null,
+    audienceFemale: parseFloat(document.getElementById('audienceFemale')?.value) || null,
+    profileVisits: parseInt(document.getElementById('profileVisits')?.value) || 0,
     audio: document.getElementById('audio').value || '',
     notes: document.getElementById('notes').value || ''
   };
@@ -413,8 +499,10 @@ async function addReel() {
   await saveData();
   
   // Clear form
-  ['title', 'views', 'reach', 'watchTime', 'length', 'likes', 'comments', 'saves', 'shares', 'followers', 'audio', 'notes', 'hour'].forEach(id => {
-    document.getElementById(id).value = '';
+  ['title', 'views', 'reach', 'watchTime', 'length', 'likes', 'comments', 'saves', 'shares', 'followers', 'audio', 'notes', 'hour',
+   'skipRate', 'followerReach', 'nonFollowerReach', 'sourceFeed', 'sourceStories', 'sourceReelsTab', 'sourceProfile', 'audienceMale', 'audienceFemale', 'profileVisits'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.value = '';
   });
 
   updateUI();
@@ -644,6 +732,90 @@ function updateCharts() {
       }
     }
   });
+
+  // ── Insight-Charts (Meta-Insights 2026) — nur rendern wenn Daten vorhanden ──
+
+  // Skip-Rate-Trend (line)
+  const skipData = [...reels].filter(r => r.skipRate != null).sort((a, b) => new Date(a.date) - new Date(b.date));
+  const ctx3 = document.getElementById('skipChart').getContext('2d');
+  if (skipChart) skipChart.destroy();
+  document.getElementById('skipEmpty').classList.toggle('hidden', skipData.length > 0);
+  if (skipData.length > 0) {
+    skipChart = new Chart(ctx3, {
+      type: 'line',
+      data: {
+        labels: skipData.map(r => r.date),
+        datasets: [{
+          label: 'Skip-Rate %',
+          data: skipData.map(r => r.skipRate),
+          borderColor: '#FF6B6B',
+          backgroundColor: 'rgba(255,107,107,0.1)',
+          fill: true,
+          tension: 0.3
+        }]
+      },
+      options: {
+        responsive: true,
+        plugins: { legend: { labels: { color: 'white' } } },
+        scales: {
+          x: { ticks: { color: '#94a3b8' }, grid: { color: 'rgba(255,255,255,0.05)' } },
+          y: { min: 0, max: 100, ticks: { color: '#94a3b8' }, grid: { color: 'rgba(255,255,255,0.05)' } }
+        }
+      }
+    });
+  }
+
+  // Audience Gender-Split (doughnut, Ø über Reels mit Daten)
+  const genderReels = reels.filter(r => r.audienceMale != null || r.audienceFemale != null);
+  const ctx4 = document.getElementById('genderChart').getContext('2d');
+  if (genderChart) genderChart.destroy();
+  document.getElementById('genderEmpty').classList.toggle('hidden', genderReels.length > 0);
+  if (genderReels.length > 0) {
+    const avgMale = genderReels.reduce((s, r) => s + (r.audienceMale || 0), 0) / genderReels.length;
+    const avgFemale = genderReels.reduce((s, r) => s + (r.audienceFemale || 0), 0) / genderReels.length;
+    genderChart = new Chart(ctx4, {
+      type: 'doughnut',
+      data: {
+        labels: ['Männer', 'Frauen'],
+        datasets: [{
+          data: [Math.round(avgMale * 10) / 10, Math.round(avgFemale * 10) / 10],
+          backgroundColor: ['#FFA94D', '#8b5cf6']
+        }]
+      },
+      options: {
+        responsive: true,
+        plugins: { legend: { labels: { color: 'white' } } }
+      }
+    });
+  }
+
+  // Source-Breakdown (bar, Ø über Reels mit Daten)
+  const srcReels = reels.filter(r => r.sourceFeed != null || r.sourceStories != null || r.sourceReelsTab != null || r.sourceProfile != null);
+  const ctx5 = document.getElementById('sourceChart').getContext('2d');
+  if (sourceChart) sourceChart.destroy();
+  document.getElementById('sourceEmpty').classList.toggle('hidden', srcReels.length > 0);
+  if (srcReels.length > 0) {
+    const avgSrc = key => srcReels.reduce((s, r) => s + (r[key] || 0), 0) / srcReels.length;
+    sourceChart = new Chart(ctx5, {
+      type: 'bar',
+      data: {
+        labels: ['Feed', 'Stories', 'Reels-Tab', 'Profil'],
+        datasets: [{
+          label: 'Ø Source %',
+          data: [avgSrc('sourceFeed'), avgSrc('sourceStories'), avgSrc('sourceReelsTab'), avgSrc('sourceProfile')].map(v => Math.round(v * 10) / 10),
+          backgroundColor: ['#10b981', '#f59e0b', '#FFA94D', '#84cc16']
+        }]
+      },
+      options: {
+        responsive: true,
+        plugins: { legend: { labels: { color: 'white' } } },
+        scales: {
+          x: { ticks: { color: '#94a3b8' }, grid: { color: 'rgba(255,255,255,0.05)' } },
+          y: { min: 0, ticks: { color: '#94a3b8' }, grid: { color: 'rgba(255,255,255,0.05)' } }
+        }
+      }
+    });
+  }
 }
 
 // 10.05.2026 — Reel Tracker Card v2 (PEAKING-3 ZIP Design-Refactor)
