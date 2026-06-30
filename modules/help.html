@@ -5,7 +5,7 @@
 <meta http-equiv="Content-Security-Policy" content="default-src 'self' https:; script-src 'self' 'unsafe-inline' 'unsafe-eval' https:; style-src 'self' 'unsafe-inline' https:; img-src 'self' data: blob: https:; font-src 'self' data: https:; connect-src 'self' https: wss:; upgrade-insecure-requests">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
-<title>🆘 Help-Center · PEAKING</title>
+<title>Help-Center · PEAKING</title>
 <link rel="icon" href="../assets/logo.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="../assets/logo.svg">
 <link rel="manifest" href="../manifest.json">
@@ -14,13 +14,16 @@
 <script src="https://cdn.tailwindcss.com"></script>
 <style>
   body {
-    background: linear-gradient(135deg, #0B0F14 0%, #11161D 100%);
+    background:
+      radial-gradient(60% 50% at 50% -10%, rgba(0,184,136,0.07), transparent 60%),
+      linear-gradient(135deg, #03080D 0%, #0B0F14 55%, #11161D 100%);
     min-height: 100dvh;
-    color: white;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Inter, sans-serif;
+    color: var(--paper);
+    font-family: var(--ff-body);
   }
-  .glass { background: rgba(30, 41, 59, 0.6); backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.1); }
-  .neon { color: #00B888; }
+  h1, h2 { font-family: var(--ff-display); letter-spacing: -0.02em; }
+  .glass { background: var(--s2s-card-bg); -webkit-backdrop-filter: blur(16px); backdrop-filter: blur(16px); border: var(--s2s-card-border); box-shadow: var(--s2s-card-shadow); }
+  .neon { color: var(--emerald-soft); }
   .text-sunrise {
     background: linear-gradient(135deg, #00B888, #1FC998, #28C281);
     -webkit-background-clip: text;
@@ -32,8 +35,10 @@
   details summary::-webkit-details-marker { display: none; }
   details summary::after { content: '▸'; transition: transform 0.2s; display: inline-block; margin-left: 8px; color: #00B888; }
   details[open] summary::after { transform: rotate(90deg); }
-  .topic-card { transition: all 0.15s; }
-  .topic-card:hover { transform: translateY(-2px); border-color: rgba(0, 184, 136,0.3); }
+  .topic-card { transition: transform var(--duration) var(--ease), border-color var(--duration) var(--ease), box-shadow var(--duration) var(--ease); }
+  .topic-card:hover { transform: translateY(-3px); border-color: rgba(0, 184, 136,0.4); box-shadow: 0 22px 50px -28px rgba(0,0,0,0.85), 0 0 24px rgba(0,184,136,0.14); }
+  .topic-ico { width: 38px; height: 38px; border-radius: 11px; display: inline-flex; align-items: center; justify-content: center; background: rgba(0,184,136,0.1); border: 1px solid rgba(0,184,136,0.22); color: var(--emerald-soft); margin-bottom: 8px; }
+  .topic-ico svg { width: 19px; height: 19px; }
   .step-num {
     width: 28px; height: 28px;
     border-radius: 50%;
@@ -60,50 +65,51 @@
   .btn-ghost:hover { border-color: rgba(0, 184, 136,0.5); color: #00B888; }
 </style>
 </head>
-<body class="px-4 md:px-8 py-6">
+<body class="px-4 md:px-8 py-6 s2s-ambient">
 <div class="max-w-4xl mx-auto">
 
   <!-- Header -->
   <header class="mb-6">
     <a href="../dashboard.html" class="text-xs text-gray-400 hover:neon">← Dashboard</a>
-    <h1 class="text-3xl md:text-4xl font-black text-sunrise mt-2">🆘 Help-Center</h1>
+    <h1 class="text-3xl md:text-4xl font-black text-sunrise mt-2">Help-Center</h1>
     <p class="text-sm text-gray-400 mt-1">Alle Module · Setup-Guides · Troubleshooting · FAQ</p>
   </header>
 
   <!-- Quick-Search -->
-  <div class="glass rounded-2xl p-3 mb-6">
-    <input type="text" id="helpSearch" placeholder="🔍 Suche in allen Topics …" class="w-full bg-transparent border-0 outline-none px-2 py-2 text-sm text-white" oninput="filterHelp()">
+  <div class="glass rounded-2xl p-3 mb-6 flex items-center gap-2 px-4">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px;color:var(--muted);flex-shrink:0"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+    <input type="text" id="helpSearch" placeholder="Suche in allen Topics …" class="w-full bg-transparent border-0 outline-none py-2 text-sm text-white" oninput="filterHelp()">
   </div>
 
   <!-- Quick-Links -->
   <div class="grid grid-cols-2 md:grid-cols-3 gap-3 mb-6" id="quickLinks">
     <a href="#getting-started" class="topic-card glass rounded-2xl p-4 block">
-      <div class="text-2xl mb-1">🚀</div>
+      <div class="topic-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l4 4L19 7"/><path d="M5 19h14"/></svg></div>
       <div class="text-sm font-bold">Erste Schritte</div>
       <div class="text-[10px] text-gray-500">3-Min-Setup</div>
     </a>
     <a href="#tracker" class="topic-card glass rounded-2xl p-4 block">
-      <div class="text-2xl mb-1">📊</div>
+      <div class="topic-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M7 14l4-4 3 3 5-6"/></svg></div>
       <div class="text-sm font-bold">Reel-Tracker</div>
       <div class="text-[10px] text-gray-500">Live + Trends</div>
     </a>
     <a href="#brain" class="topic-card glass rounded-2xl p-4 block">
-      <div class="text-2xl mb-1">🧠</div>
+      <div class="topic-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5a3 3 0 0 0-3 3 3 3 0 0 0-2 5 3 3 0 0 0 2 5 3 3 0 0 0 6 0 3 3 0 0 0 2-5 3 3 0 0 0-2-5 3 3 0 0 0-3-3z"/><path d="M12 5v14"/></svg></div>
       <div class="text-sm font-bold">AI Brain</div>
       <div class="text-[10px] text-gray-500">187+ Memos</div>
     </a>
     <a href="#reel-edit" class="topic-card glass rounded-2xl p-4 block">
-      <div class="text-2xl mb-1">✂️</div>
+      <div class="topic-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M20 4 8.1 15.9"/><path d="m8.1 8.1 11.9 11.9"/></svg></div>
       <div class="text-sm font-bold">Reel-Edit-Assistant</div>
       <div class="text-[10px] text-gray-500">Audio → SRT</div>
     </a>
     <a href="#insta-sync" class="topic-card glass rounded-2xl p-4 block">
-      <div class="text-2xl mb-1">📡</div>
+      <div class="topic-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4.9 16.1a10 10 0 0 1 0-8.2"/><path d="M19.1 7.9a10 10 0 0 1 0 8.2"/><path d="M7.8 13.2a5 5 0 0 1 0-2.4"/><path d="M16.2 10.8a5 5 0 0 1 0 2.4"/><circle cx="12" cy="12" r="1.5"/></svg></div>
       <div class="text-sm font-bold">Live Insta Sync</div>
       <div class="text-[10px] text-gray-500">Meta API</div>
     </a>
     <a href="#troubleshooting" class="topic-card glass rounded-2xl p-4 block" style="border:1px solid rgba(239,68,68,0.3)">
-      <div class="text-2xl mb-1">🛠</div>
+      <div class="topic-ico" style="background:rgba(239,68,68,0.1);border-color:rgba(239,68,68,0.25);color:#f87171"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a4 4 0 0 0-5.4 5.4l-6 6a1.4 1.4 0 0 0 2 2l6-6a4 4 0 0 0 5.4-5.4l-2.3 2.3-2-2 2.3-2.3z"/></svg></div>
       <div class="text-sm font-bold">Troubleshooting</div>
       <div class="text-[10px] text-gray-500">Bekannte Probleme</div>
     </a>
@@ -113,7 +119,7 @@
   <!-- ERSTE SCHRITTE -->
   <!-- ════════════════════════════════════ -->
   <section id="getting-started" class="glass rounded-2xl p-6 mb-6 help-section">
-    <h2 class="text-xl font-bold text-sunrise mb-4">🚀 Erste Schritte</h2>
+    <h2 class="text-xl font-bold text-sunrise mb-4">Erste Schritte</h2>
 
     <div class="space-y-3">
       <details class="glass rounded-xl p-4">
@@ -161,7 +167,7 @@
   <!-- REEL-TRACKER -->
   <!-- ════════════════════════════════════ -->
   <section id="tracker" class="glass rounded-2xl p-6 mb-6 help-section">
-    <h2 class="text-xl font-bold text-sunrise mb-4">📊 Reel-Tracker</h2>
+    <h2 class="text-xl font-bold text-sunrise mb-4">Reel-Tracker</h2>
     <div class="space-y-3">
       <details class="glass rounded-xl p-4">
         <summary class="font-bold text-sm">Wie nutze ich den Auto-Tracker?</summary>
@@ -209,7 +215,7 @@
   <!-- AI BRAIN -->
   <!-- ════════════════════════════════════ -->
   <section id="brain" class="glass rounded-2xl p-6 mb-6 help-section">
-    <h2 class="text-xl font-bold text-sunrise mb-4">🧠 AI Brain</h2>
+    <h2 class="text-xl font-bold text-sunrise mb-4">AI Brain</h2>
     <div class="space-y-3">
       <details class="glass rounded-xl p-4">
         <summary class="font-bold text-sm">Was ist AI Brain?</summary>
@@ -244,7 +250,7 @@
   <!-- REEL-EDIT-ASSISTANT -->
   <!-- ════════════════════════════════════ -->
   <section id="reel-edit" class="glass rounded-2xl p-6 mb-6 help-section">
-    <h2 class="text-xl font-bold text-sunrise mb-4">✂️ Reel-Edit-Assistant</h2>
+    <h2 class="text-xl font-bold text-sunrise mb-4">Reel-Edit-Assistant</h2>
     <div class="space-y-3">
       <details class="glass rounded-xl p-4">
         <summary class="font-bold text-sm">Wie nutze ich's?</summary>
@@ -279,7 +285,7 @@
   <!-- INSTA-SYNC -->
   <!-- ════════════════════════════════════ -->
   <section id="insta-sync" class="glass rounded-2xl p-6 mb-6 help-section">
-    <h2 class="text-xl font-bold text-sunrise mb-4">📡 Live Insta Sync</h2>
+    <h2 class="text-xl font-bold text-sunrise mb-4">Live Insta Sync</h2>
     <div class="space-y-3">
       <details class="glass rounded-xl p-4">
         <summary class="font-bold text-sm">Was synct hier?</summary>
@@ -307,7 +313,7 @@
   <!-- TROUBLESHOOTING -->
   <!-- ════════════════════════════════════ -->
   <section id="troubleshooting" class="glass rounded-2xl p-6 mb-6 help-section" style="border:1px solid rgba(239,68,68,0.2)">
-    <h2 class="text-xl font-bold text-sunrise mb-4">🛠 Troubleshooting</h2>
+    <h2 class="text-xl font-bold text-sunrise mb-4">Troubleshooting</h2>
     <div class="space-y-3">
       <details class="glass rounded-xl p-4">
         <summary class="font-bold text-sm">„Session has expired" / Token-Fehler</summary>

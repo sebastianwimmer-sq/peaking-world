@@ -5,7 +5,7 @@
 <meta http-equiv="Content-Security-Policy" content="default-src 'self' https:; script-src 'self' 'unsafe-inline' 'unsafe-eval' https:; style-src 'self' 'unsafe-inline' https:; img-src 'self' data: blob: https:; font-src 'self' data: https:; connect-src 'self' https: wss:; upgrade-insecure-requests">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>📊 Reel Tracker — PEAKING</title>
+<title>Reel Tracker — PEAKING</title>
 <link rel="icon" href="../assets/logo.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="../assets/logo.svg">
 <link rel="manifest" href="../manifest.json">
@@ -15,66 +15,74 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="../js/app.js"></script>
 <style>
-  body { 
-    background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+  body {
+    background: var(--ink);
     min-height: 100vh;
-    color: white;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    color: var(--paper);
+    font-family: var(--ff-body);
   }
+  h1, h2, h3 { font-family: var(--ff-display); letter-spacing: -0.02em; }
   .glass {
-    background: rgba(30, 41, 59, 0.6);
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255,255,255,0.1);
+    background: var(--s2s-card-bg);
+    -webkit-backdrop-filter: blur(16px); backdrop-filter: blur(16px);
+    border: var(--s2s-card-border);
+    box-shadow: var(--s2s-card-shadow);
   }
   .pillar-outdoor { background: linear-gradient(135deg, #10b981, #059669); }
   .pillar-gym { background: linear-gradient(135deg, #f59e0b, #d97706); }
   .pillar-mindset { background: linear-gradient(135deg, #8b5cf6, #7c3aed); }
   .pillar-plantbased { background: linear-gradient(135deg, #84cc16, #65a30d); }
   input, select, textarea {
-    background: rgba(15, 23, 42, 0.6);
-    border: 1px solid rgba(255,255,255,0.15);
-    color: white;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255,255,255,0.1);
+    color: var(--paper);
+    transition: border-color var(--duration-fast), box-shadow var(--duration-fast), background var(--duration-fast);
   }
   input:focus, select:focus, textarea:focus {
     outline: none;
-    border-color: #00B888;
+    border-color: var(--emerald);
+    background: rgba(0, 184, 136, 0.05);
+    box-shadow: 0 0 0 3px rgba(0, 184, 136, 0.16);
   }
   .btn-primary {
-    background: linear-gradient(135deg, #28C281, #1FC998, #00B888);
-    color:#04201A;
-    font-weight: bold;
-    transition: all 0.2s;
+    background: linear-gradient(135deg, var(--emerald), var(--emerald-soft));
+    color:#04130D;
+    font-family: var(--ff-display);
+    font-weight: 600;
+    box-shadow: 0 14px 34px -14px rgba(0, 184, 136, 0.6), 0 1px 0 rgba(255, 255, 255, 0.35) inset;
+    transition: transform var(--duration) var(--ease), box-shadow var(--duration) var(--ease), filter var(--duration) var(--ease);
   }
-  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(0, 184, 136, 0.4); }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 20px 46px -14px rgba(0, 184, 136, 0.78), 0 1px 0 rgba(255, 255, 255, 0.4) inset; filter: saturate(1.08); }
   .btn-danger {
     background: linear-gradient(135deg, #ef4444, #dc2626);
   }
+  .neon { color: var(--emerald-soft); }
   .stat-card {
-    transition: all 0.2s;
+    transition: transform var(--duration) var(--ease), border-color var(--duration) var(--ease), box-shadow var(--duration) var(--ease);
   }
-  .stat-card:hover { transform: translateY(-4px); }
+  .stat-card:hover { transform: translateY(-4px); border-color: rgba(0, 184, 136, 0.4); box-shadow: 0 1px 0 rgba(255,255,255,0.06) inset, 0 26px 60px -26px rgba(0,0,0,0.85), 0 0 28px rgba(0, 184, 136, 0.16); }
 </style>
 </head>
-<body class="p-4 md:p-8">
+<body class="p-4 md:p-8 s2s-ambient">
 
-<div class="max-w-6xl mx-auto">
-  
+<div class="max-w-6xl mx-auto s2s-stack">
+
   <!-- Header -->
   <div class="text-center mb-8">
     <div class="text-xs text-gray-500 mb-2"><a href="../dashboard.html" class="hover:text-white">← Dashboard</a></div>
-    <h1 class="text-4xl md:text-5xl font-bold mb-2">📊 Reel Tracker</h1>
-    <p class="text-gray-400">⛰️ powered by PEAKING · <span class="neon font-bold">Social, das skaliert.</span></p>
+    <h1 class="text-4xl md:text-5xl font-bold mb-2 s2s-grad">Reel Tracker</h1>
+    <p class="text-gray-400">powered by PEAKING · <span class="neon font-bold">Social, das skaliert.</span></p>
   </div>
 
   <!-- 🟢 AUTO-TRACKER LIVE (v1.9.5 — Meta API direkt, kein Screenshot mehr) -->
   <div class="rounded-3xl p-6 mb-6" style="background: linear-gradient(135deg, rgba(34,197,94,0.10), rgba(0, 184, 136,0.06)); border: 1px solid rgba(34,197,94,0.30);">
     <div class="flex items-start gap-3 mb-4 flex-wrap">
-      <div class="text-3xl">🟢</div>
+      <div style="width:10px;height:10px;border-radius:50%;background:var(--emerald);box-shadow:0 0 10px var(--emerald);margin-top:8px;flex-shrink:0"></div>
       <div class="flex-1 min-w-0">
         <h2 class="text-2xl font-bold">Auto-Tracker <span class="text-xs font-normal text-green-400">· LIVE via Meta API</span></h2>
         <p class="text-gray-400 text-sm">Reels werden automatisch alle 6h gesynct — Likes + Comments + Captions live. Kein Screenshot mehr nötig.</p>
       </div>
-      <button id="syncNowBtn" onclick="autoTrackerRefresh()" class="rounded-xl px-4 py-2 text-xs font-bold" style="background: linear-gradient(135deg, #28C281, #1FC998, #00B888); color:#04201A">🔄 Refresh</button>
+      <button id="syncNowBtn" onclick="autoTrackerRefresh()" class="rounded-xl px-4 py-2 text-xs font-bold" style="background: linear-gradient(135deg, var(--emerald), var(--emerald-soft)); color:#04130D; font-family:var(--ff-display)">Refresh</button>
     </div>
 
     <!-- Brand-Tabs -->
@@ -194,7 +202,7 @@
 
   <!-- Add Reel Form -->
   <div class="glass rounded-3xl p-6 mb-8">
-    <h2 class="text-2xl font-bold mb-4">➕ Neues Reel tracken</h2>
+    <h2 class="text-2xl font-bold mb-4">Neues Reel tracken</h2>
     
     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
       <div>
@@ -364,7 +372,7 @@
 
   <!-- Insights Panel -->
   <div class="glass rounded-3xl p-6 mb-8">
-    <h2 class="text-2xl font-bold mb-4">🧠 Auto-Insights</h2>
+    <h2 class="text-2xl font-bold mb-4">Auto-Insights</h2>
     <div id="insights" class="space-y-2 text-gray-300">
       <p class="text-gray-500 italic">Trag dein erstes Reel ein, dann gibt's hier Insights! 🚀</p>
     </div>
@@ -430,7 +438,7 @@
 
   <!-- Footer -->
   <div class="text-center mt-8 text-gray-500 text-sm">
-    <p>💡 Tipp: Trag jedes Reel 24h nach Posting ein für saubere Daten</p>
+    <p>Tipp: Trag jedes Reel 24h nach Posting ein für saubere Daten</p>
     <button onclick="exportData()" class="mt-2 text-orange-400 hover:underline">📥 Daten exportieren (JSON)</button>
     <span class="mx-2">·</span>
     <button onclick="clearAll()" class="text-red-400 hover:underline">🗑️ Alle Daten löschen</button>

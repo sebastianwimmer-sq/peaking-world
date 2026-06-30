@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
-<title>▲ Dashboard — social2scale</title>
+<title>Dashboard — social2scale</title>
 <link rel="icon" href="assets/logo.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="assets/logo.svg">
 <link rel="manifest" href="manifest.json">
@@ -14,60 +14,68 @@
 <link rel="stylesheet" href="assets/effects.css">
 <script src="https://cdn.tailwindcss.com"></script>
 <style>
-  body { 
-    background: linear-gradient(135deg, #0B0F14 0%, #11161D 100%);
+  body {
+    background:
+      radial-gradient(120% 80% at 50% -10%, rgba(0,184,136,0.14), transparent 60%),
+      radial-gradient(90% 70% at 50% 120%, rgba(0,184,136,0.06), transparent 55%),
+      var(--ink);
     min-height: 100dvh;
-    color: white;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    color: var(--paper);
+    font-family: var(--ff-body);
+    -webkit-font-smoothing: antialiased;
   }
+  h1, h2, h3 { font-family: var(--ff-display); }
+  /* Glas-Karte (Login-Referenz-Tiefe), per Klasse von effects.css gestützt */
   .glass {
-    background: rgba(30, 41, 59, 0.6);
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255,255,255,0.1);
+    background: var(--s2s-card-bg);
+    -webkit-backdrop-filter: blur(16px); backdrop-filter: blur(16px);
+    border: var(--s2s-card-border);
+    box-shadow: var(--s2s-card-shadow);
   }
-  .neon { color: #00B888; }
+  .neon { color: var(--emerald-soft); }
   .module-card {
-    transition: all 0.2s;
+    transition: transform var(--duration) var(--ease),
+                border-color var(--duration) var(--ease),
+                box-shadow var(--duration) var(--ease);
     cursor: pointer;
   }
   .module-card:hover {
     transform: translateY(-4px);
-    box-shadow: 0 12px 24px rgba(0, 184, 136, 0.15);
-    border-color: rgba(0, 184, 136, 0.3);
+    border-color: rgba(0, 184, 136, 0.4);
+    box-shadow: 0 1px 0 rgba(255,255,255,0.06) inset,
+                0 26px 60px -26px rgba(0,0,0,0.85),
+                0 0 28px rgba(0, 184, 136, 0.16);
   }
-  .stat-card {
-    transition: all 0.2s;
-  }
-  .pillar-bar {
-    transition: width 0.5s ease;
-  }
+  .stat-card { transition: transform var(--duration) var(--ease), border-color var(--duration) var(--ease); }
+  .pillar-bar { transition: width 0.6s var(--ease); }
   .account-switch {
-    background: rgba(15, 23, 42, 0.8);
+    background: rgba(255, 255, 255, 0.03);
     border: 1px solid rgba(0, 184, 136, 0.3);
-    color: white;
+    color: var(--paper);
     padding: 8px 14px;
     border-radius: 999px;
+    font-family: var(--ff-display);
     font-size: 13px;
-    font-weight: 700;
+    font-weight: 600;
     cursor: pointer;
-    transition: all 0.2s;
+    transition: border-color var(--duration) var(--ease), box-shadow var(--duration) var(--ease);
     display: flex; align-items: center; gap: 6px;
   }
   .account-switch:hover {
-    border-color: #00B888;
-    box-shadow: 0 4px 16px rgba(0, 184, 136, 0.25);
+    border-color: var(--emerald);
+    box-shadow: 0 0 0 3px rgba(0, 184, 136, 0.14);
   }
   .account-menu {
     position: absolute;
     top: 100%; right: 0;
     margin-top: 8px;
-    background: rgba(15, 23, 42, 0.98);
-    backdrop-filter: blur(12px);
+    background: var(--s2s-card-bg);
+    -webkit-backdrop-filter: blur(16px); backdrop-filter: blur(16px);
     border: 1px solid rgba(0, 184, 136, 0.3);
-    border-radius: 14px;
+    border-radius: 16px;
     padding: 6px;
     min-width: 220px;
-    box-shadow: 0 12px 32px rgba(0,0,0,0.4), 0 0 24px rgba(0, 184, 136, 0.15);
+    box-shadow: var(--s2s-card-shadow), 0 0 24px rgba(0, 184, 136, 0.12);
     z-index: 100;
   }
   .account-menu button {
@@ -78,25 +86,34 @@
     padding: 10px 12px;
     border-radius: 10px;
     text-align: left;
-    color: white;
-    transition: background 0.15s;
+    color: var(--paper);
+    transition: background var(--duration-fast);
     font-size: 14px;
   }
   .account-menu button:hover { background: rgba(0, 184, 136, 0.1); }
-  .account-menu button.current { background: rgba(0, 184, 136, 0.15); border: 1px solid rgba(0, 184, 136, 0.3); }
+  .account-menu button.current { background: rgba(0, 184, 136, 0.12); border: 1px solid rgba(0, 184, 136, 0.3); }
   .account-menu button.current::after {
-    content: '✓';
+    content: '';
     margin-left: auto;
-    color: #00B888;
-    font-weight: bold;
+    width: 14px; height: 14px;
+    background: var(--emerald);
+    -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'/%3E%3C/svg%3E") center/contain no-repeat;
+            mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'/%3E%3C/svg%3E") center/contain no-repeat;
   }
+  /* Section-Category-Label mit Emerald-Akzent-Dot statt Emoji */
+  .cat-label { font-family: var(--ff-display); font-size: 0.7rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--emerald-soft); display: inline-flex; align-items: center; gap: 8px; }
+  .cat-label::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--emerald); box-shadow: 0 0 10px rgba(0,184,136,0.7); }
+  /* Modul-Tile-Icon: dezenter Emerald-Glyph-Container */
+  .mod-ico { width: 40px; height: 40px; border-radius: 11px; display: flex; align-items: center; justify-content: center; margin-bottom: 12px; background: rgba(0,184,136,0.1); border: 1px solid rgba(0,184,136,0.22); color: var(--emerald-soft); }
+  .mod-ico svg { width: 20px; height: 20px; }
+  .mod-tile .font-bold { font-family: var(--ff-display); }
 </style>
 </head>
-<body class="p-4 md:p-6 bg-depth">
+<body class="p-4 md:p-6 s2s-ambient">
 
 <!-- Beta-Banner (toggle in Settings) -->
-<div id="betaBanner" style="display:none; position:sticky; top:0; z-index:40; background:linear-gradient(90deg, #00B888, #1FC998); color:#04201A; text-align:center; font-size:11px; font-weight:700; padding:6px 12px; letter-spacing:0.5px; text-transform:uppercase;">
-  ⚡ <span id="appVersion">v1.6.0</span> · Social, das skaliert. Sebi-Build, läuft live.
+<div id="betaBanner" style="display:none; position:sticky; top:0; z-index:40; background:linear-gradient(90deg, #00B888, #1FC998); color:#04201A; text-align:center; font-size:11px; font-weight:600; font-family:var(--ff-display); padding:6px 12px; letter-spacing:0.5px; text-transform:uppercase;">
+  <span id="appVersion">v1.6.0</span> · Social, das skaliert. Sebi-Build, läuft live.
 </div>
 
 <!-- Account-Tint Top-Border (toggle in Settings) -->
@@ -107,23 +124,23 @@
   <!-- Header -->
   <div class="flex justify-between items-center mb-6">
     <div>
-      <h1 class="text-2xl md:text-4xl font-bold flex items-center gap-2"><img src="assets/logo.svg" alt="" class="w-8 h-8 md:w-10 md:h-10 logo-glow"> <span class="text-sunrise">social2scale</span></h1>
-      <p class="text-gray-400 text-sm"><span class="neon font-bold">Social, das skaliert.</span> · <span id="todayDate"></span></p>
+      <h1 class="text-2xl md:text-4xl font-bold flex items-center gap-2.5"><img src="assets/logo.svg" alt="" class="w-8 h-8 md:w-10 md:h-10 logo-glow"> <span class="s2s-grad">social2scale</span></h1>
+      <p class="text-sm" style="color:var(--muted)"><span class="neon font-semibold">Social, das skaliert.</span> · <span id="todayDate"></span></p>
     </div>
     <div class="flex items-center gap-2 relative">
       <div class="relative">
         <button class="account-switch press-feedback" onclick="toggleAccountMenu(event)">
           <span id="accountEmoji">🏔️</span>
           <span id="accountHandle" class="hidden md:inline">@vegetarianhulk</span>
-          <span class="text-xs text-gray-400">▼</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width:12px;height:12px;opacity:.55"><polyline points="6 9 12 15 18 9"/></svg>
         </button>
         <div id="accountMenu" class="account-menu hidden">
-          <div class="text-[10px] uppercase tracking-wider text-gray-500 px-3 py-1 mb-1">Account wechseln</div>
+          <div class="text-[10px] uppercase tracking-wider px-3 py-1 mb-1" style="color:var(--muted)">Account wechseln</div>
           <!-- buttons werden via JS gerendert -->
         </div>
       </div>
-      <button onclick="SmashApp.logout()" class="text-sm text-gray-400 hover:text-white">
-        🔒
+      <button onclick="SmashApp.logout()" class="hover:text-white" style="color:var(--muted);display:flex;padding:6px" aria-label="Abmelden" title="Abmelden">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:18px;height:18px"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>
       </button>
     </div>
   </div>
@@ -131,46 +148,46 @@
   <!-- Quick Stats -->
   <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6 stagger">
     <div class="glass rounded-2xl p-4 stat-card lift-glow">
-      <div class="text-gray-400 text-xs">Follower</div>
+      <div class="text-xs" style="color:var(--muted)">Follower</div>
       <div class="text-2xl md:text-3xl font-bold neon" id="followerCount">2.080</div>
     </div>
     <div class="glass rounded-2xl p-4 stat-card lift-glow">
-      <div class="text-gray-400 text-xs">Diese Woche</div>
+      <div class="text-xs" style="color:var(--muted)">Diese Woche</div>
       <div class="text-2xl md:text-3xl font-bold" id="weekCount">0/4</div>
     </div>
     <div class="glass rounded-2xl p-4 stat-card lift-glow">
-      <div class="text-gray-400 text-xs">Streak</div>
-      <div class="text-2xl md:text-3xl font-bold" id="streakCount">0🔥</div>
+      <div class="text-xs" style="color:var(--muted)">Streak</div>
+      <div class="text-2xl md:text-3xl font-bold" id="streakCount">0</div>
     </div>
     <div class="glass rounded-2xl p-4 stat-card lift-glow">
-      <div class="text-gray-400 text-xs">Total Reels</div>
+      <div class="text-xs" style="color:var(--muted)">Total Reels</div>
       <div class="text-2xl md:text-3xl font-bold" id="totalReels">0</div>
     </div>
   </div>
 
-  <!-- 🧭 PEAKING Coach (Dashboard-Hero · daily insight + next-3) -->
-  <div id="coachHero" class="rounded-3xl p-5 mb-4 float-in" style="display:none; background: linear-gradient(135deg, rgba(0, 184, 136, 0.10), rgba(31, 201, 152, 0.14), rgba(40, 194, 129, 0.08)); border: 1px solid rgba(0, 184, 136, 0.4); box-shadow: 0 12px 40px rgba(0, 184, 136, 0.12);">
+  <!-- PEAKING Coach (Dashboard-Hero · daily insight + next-3) -->
+  <div id="coachHero" class="s2s-card s2s-card--glow p-5 mb-4 float-in" style="display:none; border-radius:24px;">
     <div class="flex justify-between items-start mb-3 gap-3 flex-wrap">
-      <div class="text-xs uppercase tracking-wider text-gray-400 font-bold">🧭 Coach · <span id="coachToday">heute</span></div>
-      <a href="modules/coach.html" class="text-xs neon hover:underline whitespace-nowrap">→ Voller Coach</a>
+      <div class="cat-label">Coach · <span id="coachToday">heute</span></div>
+      <a href="modules/coach.html" class="text-xs neon hover:underline whitespace-nowrap">Voller Coach →</a>
     </div>
     <div id="coachCardBody" class="mb-3"></div>
     <div id="coachNextSteps" class="grid grid-cols-1 md:grid-cols-3 gap-2"></div>
-    <div id="coachSetupPill" class="mt-3 text-xs text-gray-400" style="display:none;"></div>
+    <div id="coachSetupPill" class="mt-3 text-xs" style="display:none; color:var(--muted)"></div>
   </div>
 
   <!-- Today/Next Action (kompakt-Fallback wenn Coach off) -->
-  <div id="nextPostCard" class="glass gradient-flow rounded-3xl p-5 mb-6 border-l-4 float-in" style="border-left-color: #00B888;">
-    <div class="text-xs text-gray-400 mb-1">🎯 NÄCHSTER POST</div>
-    <div class="text-lg md:text-xl font-bold mb-1" id="nextPost">Heute: 💪 Gym-Reel</div>
-    <div class="text-sm text-gray-400" id="nextPostTime">Empfohlene Zeit: 19:00 Uhr</div>
+  <div id="nextPostCard" class="glass rounded-3xl p-5 mb-6 float-in" style="border-left:3px solid var(--emerald);">
+    <div class="cat-label mb-2">Nächster Post</div>
+    <div class="text-lg md:text-xl font-bold mb-1" id="nextPost">Heute: Gym-Reel</div>
+    <div class="text-sm" style="color:var(--muted)" id="nextPostTime">Empfohlene Zeit: 19:00 Uhr</div>
   </div>
 
   <!-- Module Search -->
-  <div class="mb-4">
-    <input type="text" id="moduleSearch" placeholder="🔍 Modul suchen…"
-           class="w-full p-3 rounded-xl text-sm"
-           style="background: rgba(15, 23, 42, 0.6); border: 1px solid rgba(255,255,255,0.15); color: white;"
+  <div class="mb-4" style="position:relative">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="position:absolute;left:14px;top:50%;transform:translateY(-50%);width:16px;height:16px;color:var(--muted);pointer-events:none"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+    <input type="text" id="moduleSearch" placeholder="Modul suchen…"
+           class="s2s-input text-sm" style="padding-left:42px"
            oninput="filterModules()">
   </div>
 
@@ -179,65 +196,65 @@
   <!-- 🎯 TRACK & GROW -->
   <div class="cat-block mb-5" data-cat="track">
     <div class="flex items-center gap-2 mb-2">
-      <span class="text-xs uppercase tracking-wider font-bold neon">🎯 Track & Grow</span>
-      <span class="text-[10px] text-gray-500" data-cat-count>5 Module</span>
+      <span class="cat-label">Track &amp; Grow</span>
+      <span class="text-[10px]" style="color:var(--muted-soft)" data-cat-count>5 Module</span>
     </div>
     <div class="grid grid-cols-2 md:grid-cols-3 gap-3 stagger">
       <a href="modules/brain-v3.html" class="mod-tile glass module-card lift-glow press-feedback rounded-2xl p-5" data-keywords="brain memos memory ki ai dashboard wissen knowledge search filter all decisions v3 unified hub cross-brand" style="border: 1px solid rgba(0, 184, 136, 0.4); position: relative;">
-        <span style="position:absolute;top:8px;right:8px;background:linear-gradient(135deg,#00B888,#1FC998);color:#03080D;font-size:9px;font-weight:800;letter-spacing:1px;padding:2px 6px;border-radius:4px">V3</span>
-        <div class="text-3xl mb-2">🧠</div>
+        <span style="position:absolute;top:10px;right:10px;background:linear-gradient(135deg,#00B888,#1FC998);color:#03080D;font-size:9px;font-weight:700;font-family:var(--ff-display);letter-spacing:1px;padding:2px 6px;border-radius:5px">V3</span>
+        <div class="mod-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5a3 3 0 1 0-5.997.142 4 4 0 0 0-2.526 5.77 4 4 0 0 0 .556 6.588A4 4 0 1 0 12 18Z"/><path d="M12 5a3 3 0 1 1 5.997.142 4 4 0 0 1 2.526 5.77 4 4 0 0 1-.556 6.588A4 4 0 1 1 12 18Z"/></svg></div>
         <div class="font-bold mb-1">AI Brain</div>
-        <div class="text-xs text-gray-400">Unified Hub · Cross-Brand · Filter · Search</div>
+        <div class="text-xs" style="color:var(--muted)">Unified Hub · Cross-Brand · Filter · Search</div>
       </a>
       <a href="modules/brain-recap.html" class="mod-tile glass module-card lift-glow press-feedback rounded-2xl p-5" data-keywords="recap sunday reflection week kw zusammenfassung review wochen-recap reels stats summary plan" style="border: 1px solid rgba(0, 184, 136, 0.4);">
-        <div class="text-3xl mb-2">📊</div>
+        <div class="mod-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><rect x="7" y="11" width="3" height="6"/><rect x="12" y="7" width="3" height="10"/><rect x="17" y="13" width="3" height="4"/></svg></div>
         <div class="font-bold mb-1">Sunday Recap</div>
-        <div class="text-xs text-gray-400">Wochen-Reflexion · Top/Flop · AI-Summary · KW-Plan</div>
+        <div class="text-xs" style="color:var(--muted)">Wochen-Reflexion · Top/Flop · AI-Summary · KW-Plan</div>
       </a>
       <a href="modules/help.html" class="mod-tile glass module-card lift-glow press-feedback rounded-2xl p-5" data-keywords="help faq onboarding troubleshooting hilfe support tutorial wizard">
-        <div class="text-3xl mb-2">🆘</div>
+        <div class="mod-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></svg></div>
         <div class="font-bold mb-1">Help-Center</div>
-        <div class="text-xs text-gray-400">FAQ · How-Tos · Troubleshooting</div>
+        <div class="text-xs" style="color:var(--muted)">FAQ · How-Tos · Troubleshooting</div>
       </a>
       <a href="modules/growth-coach.html" class="mod-tile glass module-card lift-glow press-feedback rounded-2xl p-5" data-keywords="growth coach ki ai tipps wachstum reels algorithm 2026" style="border: 1px solid rgba(0, 184, 136, 0.4);">
-        <div class="text-3xl mb-2">🧭</div>
+        <div class="mod-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></svg></div>
         <div class="font-bold mb-1">Growth-Coach</div>
-        <div class="text-xs text-gray-400">15 Tips · Live-Data · Algorithm 2026</div>
+        <div class="text-xs" style="color:var(--muted)">15 Tips · Live-Data · Algorithm 2026</div>
       </a>
       <a href="modules/insta.html" class="mod-tile glass module-card lift-glow press-feedback rounded-2xl p-5" data-keywords="insta sync live api meta graph reels followers dashboard auto" style="border: 1px solid rgba(0, 184, 136, 0.4);">
-        <div class="text-3xl mb-2">📡</div>
+        <div class="mod-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4.93 4.93a10 10 0 0 0 0 14.14M19.07 4.93a10 10 0 0 1 0 14.14M7.76 7.76a6 6 0 0 0 0 8.48M16.24 7.76a6 6 0 0 1 0 8.48"/><circle cx="12" cy="12" r="2"/></svg></div>
         <div class="font-bold mb-1">Live Insta Sync</div>
-        <div class="text-xs text-gray-400">3 Brands · Auto-Sync 6h · Meta API</div>
+        <div class="text-xs" style="color:var(--muted)">3 Brands · Auto-Sync 6h · Meta API</div>
       </a>
       <a href="modules/reel-edit-assistant.html" class="mod-tile glass module-card lift-glow press-feedback rounded-2xl p-5" data-keywords="reel edit audio whisper transcribe srt untertitel davinci subtitle ai" style="border: 1px solid rgba(0, 184, 136, 0.4);">
-        <div class="text-3xl mb-2">✂️</div>
+        <div class="mod-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><line x1="20" y1="4" x2="8.12" y2="15.88"/><line x1="14.47" y1="14.48" x2="20" y2="20"/><line x1="8.12" y1="8.12" x2="12" y2="12"/></svg></div>
         <div class="font-bold mb-1">Reel-Edit-Assistant</div>
-        <div class="text-xs text-gray-400">Audio → SRT · 53% Zeitsparung</div>
+        <div class="text-xs" style="color:var(--muted)">Audio → SRT · 53% Zeitsparung</div>
       </a>
       <a href="modules/tracker.html" class="mod-tile glass module-card lift-glow press-feedback rounded-2xl p-5" data-keywords="reel performance tracking stats views likes hook">
-        <div class="text-3xl mb-2">📊</div>
+        <div class="mod-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="m19 9-5 5-4-4-3 3"/></svg></div>
         <div class="font-bold mb-1">Reel Tracker</div>
-        <div class="text-xs text-gray-400">Performance + 2026 Algo-Metrics</div>
+        <div class="text-xs" style="color:var(--muted)">Performance + 2026 Algo-Metrics</div>
       </a>
       <a href="modules/analytics.html" class="mod-tile glass module-card lift-glow press-feedback rounded-2xl p-5" data-keywords="analytics charts er sends pillar funnel heatmap insights trends">
-        <div class="text-3xl mb-2">📈</div>
+        <div class="mod-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="m7 14 4-4 3 3 5-6"/><polyline points="15 7 19 7 19 11"/></svg></div>
         <div class="font-bold mb-1">Analytics</div>
-        <div class="text-xs text-gray-400">Sends-per-Reach · Funnel · Heatmap</div>
+        <div class="text-xs" style="color:var(--muted)">Sends-per-Reach · Funnel · Heatmap</div>
       </a>
       <a href="modules/goals.html" class="mod-tile glass module-card lift-glow press-feedback rounded-2xl p-5" data-keywords="goals milestones followers 1m climb peak">
-        <div class="text-3xl mb-2">🏔️</div>
+        <div class="mod-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m8 21 4.5-9L17 21"/><path d="m2 21 6.5-13L12 14"/><path d="m12 14 3-6 7 13"/></svg></div>
         <div class="font-bold mb-1">Goals</div>
-        <div class="text-xs text-gray-400">Climb to 1M · 11 Milestones</div>
+        <div class="text-xs" style="color:var(--muted)">Climb to 1M · 11 Milestones</div>
       </a>
       <a href="modules/bip.html" class="mod-tile glass module-card lift-glow press-feedback rounded-2xl p-5" data-keywords="bip building public log diary tagebuch streak energy notes">
-        <div class="text-3xl mb-2">📝</div>
+        <div class="mod-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg></div>
         <div class="font-bold mb-1">BIP Daily-Log</div>
-        <div class="text-xs text-gray-400">Building in Public · Streak</div>
+        <div class="text-xs" style="color:var(--muted)">Building in Public · Streak</div>
       </a>
       <a href="modules/achievements.html" class="mod-tile glass module-card lift-glow press-feedback rounded-2xl p-5" data-keywords="achievements badges trophies xp tier bronze silver gold diamond legend">
-        <div class="text-3xl mb-2">🏆</div>
+        <div class="mod-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/></svg></div>
         <div class="font-bold mb-1">Achievements</div>
-        <div class="text-xs text-gray-400">33 Auto-Unlock-Badges</div>
+        <div class="text-xs" style="color:var(--muted)">33 Auto-Unlock-Badges</div>
       </a>
     </div>
   </div>
@@ -245,34 +262,34 @@
   <!-- 🎨 CREATE -->
   <div class="cat-block mb-5" data-cat="create">
     <div class="flex items-center gap-2 mb-2">
-      <span class="text-xs uppercase tracking-wider font-bold neon">🎨 Create</span>
-      <span class="text-[10px] text-gray-500" data-cat-count>5 Module</span>
+      <span class="cat-label">Create</span>
+      <span class="text-[10px]" style="color:var(--muted-soft)" data-cat-count>5 Module</span>
     </div>
     <div class="grid grid-cols-2 md:grid-cols-3 gap-3 stagger">
       <a href="modules/recorder.html" class="mod-tile glass module-card lift-glow press-feedback rounded-2xl p-5" data-keywords="recorder camera video aufnehmen filmen pro film hook countdown">
-        <div class="text-3xl mb-2">🎥</div>
+        <div class="mod-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m22 8-6 4 6 4V8Z"/><rect x="2" y="6" width="14" height="12" rx="2"/></svg></div>
         <div class="font-bold mb-1">Recorder</div>
-        <div class="text-xs text-gray-400">Reel filmen · Pro-Cam</div>
+        <div class="text-xs" style="color:var(--muted)">Reel filmen · Pro-Cam</div>
       </a>
       <a href="modules/builder.html" class="mod-tile glass module-card lift-glow press-feedback rounded-2xl p-5" data-keywords="carousel builder slides bilder berg fotos sortieren">
-        <div class="text-3xl mb-2">🖼️</div>
+        <div class="mod-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="4" width="10" height="16" rx="2"/><path d="M3 8v8"/><path d="M21 8v8"/></svg></div>
         <div class="font-bold mb-1">Carousel Builder</div>
-        <div class="text-xs text-gray-400">10 Slides · Bulk-Download</div>
+        <div class="text-xs" style="color:var(--muted)">10 Slides · Bulk-Download</div>
       </a>
       <a href="modules/hooks.html" class="mod-tile glass module-card lift-glow press-feedback rounded-2xl p-5" data-keywords="hook library patterns win rate loss twist stat reveal mistake curiosity pov" style="border: 1px solid rgba(0, 184, 136, 0.3);">
-        <div class="text-3xl mb-2">🪝</div>
-        <div class="font-bold mb-1 text-sunrise">Hook Library</div>
-        <div class="text-xs text-gray-400">50+ Patterns · Win-Rate</div>
+        <div class="mod-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12a4 4 0 0 1-8 0"/><circle cx="12" cy="3" r="1.5"/></svg></div>
+        <div class="font-bold mb-1 s2s-grad">Hook Library</div>
+        <div class="text-xs" style="color:var(--muted)">50+ Patterns · Win-Rate</div>
       </a>
       <a href="modules/captions.html" class="mod-tile glass module-card lift-glow press-feedback rounded-2xl p-5" data-keywords="captions templates hashtags variablen quick copy loss hook">
-        <div class="text-3xl mb-2">🎨</div>
+        <div class="mod-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7V5a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v2"/><path d="M9 20h6"/><path d="M12 4v16"/></svg></div>
         <div class="font-bold mb-1">Captions</div>
-        <div class="text-xs text-gray-400">28 Templates · Hashtag-Sets</div>
+        <div class="text-xs" style="color:var(--muted)">28 Templates · Hashtag-Sets</div>
       </a>
       <a href="modules/ideas.html" class="mod-tile glass module-card lift-glow press-feedback rounded-2xl p-5" data-keywords="ideas reel-ideen format pillar pov story quote">
-        <div class="text-3xl mb-2">💡</div>
+        <div class="mod-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6"/><path d="M10 22h4"/><path d="M15.09 14c.18-.98.65-1.74 1.41-2.5A4.65 4.65 0 0 0 18 8 6 6 0 0 0 6 8c0 1 .23 2.23 1.5 3.5A4.61 4.61 0 0 1 8.91 14"/></svg></div>
         <div class="font-bold mb-1">Idea Bank</div>
-        <div class="text-xs text-gray-400">Reel-Ideen · Filter · Custom</div>
+        <div class="text-xs" style="color:var(--muted)">Reel-Ideen · Filter · Custom</div>
       </a>
     </div>
   </div>
@@ -280,34 +297,34 @@
   <!-- 📅 PLAN -->
   <div class="cat-block mb-5" data-cat="plan">
     <div class="flex items-center gap-2 mb-2">
-      <span class="text-xs uppercase tracking-wider font-bold neon">📅 Plan</span>
-      <span class="text-[10px] text-gray-500" data-cat-count>5 Module</span>
+      <span class="cat-label">Plan</span>
+      <span class="text-[10px]" style="color:var(--muted-soft)" data-cat-count>5 Module</span>
     </div>
     <div class="grid grid-cols-2 md:grid-cols-3 gap-3 stagger">
       <a href="modules/calendar.html" class="mod-tile glass module-card lift-glow press-feedback rounded-2xl p-5" data-keywords="calendar wochenplan posting schedule mo mi fr sa">
-        <div class="text-3xl mb-2">📅</div>
+        <div class="mod-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M3 10h18"/><path d="M8 2v4"/><path d="M16 2v4"/></svg></div>
         <div class="font-bold mb-1">Calendar</div>
-        <div class="text-xs text-gray-400">Wochenplan · Mo/Mi/Fr/Sa</div>
+        <div class="text-xs" style="color:var(--muted)">Wochenplan · Mo/Mi/Fr/Sa</div>
       </a>
       <a href="modules/series.html" class="mod-tile glass module-card lift-glow press-feedback rounded-2xl p-5" data-keywords="series multi reel story arc day x of y bip">
-        <div class="text-3xl mb-2">🎞️</div>
+        <div class="mod-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="2"/><path d="M7 2v20"/><path d="M17 2v20"/><path d="M2 7h5"/><path d="M2 17h5"/><path d="M17 7h5"/><path d="M17 17h5"/></svg></div>
         <div class="font-bold mb-1">Reel Series</div>
-        <div class="text-xs text-gray-400">Multi-Reel-Story-Arcs</div>
+        <div class="text-xs" style="color:var(--muted)">Multi-Reel-Story-Arcs</div>
       </a>
       <a href="modules/cross-post.html" class="mod-tile glass module-card lift-glow press-feedback rounded-2xl p-5" data-keywords="cross post recut reframe hook account multi vegetarianhulk peakingworld">
-        <div class="text-3xl mb-2">🔄</div>
+        <div class="mod-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 2v6h-6"/><path d="M3 12a9 9 0 0 1 15-6.7L21 8"/><path d="M3 22v-6h6"/><path d="M21 12a9 9 0 0 1-15 6.7L3 16"/></svg></div>
         <div class="font-bold mb-1">Cross-Posting</div>
-        <div class="text-xs text-gray-400">Re-Cut: Account A → Account B</div>
+        <div class="text-xs" style="color:var(--muted)">Re-Cut: Account A → Account B</div>
       </a>
       <a href="modules/growth.html" class="mod-tile glass module-card lift-glow press-feedback rounded-2xl p-5" data-keywords="growth bootstrap profil setup checklist 30 tage plan cross promo" style="border: 1px solid rgba(0, 184, 136, 0.3);">
-        <div class="text-3xl mb-2">🚀</div>
-        <div class="font-bold mb-1 text-sunrise">Growth Center</div>
-        <div class="text-xs text-gray-400">30-Tage-Bootstrap · Setup</div>
+        <div class="mod-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91 0z"/><path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"/><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"/></svg></div>
+        <div class="font-bold mb-1 s2s-grad">Growth Center</div>
+        <div class="text-xs" style="color:var(--muted)">30-Tage-Bootstrap · Setup</div>
       </a>
       <a href="modules/coach.html" class="mod-tile glass module-card lift-glow press-feedback rounded-2xl p-5" data-keywords="coach mastermind insights setup checklist daily algorithm pattern detection feedback" style="border: 1px solid rgba(0, 184, 136, 0.4); background: linear-gradient(135deg, rgba(0, 184, 136, 0.08), rgba(0, 184, 136, 0.05));">
-        <div class="text-3xl mb-2">🧭</div>
-        <div class="font-bold mb-1 text-sunrise">PEAKING Coach</div>
-        <div class="text-xs text-gray-400">Daily Insights · Mastermind · Next-3</div>
+        <div class="mod-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></svg></div>
+        <div class="font-bold mb-1 s2s-grad">PEAKING Coach</div>
+        <div class="text-xs" style="color:var(--muted)">Daily Insights · Mastermind · Next-3</div>
       </a>
     </div>
   </div>
@@ -315,24 +332,24 @@
   <!-- 🤝 ENGAGE -->
   <div class="cat-block mb-5" data-cat="engage">
     <div class="flex items-center gap-2 mb-2">
-      <span class="text-xs uppercase tracking-wider font-bold neon">🤝 Engage</span>
-      <span class="text-[10px] text-gray-500" data-cat-count>3 Module</span>
+      <span class="cat-label">Engage</span>
+      <span class="text-[10px]" style="color:var(--muted-soft)" data-cat-count>3 Module</span>
     </div>
     <div class="grid grid-cols-2 md:grid-cols-3 gap-3 stagger">
       <a href="modules/inspiration.html" class="mod-tile glass module-card lift-glow press-feedback rounded-2xl p-5" data-keywords="inspiration bookmarks insta urls reels audio accounts">
-        <div class="text-3xl mb-2">👀</div>
+        <div class="mod-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg></div>
         <div class="font-bold mb-1">Inspiration</div>
-        <div class="text-xs text-gray-400">Reel/Audio/Account-Bookmarks</div>
+        <div class="text-xs" style="color:var(--muted)">Reel/Audio/Account-Bookmarks</div>
       </a>
       <a href="modules/replies.html" class="mod-tile glass module-card lift-glow press-feedback rounded-2xl p-5" data-keywords="replies dm comment story templates antworten quick">
-        <div class="text-3xl mb-2">💬</div>
+        <div class="mod-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></svg></div>
         <div class="font-bold mb-1">Quick Replies</div>
-        <div class="text-xs text-gray-400">DM · Comment · Story</div>
+        <div class="text-xs" style="color:var(--muted)">DM · Comment · Story</div>
       </a>
       <a href="modules/story-pack.html" class="mod-tile glass module-card lift-glow press-feedback rounded-2xl p-5" data-keywords="story pack stories slides cross post reel drop bip insight png download">
-        <div class="text-3xl mb-2">📨</div>
+        <div class="mod-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></svg></div>
         <div class="font-bold mb-1">Story-Pack</div>
-        <div class="text-xs text-gray-400">Auto-Slides · PNG-Download</div>
+        <div class="text-xs" style="color:var(--muted)">Auto-Slides · PNG-Download</div>
       </a>
     </div>
   </div>
@@ -340,52 +357,52 @@
   <!-- ⚙️ ADMIN -->
   <div class="cat-block mb-6" data-cat="admin">
     <div class="flex items-center gap-2 mb-2">
-      <span class="text-xs uppercase tracking-wider font-bold neon">⚙️ Admin</span>
-      <span class="text-[10px] text-gray-500" data-cat-count>1 Modul</span>
+      <span class="cat-label">Admin</span>
+      <span class="text-[10px]" style="color:var(--muted-soft)" data-cat-count>1 Modul</span>
     </div>
     <div class="grid grid-cols-2 md:grid-cols-3 gap-3 stagger">
       <a href="modules/settings.html" class="mod-tile glass module-card lift-glow press-feedback rounded-2xl p-5" data-keywords="settings backup compare reset accounts data export import">
-        <div class="text-3xl mb-2">⚙️</div>
+        <div class="mod-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg></div>
         <div class="font-bold mb-1">Settings</div>
-        <div class="text-xs text-gray-400">Backup · Compare · Reset</div>
+        <div class="text-xs" style="color:var(--muted)">Backup · Compare · Reset</div>
       </a>
     </div>
   </div>
 
-  <div id="searchEmpty" class="hidden text-center py-8 text-gray-500 text-sm">
-    🤷 Kein Modul gefunden für „<span id="searchTerm"></span>"
+  <div id="searchEmpty" class="hidden text-center py-8 text-sm" style="color:var(--muted)">
+    Kein Modul gefunden für „<span id="searchTerm"></span>"
   </div>
 
   <!-- Brand-Section-Divider mit Emerald-Strich (klare Visual-Trennung Module ↔ Account-Daten) -->
-  <div class="flex items-center gap-3 mt-8 mb-4">
-    <div style="height: 2px; flex: 1; background: linear-gradient(90deg, transparent, rgba(0, 184, 136, 0.4), transparent);"></div>
-    <span class="text-xs uppercase tracking-wider font-bold text-sunrise">▲ Account-Übersicht</span>
-    <div style="height: 2px; flex: 1; background: linear-gradient(90deg, transparent, rgba(0, 184, 136, 0.4), transparent);"></div>
+  <div class="flex items-center gap-3 mt-10 mb-4">
+    <div class="s2s-divider" style="flex:1"></div>
+    <span class="s2s-eyebrow">Account-Übersicht</span>
+    <div class="s2s-divider" style="flex:1"></div>
   </div>
 
   <!-- Säulen-Balance (Account-spezifisch, KEIN Brand-Token) -->
-  <div class="glass rounded-3xl p-5 mb-4" style="border: 1px solid rgba(0, 184, 136, 0.2);">
+  <div class="glass rounded-3xl p-5 mb-4">
     <div class="flex items-baseline justify-between mb-1 flex-wrap gap-2">
-      <h2 class="text-lg font-bold">⚖️ Säulen-Balance <span class="text-xs text-gray-500 font-normal">· <span id="pbAccountLabel">@vegetarianhulk</span></span></h2>
-      <span class="text-[10px] text-gray-500">Pillar-Tokens · NICHT Brand</span>
+      <h2 class="text-lg font-bold">Säulen-Balance <span class="text-xs font-normal" style="color:var(--muted)">· <span id="pbAccountLabel">@vegetarianhulk</span></span></h2>
+      <span class="text-[10px]" style="color:var(--muted-soft)">Pillar-Tokens · NICHT Brand</span>
     </div>
-    <p class="text-[11px] text-gray-500 mb-3">Färbung der Bars = Account-Pillar-Categorization (z.B. Outdoor-Grün, Gym-Amber). Emerald ist Brand drüber.</p>
+    <p class="text-[11px] mb-3" style="color:var(--muted)">Färbung der Bars = Account-Pillar-Categorization (z.B. Outdoor-Grün, Gym-Amber). Emerald ist Brand drüber.</p>
     <div id="pillarBalance" class="space-y-3">
       <!-- Wird via JS gefüllt -->
     </div>
   </div>
 
   <!-- Recent Reels -->
-  <div class="glass rounded-3xl p-5 mb-6" style="border: 1px solid rgba(0, 184, 136, 0.2);">
-    <h2 class="text-lg font-bold mb-4">📝 Letzte Reels <span class="text-xs text-gray-500 font-normal">· <span id="rrAccountLabel">@vegetarianhulk</span></span></h2>
+  <div class="glass rounded-3xl p-5 mb-6">
+    <h2 class="text-lg font-bold mb-4">Letzte Reels <span class="text-xs font-normal" style="color:var(--muted)">· <span id="rrAccountLabel">@vegetarianhulk</span></span></h2>
     <div id="recentReels" class="space-y-2">
-      <p class="text-gray-500 italic text-sm">Noch keine Reels getrackt. <a href="modules/tracker.html" class="neon underline">Jetzt starten →</a></p>
+      <p class="italic text-sm" style="color:var(--muted)">Noch keine Reels getrackt. <a href="modules/tracker.html" class="neon underline">Jetzt starten →</a></p>
     </div>
   </div>
 
   <!-- Footer -->
-  <div class="text-center text-gray-500 text-xs mt-8">
-    ▲ social2scale · Social, das skaliert. · powered by PEAKING
+  <div class="text-center text-xs mt-8" style="color:var(--muted-soft)">
+    social2scale · Social, das skaliert. · powered by PEAKING
   </div>
 </div>
 
@@ -476,7 +493,7 @@ SmashApp.requireAuth();
       }
     }
     const streakEl = document.getElementById('streakCount');
-    if (streakEl) streakEl.textContent = `${streak}🔥`;
+    if (streakEl) streakEl.textContent = `${streak}`;
 
     // 4. Total Reels (Worker-Cache count, ehrliche Live-Zahl)
     const totalEl = document.getElementById('totalReels');
@@ -491,7 +508,7 @@ SmashApp.requireAuth();
         const dot = document.createElement('span');
         dot.className = 'live-dot';
         dot.style.cssText = 'display:inline-block;width:5px;height:5px;border-radius:50%;background:#22c55e;box-shadow:0 0 5px #22c55e;margin-left:6px;vertical-align:middle;';
-        const label = card.querySelector('.text-gray-400');
+        const label = card.querySelector('.text-xs');
         if (label) label.appendChild(dot);
       }
     });
@@ -542,7 +559,7 @@ function renderCoachHero() {
       <div class="flex-1">
         <h2 class="text-lg md:text-xl font-bold mb-1">${escapeHTMLD(card.title)}</h2>
         <p class="text-sm text-gray-200 leading-relaxed mb-3">${escapeHTMLD(card.body)}</p>
-        ${card.cta ? `<a href="modules/${card.cta.href}" class="inline-block px-4 py-2 rounded-xl text-sm font-bold" style="background: linear-gradient(135deg, #00B888, #1FC998); color: #04201A;">${escapeHTMLD(card.cta.text)}</a>` : ''}
+        ${card.cta ? `<a href="modules/${card.cta.href}" class="s2s-btn text-sm">${escapeHTMLD(card.cta.text)}</a>` : ''}
       </div>
     </div>
   `;
@@ -550,10 +567,10 @@ function renderCoachHero() {
   // Next-3 Steps (compact)
   const next3 = Coach.getNext3Steps();
   document.getElementById('coachNextSteps').innerHTML = next3.map(s => `
-    <a href="modules/${s.href || ''}" class="block p-3 rounded-xl text-xs ${s.done ? 'opacity-50' : ''}" style="background: rgba(15, 23, 42, 0.5); border: 1px solid rgba(0, 184, 136, 0.15);">
+    <a href="modules/${s.href || ''}" class="block p-3 rounded-xl text-xs ${s.done ? 'opacity-50' : ''}" style="background: rgba(255,255,255,.03); border: 1px solid rgba(0, 184, 136, 0.15);">
       <div class="flex items-center gap-2">
-        <span style="color:${s.done ? '#84cc16' : '#00B888'}">${s.done ? '✓' : '○'}</span>
-        <span class="${s.done ? 'line-through text-gray-500' : ''}">${escapeHTMLD(s.text)}</span>
+        <span style="color:${s.done ? '#1FC998' : '#00B888'}">${s.done ? '✓' : '○'}</span>
+        <span class="${s.done ? 'line-through' : ''}" style="${s.done ? 'color:var(--muted)' : ''}">${escapeHTMLD(s.text)}</span>
       </div>
     </a>
   `).join('');
@@ -564,7 +581,7 @@ function renderCoachHero() {
     const pill = document.getElementById('coachSetupPill');
     pill.style.display = 'block';
     pill.innerHTML = `
-      <span class="neon font-bold">⚡ Setup ${setup.completed}/${setup.total} done</span> ·
+      <span class="neon font-semibold">Setup ${setup.completed}/${setup.total} done</span> ·
       <a href="modules/coach.html#setup" class="hover:underline">Wizard öffnen</a> ·
       ${setup.pct}% ready
     `;
@@ -580,35 +597,43 @@ function maybeShowOnboarding() {
 
   const overlay = document.createElement('div');
   overlay.id = 'onboardingOverlay';
-  overlay.style.cssText = 'position:fixed;inset:0;z-index:300;background:rgba(15,23,42,0.92);backdrop-filter:blur(10px);display:flex;align-items:center;justify-content:center;padding:20px;';
+  overlay.style.cssText = 'position:fixed;inset:0;z-index:300;background:rgba(3,8,13,0.82);backdrop-filter:blur(12px);display:flex;align-items:center;justify-content:center;padding:20px;';
+  const ICONS = {
+    chart: '<path d="M3 3v18h18"/><path d="m19 9-5 5-4-4-3 3"/>',
+    compass: '<circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/>',
+    wizard: '<path d="M5 3v4"/><path d="M19 17v4"/><path d="M3 5h4"/><path d="M17 19h4"/><path d="M12 4l2.5 5.5L20 12l-5.5 2.5L12 20l-2.5-5.5L4 12l5.5-2.5z"/>',
+    hook: '<path d="M12 3v12a4 4 0 0 1-8 0"/><circle cx="12" cy="3" r="1.5"/>',
+    cross: '<path d="M21 2v6h-6"/><path d="M3 12a9 9 0 0 1 15-6.7L21 8"/><path d="M3 22v-6h6"/><path d="M21 12a9 9 0 0 1-15 6.7L3 16"/>',
+    peak: '<path d="m8 21 4.5-9L17 21"/><path d="m2 21 6.5-13L12 14"/><path d="m12 14 3-6 7 13"/>'
+  };
   const steps = [
     {
-      emoji: '📈',
+      icon: 'chart',
       title: 'Willkommen bei social2scale',
       body: 'Dein Wachstums-Cockpit für Instagram. <b class="neon">Strategie statt Zufall.</b> heißt: heute 1 Schritt weiter, nicht alles auf einmal. Wir nehmen dich an die Hand — Setup-Wizard, Daily-Coach, Pattern-Insights.'
     },
     {
-      emoji: '🧭',
+      icon: 'compass',
       title: 'Coach ist dein Mastermind',
       body: 'Oben im Dashboard siehst du jeden Tag <b class="neon">eine Top-Action</b> — basierend auf deinen Daten. Plus die nächsten 3 Steps. Kein Decision-Fatigue, kein Scrollen.'
     },
     {
-      emoji: '⚡',
+      icon: 'wizard',
       title: 'Setup-Wizard',
-      body: '6 Schritte: Pillars · Posting-Plan · Bio · Erste Hook · Erstes Reel · Cross-Post. social2scale erkennt automatisch wenn du sie tust. Alles in <b class="neon">→ Coach</b>.'
+      body: '6 Schritte: Pillars · Posting-Plan · Bio · Erste Hook · Erstes Reel · Cross-Post. social2scale erkennt automatisch wenn du sie tust. Alles im <b class="neon">Coach</b>.'
     },
     {
-      emoji: '🪝',
+      icon: 'hook',
       title: 'Hook = 80% des Reach',
       body: '50+ verifizierte Hook-Patterns mit Win-Rate aus DEINEN Daten. Loss-Hooks performen 2-3× besser im 2026-Algo. Smart-Recommendations passen sich an deinen Account-Pillar-Mix an.'
     },
     {
-      emoji: '🔄',
-      title: '2 Accounts? 1 Click → Cross-Post',
+      icon: 'cross',
+      title: '2 Accounts? 1 Click zum Cross-Post',
       body: 'Wenn du @vegetarianhulk + @peakingworld pflegst: 1 Reel auf Account A → Re-Cut für Account B in 3 Klicks. Hebel pro Idee verdoppelt.'
     },
     {
-      emoji: '▲',
+      icon: 'peak',
       title: 'Du bist soweit.',
       body: 'Web-Only. Keine App-Store-Wartezeit. Iteration in Minuten. <b class="neon">Social, das skaliert.</b> Lass uns skalieren.'
     }
@@ -618,19 +643,21 @@ function maybeShowOnboarding() {
   function renderStep() {
     const s = steps[idx];
     overlay.innerHTML = `
-      <div style="background:linear-gradient(135deg,#11161D,#0B0F14); border:1px solid rgba(0, 184, 136, 0.3); border-radius:24px; max-width:500px; width:100%; padding:32px; text-align:center;">
-        <div style="font-size:64px; margin-bottom:16px;">${s.emoji}</div>
-        <h2 style="font-size:22px; font-weight:bold; margin-bottom:12px;">${s.title}</h2>
-        <p style="color:#cbd5e1; font-size:15px; line-height:1.6; margin-bottom:24px;">${s.body}</p>
-        <div style="display:flex; gap:8px; justify-content:center; margin-bottom:20px;">
-          ${steps.map((_, i) => `<div style="width:8px; height:8px; border-radius:50%; background:${i === idx ? '#00B888' : 'rgba(255,255,255,0.15)'};"></div>`).join('')}
+      <div class="s2s-card s2s-card--glow" style="max-width:500px; width:100%; padding:36px 32px; text-align:center;">
+        <div style="width:72px;height:72px;margin:0 auto 20px;border-radius:18px;display:flex;align-items:center;justify-content:center;background:rgba(0,184,136,0.1);border:1px solid rgba(0,184,136,0.25);color:#1FC998;">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:34px;height:34px;">${ICONS[s.icon]}</svg>
+        </div>
+        <h2 class="s2s-h" style="font-size:22px; margin-bottom:12px;">${s.title}</h2>
+        <p style="color:var(--muted); font-size:15px; line-height:1.6; margin-bottom:24px;">${s.body}</p>
+        <div style="display:flex; gap:8px; justify-content:center; margin-bottom:22px;">
+          ${steps.map((_, i) => `<div style="width:8px; height:8px; border-radius:50%; background:${i === idx ? '#00B888' : 'rgba(255,255,255,0.15)'}; box-shadow:${i === idx ? '0 0 10px rgba(0,184,136,.7)' : 'none'};"></div>`).join('')}
         </div>
         <div style="display:flex; gap:10px; justify-content:center; flex-wrap:wrap;">
-          ${idx > 0 ? '<button onclick="onboardPrev()" style="background:transparent; color:#94a3b8; border:1px solid rgba(255,255,255,0.1); padding:10px 18px; border-radius:12px; cursor:pointer; font-size:13px;">← Zurück</button>' : ''}
-          <button onclick="${idx === steps.length-1 ? 'finishOnboarding()' : 'onboardNext()'}" style="background:linear-gradient(135deg,#00B888,#1FC998); color:#04201A; font-weight:bold; padding:10px 22px; border-radius:12px; border:none; cursor:pointer; font-size:13px;">
-            ${idx === steps.length-1 ? '▲ Lets go skalieren' : 'Weiter →'}
+          ${idx > 0 ? '<button onclick="onboardPrev()" class="s2s-btn--ghost s2s-btn" style="font-size:13px;padding:10px 18px;">← Zurück</button>' : ''}
+          <button onclick="${idx === steps.length-1 ? 'finishOnboarding()' : 'onboardNext()'}" class="s2s-btn" style="font-size:13px;padding:10px 22px;">
+            ${idx === steps.length-1 ? 'Los, skalieren' : 'Weiter →'}
           </button>
-          ${idx < steps.length-1 ? '<button onclick="finishOnboarding()" style="background:transparent; color:#64748b; border:none; cursor:pointer; font-size:12px; padding:10px;">Skip</button>' : ''}
+          ${idx < steps.length-1 ? '<button onclick="finishOnboarding()" style="background:transparent; color:var(--muted-soft); border:none; cursor:pointer; font-size:12px; padding:10px;font-family:var(--ff-body);">Skip</button>' : ''}
         </div>
       </div>
     `;
@@ -712,7 +739,7 @@ const todayPost = planByDayKey[DAY_KEYS[day]];
 if (todayPost) {
   document.getElementById('nextPost').textContent = `Heute: ${todayPost.emoji} ${todayPost.name}`;
 } else {
-  document.getElementById('nextPost').textContent = '✨ Heute Pause — morgen geht\'s weiter!';
+  document.getElementById('nextPost').textContent = 'Heute Pause — morgen geht\'s weiter!';
   document.getElementById('nextPostTime').textContent = 'Engagement-Tag: kommentiere auf 5 Profilen';
 }
 
@@ -721,7 +748,7 @@ const reels = SmashApp.getData('reels', []);
 
 document.getElementById('totalReels').textContent = reels.length;
 document.getElementById('weekCount').textContent = `${SmashApp.getThisWeekPostCount(reels)}/4`;
-document.getElementById('streakCount').textContent = `${SmashApp.getStreak(reels)}🔥`;
+document.getElementById('streakCount').textContent = `${SmashApp.getStreak(reels)}`;
 
 // Pillar Balance
 function renderPillarBalance() {
@@ -737,15 +764,16 @@ function renderPillarBalance() {
     const info = SmashApp.PILLAR_INFO[p];
     const stat = stats[p];
     const diff = stat.percentage - info.target;
-    const status = Math.abs(diff) <= 5 ? '✅' : diff > 5 ? '⬆️' : '⬇️';
-    
+    const status = Math.abs(diff) <= 5 ? 'on target' : diff > 5 ? 'über' : 'unter';
+    const statusColor = Math.abs(diff) <= 5 ? '#1FC998' : 'rgba(242,243,241,.5)';
+
     return `
       <div>
         <div class="flex justify-between text-xs mb-1">
           <span><b>${info.emoji} ${info.name}</b> · ${stat.count} (${stat.percentage}%)</span>
-          <span class="text-gray-400">Ziel: ${info.target}% ${status}</span>
+          <span style="color:${statusColor}">Ziel: ${info.target}% · ${status}</span>
         </div>
-        <div class="bg-slate-700/50 rounded-full h-2 overflow-hidden relative">
+        <div class="rounded-full h-2 overflow-hidden relative" style="background:rgba(255,255,255,.06)">
           <div class="pillar-bar h-full rounded-full" style="width: ${stat.percentage}%; background: ${info.color}"></div>
           <div class="absolute top-0 h-full w-0.5 bg-white/40" style="left: ${info.target}%"></div>
         </div>
@@ -765,17 +793,17 @@ function renderRecentReels() {
   el.innerHTML = sorted.map(r => {
     const info = SmashApp.PILLAR_INFO[r.pillar] || { emoji: '🎬', name: 'Other' };
     return `
-      <div class="bg-slate-800/50 rounded-xl p-3 flex items-center justify-between">
+      <div class="rounded-xl p-3 flex items-center justify-between" style="background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06)">
         <div class="flex items-center gap-3 min-w-0 flex-1">
           <span class="text-2xl">${info.emoji}</span>
           <div class="min-w-0 flex-1">
             <div class="font-bold text-sm truncate">${r.title}</div>
-            <div class="text-xs text-gray-400">${SmashApp.formatDate(r.date)}</div>
+            <div class="text-xs" style="color:var(--muted)">${SmashApp.formatDate(r.date)}</div>
           </div>
         </div>
         <div class="text-right text-sm">
           <div class="font-bold neon">${SmashApp.formatNumber(r.views)}</div>
-          <div class="text-xs text-gray-400">Views</div>
+          <div class="text-xs" style="color:var(--muted)">Views</div>
         </div>
       </div>
     `;
@@ -824,11 +852,11 @@ function filterModules() {
 </script>
 
 <!-- v1.9.10: Legal-Footer -->
-<footer class="max-w-5xl mx-auto mt-12 mb-8 text-center text-[10px] text-gray-600 border-t border-white/5 pt-4">
-  <a href="impressum.html" class="hover:text-orange-300 mx-2">Impressum</a> ·
-  <a href="datenschutz.html" class="hover:text-orange-300 mx-2">Datenschutz</a> ·
-  <a href="agb.html" class="hover:text-orange-300 mx-2">AGB</a>
-  <div class="mt-1 text-gray-700">© Sebastian Wimmer · peaking.world · powered by PEAKING</div>
+<footer class="max-w-5xl mx-auto mt-12 mb-8 text-center text-[10px] border-t border-white/5 pt-4" style="color:var(--muted-soft)">
+  <a href="impressum.html" class="hover:text-emerald-400 mx-2">Impressum</a> ·
+  <a href="datenschutz.html" class="hover:text-emerald-400 mx-2">Datenschutz</a> ·
+  <a href="agb.html" class="hover:text-emerald-400 mx-2">AGB</a>
+  <div class="mt-1" style="color:var(--muted-soft)">© Sebastian Wimmer · peaking.world · powered by PEAKING</div>
 </footer>
 
 </body>

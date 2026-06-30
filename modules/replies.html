@@ -5,7 +5,7 @@
 <meta http-equiv="Content-Security-Policy" content="default-src 'self' https:; script-src 'self' 'unsafe-inline' 'unsafe-eval' https:; style-src 'self' 'unsafe-inline' https:; img-src 'self' data: blob: https:; font-src 'self' data: https:; connect-src 'self' https: wss:; upgrade-insecure-requests">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
-<title>💬 Replies — PEAKING</title>
+<title>Replies — PEAKING</title>
 <link rel="icon" href="../assets/logo.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="../assets/logo.svg">
 <link rel="manifest" href="../manifest.json">
@@ -15,26 +15,32 @@
 <script src="../js/app.js"></script>
 <style>
   body {
-    background: linear-gradient(135deg, #0B0F14 0%, #11161D 100%);
+    background:
+      radial-gradient(60% 50% at 50% -10%, rgba(0,184,136,0.07), transparent 60%),
+      linear-gradient(135deg, #03080D 0%, #0B0F14 55%, #11161D 100%);
     min-height: 100dvh;
-    color: white;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    color: var(--paper);
+    font-family: var(--ff-body);
   }
+  h1, h2 { font-family: var(--ff-display); letter-spacing: -0.02em; }
   .glass {
-    background: rgba(30, 41, 59, 0.6);
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255,255,255,0.1);
+    background: var(--s2s-card-bg);
+    -webkit-backdrop-filter: blur(16px); backdrop-filter: blur(16px);
+    border: var(--s2s-card-border);
+    box-shadow: var(--s2s-card-shadow);
   }
-  .neon { color: #00B888; }
+  .neon { color: var(--emerald-soft); }
   .btn-primary {
-    background: linear-gradient(135deg, #00B888, #1FC998);
-    color: #04201A;
-    font-weight: bold;
-    transition: all 0.2s;
+    background: linear-gradient(135deg, var(--emerald), var(--emerald-soft));
+    color: #04130D;
+    font-family: var(--ff-display);
+    font-weight: 600;
+    box-shadow: 0 14px 34px -14px rgba(0,184,136,0.6), 0 1px 0 rgba(255,255,255,0.35) inset;
+    transition: transform var(--duration) var(--ease), box-shadow var(--duration) var(--ease), filter var(--duration) var(--ease);
   }
-  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(0, 184, 136, 0.4); }
-  input, textarea, select { background: rgba(15, 23, 42, 0.6); border: 1px solid rgba(255,255,255,0.15); color: white; }
-  input:focus, textarea:focus, select:focus { outline: none; border-color: #00B888; }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 20px 46px -14px rgba(0,184,136,0.78), 0 1px 0 rgba(255,255,255,0.4) inset; filter: saturate(1.08); }
+  input, textarea, select { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); color: var(--paper); transition: border-color var(--duration-fast), box-shadow var(--duration-fast), background var(--duration-fast); }
+  input:focus, textarea:focus, select:focus { outline: none; border-color: var(--emerald); background: rgba(0,184,136,0.05); box-shadow: 0 0 0 3px rgba(0,184,136,0.16); }
   .modal-bg { background: rgba(0,0,0,0.7); backdrop-filter: blur(4px); }
   .toast {
     position: fixed; bottom: 24px; left: 50%;
@@ -56,15 +62,16 @@
     transition: all 0.15s;
     font-size: 13px;
   }
-  .tab-btn.active { color: #00B888; border-bottom-color: #00B888; }
+  .tab-btn { font-family: var(--ff-display); }
+  .tab-btn.active { color: var(--emerald-soft); border-bottom-color: var(--emerald); }
   .reply-card {
-    background: rgba(15, 23, 42, 0.4);
-    border: 1px solid rgba(255,255,255,0.08);
+    background: linear-gradient(168deg, rgba(17,22,29,0.7), rgba(8,13,18,0.7));
+    border: 1px solid rgba(255,255,255,0.07);
     border-radius: 14px;
     padding: 14px;
-    transition: all 0.2s;
+    transition: transform var(--duration) var(--ease), border-color var(--duration) var(--ease), box-shadow var(--duration) var(--ease);
   }
-  .reply-card:hover { border-color: rgba(0, 184, 136, 0.3); }
+  .reply-card:hover { transform: translateY(-2px); border-color: rgba(0, 184, 136, 0.35); box-shadow: 0 18px 44px -28px rgba(0,0,0,0.85), 0 0 22px rgba(0,184,136,0.12); }
   .reply-text {
     font-size: 14px;
     line-height: 1.6;
@@ -86,18 +93,22 @@
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.5px;
-    background: rgba(0, 184, 136, 0.15);
-    color: #00B888;
+    background: rgba(0, 184, 136, 0.12);
+    color: var(--emerald-soft);
+    border: 1px solid rgba(0,184,136,0.25);
+    font-family: var(--ff-display);
   }
   .fab {
     position: fixed; bottom: 20px; right: 20px;
     width: 56px; height: 56px; border-radius: 999px;
-    background: linear-gradient(135deg, #00B888, #1FC998);
-    color: #04201A; font-size: 28px; font-weight: bold;
-    box-shadow: 0 8px 24px rgba(0, 184, 136, 0.4);
+    background: linear-gradient(135deg, var(--emerald), var(--emerald-soft));
+    color: #04130D; font-size: 28px; font-weight: bold;
+    box-shadow: 0 14px 34px -10px rgba(0, 184, 136, 0.6);
     display: flex; align-items: center; justify-content: center;
     cursor: pointer; z-index: 50; border: none;
+    transition: transform var(--duration) var(--ease), box-shadow var(--duration) var(--ease);
   }
+  .fab:hover { transform: translateY(-2px) scale(1.05); box-shadow: 0 20px 44px -12px rgba(0,184,136,0.7); }
   .preview-box {
     background: rgba(15, 23, 42, 0.8);
     border: 1px solid rgba(0, 184, 136, 0.2);
@@ -110,7 +121,7 @@
   }
 </style>
 </head>
-<body class="p-4 md:p-6 pb-24 bg-depth">
+<body class="p-4 md:p-6 pb-24 bg-depth s2s-ambient">
 
 <div class="max-w-4xl mx-auto">
 
@@ -118,28 +129,33 @@
   <div class="flex justify-between items-center mb-4">
     <div>
       <a href="../dashboard.html" class="text-xs text-gray-400 hover:text-white">← Dashboard</a>
-      <h1 class="text-2xl md:text-3xl font-bold mt-1">💬 <span class="text-sunrise">Quick Replies</span></h1>
+      <h1 class="text-2xl md:text-3xl font-bold mt-1 flex items-center gap-2.5">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:1.1em;height:1.1em;color:var(--emerald-soft)"><path d="M21 12a8 8 0 0 1-11.3 7.3L3 21l1.7-6.7A8 8 0 1 1 21 12z"/></svg>
+        <span class="text-sunrise">Quick Replies</span>
+      </h1>
       <p class="text-gray-400 text-sm" id="stats">0 Templates</p>
     </div>
-    <button onclick="SmashApp.logout()" class="text-sm text-gray-400 hover:text-white">🔒</button>
+    <button onclick="SmashApp.logout()" class="text-sm text-gray-400 hover:text-white" title="Logout" aria-label="Logout">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:18px;height:18px"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>
+    </button>
   </div>
 
   <!-- Tabs -->
   <div class="glass rounded-2xl mb-5 flex overflow-hidden">
-    <div class="tab-btn active" data-tab="dm" onclick="switchTab('dm')">📥 DM</div>
-    <div class="tab-btn" data-tab="comment" onclick="switchTab('comment')">💬 Comment</div>
-    <div class="tab-btn" data-tab="story" onclick="switchTab('story')">⚡ Story-Reply</div>
+    <div class="tab-btn active" data-tab="dm" onclick="switchTab('dm')">DM</div>
+    <div class="tab-btn" data-tab="comment" onclick="switchTab('comment')">Comment</div>
+    <div class="tab-btn" data-tab="story" onclick="switchTab('story')">Story-Reply</div>
   </div>
 
   <!-- Reply List -->
   <div id="replyList" class="grid grid-cols-1 md:grid-cols-2 gap-3"></div>
   <div id="emptyState" class="hidden text-center py-12 text-gray-500">
-    <div class="text-5xl mb-3">💬</div>
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="width:42px;height:42px;margin:0 auto 12px;color:var(--muted)"><path d="M21 12a8 8 0 0 1-11.3 7.3L3 21l1.7-6.7A8 8 0 1 1 21 12z"/></svg>
     <p>Keine Templates in dieser Kategorie. Tap rechts unten +</p>
   </div>
 
   <div class="text-center text-gray-500 text-xs mt-12">
-    💬 PEAKING · Quick-Replies · Sebi-Style: ehrlich + kraftvoll + kein corporate-Bullshit
+    Quick-Replies · powered by PEAKING · Sebi-Style: ehrlich + kraftvoll + kein corporate-Bullshit
   </div>
 </div>
 
@@ -150,13 +166,13 @@
 <div id="useModal" class="hidden fixed inset-0 modal-bg z-50 flex items-center justify-center p-4">
   <div class="glass rounded-3xl p-6 w-full max-w-lg max-h-[90vh] overflow-y-auto">
     <div class="flex justify-between items-center mb-4">
-      <h2 class="text-xl font-bold">💬 Reply anpassen</h2>
+      <h2 class="text-xl font-bold">Reply anpassen</h2>
       <button onclick="closeUseModal()" class="text-gray-400 hover:text-white text-2xl">×</button>
     </div>
     <div id="useVars" class="space-y-2 mb-4"></div>
     <div class="text-xs text-gray-500 mb-2 font-bold uppercase tracking-wider">Live-Preview</div>
     <div id="previewBox" class="preview-box mb-4"></div>
-    <button onclick="copyPreview()" class="btn-primary w-full p-3 rounded-xl">📋 Reply kopieren</button>
+    <button onclick="copyPreview()" class="btn-primary w-full p-3 rounded-xl">Reply kopieren</button>
   </div>
 </div>
 
@@ -164,7 +180,7 @@
 <div id="editModal" class="hidden fixed inset-0 modal-bg z-50 flex items-center justify-center p-4">
   <div class="glass rounded-3xl p-6 w-full max-w-md max-h-[90vh] overflow-y-auto">
     <div class="flex justify-between items-center mb-4">
-      <h2 class="text-xl font-bold" id="editTitle">+ Neues Template</h2>
+      <h2 class="text-xl font-bold" id="editTitle">Neues Template</h2>
       <button onclick="closeEditModal()" class="text-gray-400 hover:text-white text-2xl">×</button>
     </div>
     <div class="space-y-3">
@@ -179,13 +195,13 @@
       <div>
         <label class="block text-xs text-gray-400 mb-1">Kategorie</label>
         <select id="editTab" class="w-full p-3 rounded-xl text-sm">
-          <option value="dm">📥 DM</option>
-          <option value="comment">💬 Comment</option>
-          <option value="story">⚡ Story-Reply</option>
+          <option value="dm">DM</option>
+          <option value="comment">Comment</option>
+          <option value="story">Story-Reply</option>
         </select>
       </div>
-      <button onclick="saveTemplate()" class="btn-primary w-full p-3 rounded-xl">💾 Speichern</button>
-      <button id="deleteBtn" onclick="deleteTemplate()" class="hidden w-full p-2 text-sm text-red-400 hover:text-red-300">🗑️ Löschen</button>
+      <button onclick="saveTemplate()" class="btn-primary w-full p-3 rounded-xl">Speichern</button>
+      <button id="deleteBtn" onclick="deleteTemplate()" class="hidden w-full p-2 text-sm text-red-400 hover:text-red-300">Löschen</button>
     </div>
   </div>
 </div>
@@ -201,7 +217,7 @@ const SEED = [
   { id: 5001, tab: 'dm', ctx: 'Brand-Pitch / Collab-Anfrage', text: "Hey [NAME], danke für deine Nachricht!\n\nIch schaue mir [BRAND] gerne an. Schick mir bitte:\n• Was schwebt dir konkret vor?\n• Compensation-Range\n• Timeline\n\nDann antworte ich dir innerhalb 48h ehrlich ob's matched.\n\nLG, Sebi" },
   { id: 5002, tab: 'dm', ctx: 'Newbie-Tool-Frage', text: "Hey [NAME] — danke für die Frage!\n\nKurzer Tipp: [TIPP].\n\nFalls du mehr willst: ich bau gerade alles Public auf @peakingworld — da kommt jeden Tag neuer Insight.\n\nKeep climbing. ⛰️" },
   { id: 5003, tab: 'dm', ctx: 'Press / Investor', text: "Hi [NAME], danke für dein Interesse.\n\nFür Press + Pitch-Deck: peaking.world/links\nFür Direkt-Call: info@peaking.world\n\nFreue mich auf Austausch.\n\nSebi · Founder, PEAKING" },
-  { id: 5004, tab: 'dm', ctx: 'Spam / 'investiere für dich'', text: "Danke, aber kein Interesse — ich invest mich selbst." },
+  { id: 5004, tab: 'dm', ctx: "Spam / 'investiere für dich'", text: "Danke, aber kein Interesse — ich invest mich selbst." },
   { id: 5005, tab: 'dm', ctx: 'Compliment ehrlich beantworten', text: "Danke [NAME], freut mich richtig. 🙏\n\nWas hat dich am meisten überzeugt? Würde mir helfen die nächsten Reels zu schärfen." },
 
   // COMMENT

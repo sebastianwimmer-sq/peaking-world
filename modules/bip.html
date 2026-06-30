@@ -5,7 +5,7 @@
 <meta http-equiv="Content-Security-Policy" content="default-src 'self' https:; script-src 'self' 'unsafe-inline' 'unsafe-eval' https:; style-src 'self' 'unsafe-inline' https:; img-src 'self' data: blob: https:; font-src 'self' data: https:; connect-src 'self' https: wss:; upgrade-insecure-requests">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
-<title>📊 BIP Daily-Log — PEAKING</title>
+<title>BIP Daily-Log — PEAKING</title>
 <link rel="icon" href="../assets/logo.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="../assets/logo.svg">
 <link rel="manifest" href="../manifest.json">
@@ -16,41 +16,51 @@
 <script src="../js/app.js"></script>
 <style>
   body {
-    background: linear-gradient(135deg, #0B0F14 0%, #11161D 100%);
+    background:
+      radial-gradient(60% 50% at 50% -10%, rgba(0,184,136,0.07), transparent 60%),
+      linear-gradient(135deg, #03080D 0%, #0B0F14 55%, #11161D 100%);
     min-height: 100dvh;
-    color: white;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    color: var(--paper);
+    font-family: var(--ff-body);
   }
+  h1, h2 { font-family: var(--ff-display); letter-spacing: -0.02em; }
   .glass {
-    background: rgba(30, 41, 59, 0.6);
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255,255,255,0.1);
+    background: var(--s2s-card-bg);
+    -webkit-backdrop-filter: blur(16px); backdrop-filter: blur(16px);
+    border: var(--s2s-card-border);
+    box-shadow: var(--s2s-card-shadow);
   }
-  .neon { color: #00B888; }
+  .neon { color: var(--emerald-soft); }
   .btn-primary {
-    background: linear-gradient(135deg, #00B888, #1FC998);
-    color: #04201A;
-    font-weight: bold;
-    transition: all 0.2s;
+    background: linear-gradient(135deg, var(--emerald), var(--emerald-soft));
+    color: #04130D;
+    font-family: var(--ff-display);
+    font-weight: 600;
+    letter-spacing: 0.01em;
+    box-shadow: 0 14px 34px -14px rgba(0,184,136,0.6), 0 1px 0 rgba(255,255,255,0.35) inset;
+    transition: transform var(--duration) var(--ease), box-shadow var(--duration) var(--ease), filter var(--duration) var(--ease);
   }
-  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(0, 184, 136, 0.4); }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 20px 46px -14px rgba(0,184,136,0.78), 0 1px 0 rgba(255,255,255,0.4) inset; filter: saturate(1.08); }
   input, select, textarea {
-    background: rgba(15, 23, 42, 0.6);
-    border: 1px solid rgba(255,255,255,0.15);
-    color: white;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.1);
+    color: var(--paper);
+    transition: border-color var(--duration-fast), box-shadow var(--duration-fast), background var(--duration-fast);
   }
   input:focus, select:focus, textarea:focus {
     outline: none;
-    border-color: #00B888;
+    border-color: var(--emerald);
+    background: rgba(0,184,136,0.05);
+    box-shadow: 0 0 0 3px rgba(0,184,136,0.16);
   }
   .log-card {
-    background: rgba(15, 23, 42, 0.5);
-    border: 1px solid rgba(255,255,255,0.08);
+    background: linear-gradient(168deg, rgba(17,22,29,0.7), rgba(8,13,18,0.7));
+    border: 1px solid rgba(255,255,255,0.07);
     border-radius: 16px;
     padding: 16px;
-    transition: all 0.2s;
+    transition: transform var(--duration) var(--ease), border-color var(--duration) var(--ease), box-shadow var(--duration) var(--ease);
   }
-  .log-card:hover { border-color: rgba(0, 184, 136, 0.3); }
+  .log-card:hover { transform: translateY(-2px); border-color: rgba(0, 184, 136, 0.35); box-shadow: 0 18px 44px -28px rgba(0,0,0,0.85), 0 0 22px rgba(0,184,136,0.12); }
   .energy-slider {
     -webkit-appearance: none;
     appearance: none;
@@ -77,15 +87,15 @@
     cursor: pointer;
   }
   .stat-mini {
-    background: rgba(15, 23, 42, 0.4);
     border-radius: 12px;
     padding: 10px 14px;
     display: flex;
     flex-direction: column;
     gap: 2px;
   }
-  .stat-mini .lbl { font-size: 10px; color: #64748b; text-transform: uppercase; letter-spacing: 0.5px; font-weight: 700; }
-  .stat-mini .val { font-size: 20px; font-weight: 800; }
+  .stat-mini { background: linear-gradient(168deg, rgba(17,22,29,0.55), rgba(8,13,18,0.55)); border: 1px solid rgba(255,255,255,0.06); }
+  .stat-mini .lbl { font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.07em; font-weight: 700; font-family: var(--ff-display); }
+  .stat-mini .val { font-size: 20px; font-weight: 700; font-family: var(--ff-display); }
   .toast {
     position: fixed; bottom: 24px; left: 50%;
     transform: translateX(-50%) translateY(100px);
@@ -105,19 +115,22 @@
     color: #04201A;
   }
   .quick-prompt {
+    display: inline-flex; align-items: center; gap: 6px;
     padding: 8px 12px;
     border-radius: 10px;
     background: rgba(0, 184, 136, 0.08);
-    border: 1px solid rgba(0, 184, 136, 0.2);
-    color: #00B888;
+    border: 1px solid rgba(0, 184, 136, 0.22);
+    color: var(--emerald-soft);
     font-size: 12px;
+    font-weight: 600;
     cursor: pointer;
-    transition: all 0.15s;
+    transition: background var(--duration-fast), border-color var(--duration-fast), transform var(--duration-fast);
   }
-  .quick-prompt:hover { background: rgba(0, 184, 136, 0.15); }
+  .quick-prompt:hover { background: rgba(0, 184, 136, 0.15); border-color: rgba(0,184,136,0.4); transform: translateY(-1px); }
+  .quick-prompt svg { width: 14px; height: 14px; }
 </style>
 </head>
-<body class="p-4 md:p-6 pb-24 bg-depth">
+<body class="p-4 md:p-6 pb-24 bg-depth s2s-ambient">
 
 <div class="max-w-4xl mx-auto">
 
@@ -125,10 +138,15 @@
   <div class="flex justify-between items-center mb-4">
     <div>
       <a href="../dashboard.html" class="text-xs text-gray-400 hover:text-white">← Dashboard</a>
-      <h1 class="text-2xl md:text-3xl font-bold mt-1">📊 <span class="text-sunrise">BIP Daily-Log</span></h1>
+      <h1 class="text-2xl md:text-3xl font-bold mt-1 flex items-center gap-2.5">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:1.1em;height:1.1em;color:var(--emerald-soft)"><path d="M3 3v18h18"/><path d="M7 15l4-4 3 3 5-6"/></svg>
+        <span class="text-sunrise">BIP Daily-Log</span>
+      </h1>
       <p class="text-gray-400 text-sm">Building in Public — täglich kurz festhalten was passiert</p>
     </div>
-    <button onclick="SmashApp.logout()" class="text-sm text-gray-400 hover:text-white">🔒</button>
+    <button onclick="SmashApp.logout()" class="text-sm text-gray-400 hover:text-white" title="Logout" aria-label="Logout">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:18px;height:18px"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>
+    </button>
   </div>
 
   <!-- Stats Grid -->
@@ -142,19 +160,19 @@
   <!-- Today's Log Form -->
   <div class="glass gradient-flow rounded-3xl p-5 mb-5 float-in">
     <div class="flex items-baseline justify-between mb-4">
-      <h2 class="text-lg font-bold">✍️ Heute (<span id="todayLabel">…</span>)</h2>
+      <h2 class="text-lg font-bold">Heute (<span id="todayLabel">…</span>)</h2>
       <span id="todayStatus" class="text-xs text-gray-400">Noch nicht geloggt</span>
     </div>
 
     <!-- Quick prompts -->
     <div class="text-xs text-gray-500 uppercase tracking-wider font-bold mb-2">Quick-Prompts</div>
     <div class="flex gap-2 flex-wrap mb-4">
-      <button class="quick-prompt" onclick="addPrompt('Today I shipped: ')">🚀 Shipped</button>
-      <button class="quick-prompt" onclick="addPrompt('Reel posted: ')">📱 Reel</button>
-      <button class="quick-prompt" onclick="addPrompt('Lesson learned: ')">💡 Lesson</button>
-      <button class="quick-prompt" onclick="addPrompt('Stat: ')">📊 Stat</button>
-      <button class="quick-prompt" onclick="addPrompt('Win: ')">🏆 Win</button>
-      <button class="quick-prompt" onclick="addPrompt('Stuck on: ')">🧗 Stuck</button>
+      <button class="quick-prompt" onclick="addPrompt('Today I shipped: ')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20l5-1 9-9a2.8 2.8 0 0 0-4-4l-9 9-1 5z"/><path d="M12 6l4 4"/></svg>Shipped</button>
+      <button class="quick-prompt" onclick="addPrompt('Reel posted: ')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="3" width="12" height="18" rx="2"/><path d="M11 18h2"/></svg>Reel</button>
+      <button class="quick-prompt" onclick="addPrompt('Lesson learned: ')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6"/><path d="M10 22h4"/><path d="M12 2a7 7 0 0 0-4 12.7c.6.5 1 1.3 1 2.3h6c0-1 .4-1.8 1-2.3A7 7 0 0 0 12 2z"/></svg>Lesson</button>
+      <button class="quick-prompt" onclick="addPrompt('Stat: ')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><rect x="7" y="11" width="3" height="6"/><rect x="13" y="7" width="3" height="10"/></svg>Stat</button>
+      <button class="quick-prompt" onclick="addPrompt('Win: ')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 21h8"/><path d="M12 17v4"/><path d="M7 4h10v4a5 5 0 0 1-10 0V4z"/><path d="M5 5H3v2a3 3 0 0 0 3 3"/><path d="M19 5h2v2a3 3 0 0 1-3 3"/></svg>Win</button>
+      <button class="quick-prompt" onclick="addPrompt('Stuck on: ')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 21l5-9"/><path d="M14 12l5 9"/><path d="M4 12l7-9 4 6-5 3z"/></svg>Stuck</button>
     </div>
 
     <textarea id="logText" rows="4" class="w-full p-3 rounded-xl text-sm mb-3" placeholder="Was war heute? In 1-3 Sätzen. Material für nächste BIP-Reels."></textarea>
@@ -178,25 +196,25 @@
       <input type="range" min="1" max="10" value="7" id="logEnergy" class="energy-slider" oninput="document.getElementById('energyVal').textContent = this.value + '/10'">
     </div>
 
-    <button onclick="saveTodayLog()" class="btn-primary w-full p-3 rounded-xl">💾 Heute speichern</button>
+    <button onclick="saveTodayLog()" class="btn-primary w-full p-3 rounded-xl">Heute speichern</button>
   </div>
 
   <!-- Past Logs -->
   <div class="glass rounded-3xl p-5 mb-5">
     <div class="flex items-baseline justify-between mb-4">
-      <h2 class="text-lg font-bold">📅 Letzte Tage</h2>
-      <button onclick="exportLogs()" class="text-xs neon hover:underline">📥 Export JSON</button>
+      <h2 class="text-lg font-bold">Letzte Tage</h2>
+      <button onclick="exportLogs()" class="text-xs neon hover:underline inline-flex items-center gap-1.5"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:13px;height:13px"><path d="M12 3v12"/><path d="M7 10l5 5 5-5"/><path d="M5 21h14"/></svg>Export JSON</button>
     </div>
     <div id="logsList" class="space-y-3"></div>
     <div id="logsEmpty" class="hidden text-center py-12 text-gray-500">
-      <div class="text-5xl mb-3">📝</div>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="width:42px;height:42px;margin:0 auto 12px;color:var(--muted)"><path d="M4 4h11l5 5v11a0 0 0 0 1 0 0H4z"/><path d="M15 4v5h5"/><path d="M9 13h6"/><path d="M9 17h4"/></svg>
       <p>Noch keine Logs. Beginne heute — auch ein 1-Satz-Log zählt.</p>
     </div>
   </div>
 
   <!-- Energy Trend Chart (when 5+ logs exist) -->
   <div class="glass rounded-3xl p-5 mb-5 hidden" id="trendCard">
-    <h2 class="text-lg font-bold mb-1">📈 Energy-Trend</h2>
+    <h2 class="text-lg font-bold mb-1">Energy-Trend</h2>
     <p class="text-xs text-gray-400 mb-4">Wie sich dein Building-Vibe über Zeit entwickelt.</p>
     <div style="position: relative; height: 200px;">
       <canvas id="energyChart"></canvas>
@@ -204,7 +222,7 @@
   </div>
 
   <div class="text-center text-gray-500 text-xs mt-12">
-    📊 BIP-Log · powered by PEAKING · Solo built. Public stats.
+    BIP-Log · powered by PEAKING · Solo built. Public stats.
   </div>
 </div>
 
@@ -212,7 +230,7 @@
 <div id="editModal" class="hidden fixed inset-0 modal-bg z-50 flex items-center justify-center p-4">
   <div class="glass rounded-3xl p-6 w-full max-w-md max-h-[90vh] overflow-y-auto">
     <div class="flex justify-between items-center mb-4">
-      <h2 class="text-xl font-bold">✏️ Log bearbeiten</h2>
+      <h2 class="text-xl font-bold">Log bearbeiten</h2>
       <button onclick="closeEditModal()" class="text-gray-400 hover:text-white text-2xl">×</button>
     </div>
     <div class="space-y-3">
@@ -238,8 +256,8 @@
         <label class="block text-xs text-gray-400 mb-1">Energy: <span id="editEnergyVal">7</span>/10</label>
         <input type="range" min="1" max="10" id="editEnergy" class="energy-slider" oninput="document.getElementById('editEnergyVal').textContent = this.value">
       </div>
-      <button onclick="saveEdit()" class="btn-primary w-full p-3 rounded-xl">💾 Speichern</button>
-      <button onclick="deleteLog()" class="w-full p-2 text-sm text-red-400 hover:text-red-300">🗑️ Log löschen</button>
+      <button onclick="saveEdit()" class="btn-primary w-full p-3 rounded-xl">Speichern</button>
+      <button onclick="deleteLog()" class="w-full p-2 text-sm text-red-400 hover:text-red-300">Log löschen</button>
     </div>
   </div>
 </div>

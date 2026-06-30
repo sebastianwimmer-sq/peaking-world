@@ -5,7 +5,7 @@
 <meta http-equiv="Content-Security-Policy" content="default-src 'self' https:; script-src 'self' 'unsafe-inline' 'unsafe-eval' https:; style-src 'self' 'unsafe-inline' https:; img-src 'self' data: blob: https:; font-src 'self' data: https:; connect-src 'self' https: wss:; upgrade-insecure-requests">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
-<title>🏔️ Goals — PEAKING</title>
+<title>Goals — PEAKING</title>
 <link rel="icon" href="../assets/logo.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="../assets/logo.svg">
 <link rel="manifest" href="../manifest.json">
@@ -15,26 +15,31 @@
 <script src="../js/app.js"></script>
 <style>
   body {
-    background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+    background: linear-gradient(160deg, var(--ink) 0%, var(--ink-800) 60%, var(--ink-700) 100%);
     min-height: 100dvh;
-    color: white;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    color: var(--paper);
+    font-family: var(--ff-body);
   }
+  h1, h2, h3, .font-bold { font-family: var(--ff-display); letter-spacing: -0.01em; }
   .glass {
-    background: rgba(30, 41, 59, 0.6);
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255,255,255,0.1);
+    background: var(--s2s-card-bg);
+    -webkit-backdrop-filter: blur(16px);
+    backdrop-filter: blur(16px);
+    border: var(--s2s-card-border);
+    box-shadow: var(--s2s-card-shadow);
   }
-  .neon { color: #00B888; }
+  .neon { color: var(--emerald-soft); }
   .btn-primary {
-    background: linear-gradient(135deg, #00B888, #1FC998);
-    color:#04201A;
-    font-weight: bold;
-    transition: all 0.2s;
+    background: linear-gradient(135deg, var(--emerald), var(--emerald-soft));
+    color:#04130D;
+    font-family: var(--ff-display);
+    font-weight: 600;
+    box-shadow: 0 14px 34px -14px rgba(0,184,136,0.6), 0 1px 0 rgba(255,255,255,0.35) inset;
+    transition: transform var(--duration) var(--ease), box-shadow var(--duration) var(--ease), filter var(--duration) var(--ease);
   }
-  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(0, 184, 136, 0.4); }
-  input { background: rgba(15, 23, 42, 0.6); border: 1px solid rgba(255,255,255,0.15); color: white; }
-  input:focus { outline: none; border-color: #00B888; }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 20px 46px -14px rgba(0,184,136,0.78), 0 1px 0 rgba(255,255,255,0.4) inset; filter: saturate(1.08); }
+  input { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); color: var(--paper); transition: border-color var(--duration-fast), box-shadow var(--duration-fast), background var(--duration-fast); }
+  input:focus { outline: none; border-color: var(--emerald); background: rgba(0,184,136,0.05); box-shadow: 0 0 0 3px rgba(0,184,136,0.16); }
   .toast {
     position: fixed; bottom: 24px; left: 50%;
     transform: translateX(-50%) translateY(100px);
@@ -153,18 +158,26 @@
   .modal-bg { background: rgba(0,0,0,0.7); backdrop-filter: blur(4px); }
 </style>
 </head>
-<body class="p-4 md:p-6 pb-12 bg-depth">
+<body class="p-4 md:p-6 pb-12 bg-depth s2s-ambient">
 
 <div class="max-w-3xl mx-auto">
 
   <!-- Header -->
   <div class="flex justify-between items-center mb-4">
     <div>
-      <a href="../dashboard.html" class="text-xs text-gray-400 hover:text-white">← Dashboard</a>
-      <h1 class="text-2xl md:text-3xl font-bold mt-1">🏔️ <span class="text-sunrise">Goals</span></h1>
+      <a href="../dashboard.html" class="text-xs text-gray-400 hover:text-white inline-flex items-center gap-1">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+        Dashboard
+      </a>
+      <h1 class="text-2xl md:text-3xl font-bold mt-1 flex items-center gap-2">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="url(#g-peak)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><defs><linearGradient id="g-peak" x1="0" y1="0" x2="24" y2="24"><stop stop-color="#00B888"/><stop offset="1" stop-color="#28C281"/></linearGradient></defs><path d="m3 20 6.5-12 4 6 2-3.5L21 20z"/></svg>
+        <span class="text-sunrise">Goals</span>
+      </h1>
       <p class="text-gray-400 text-sm">Von der Strategie zur Skalierung — dein Weg 2k → 1M</p>
     </div>
-    <button onclick="SmashApp.logout()" class="text-sm text-gray-400 hover:text-white">🔒</button>
+    <button onclick="SmashApp.logout()" class="text-gray-400 hover:text-white" aria-label="Logout">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="m16 17 5-5-5-5M21 12H9"/></svg>
+    </button>
   </div>
 
   <!-- Hero Progress -->
@@ -181,15 +194,16 @@
       <span id="progressPct">0%</span> zur nächsten Mile · <span id="lifetimePct">0%</span> zum 1M-Peak
     </div>
 
-    <button onclick="updateCount()" class="btn-primary mt-5 px-6 py-2.5 rounded-xl">
-      📊 Follower-Stand updaten
+    <button onclick="updateCount()" class="btn-primary mt-5 px-6 py-2.5 rounded-xl inline-flex items-center gap-2">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><rect x="7" y="11" width="3" height="6"/><rect x="13" y="7" width="3" height="10"/></svg>
+      Follower-Stand updaten
     </button>
   </div>
 
   <!-- Milestones -->
   <div class="glass rounded-3xl p-5 mb-5">
     <div class="flex items-baseline justify-between mb-4">
-      <h2 class="text-lg font-bold">🎯 Milestones</h2>
+      <h2 class="text-lg font-bold">Milestones</h2>
       <span class="text-xs text-gray-400" id="milestoneStats">0/11 erreicht</span>
     </div>
     <div id="milestoneList" class="stagger"></div>
@@ -198,7 +212,7 @@
   <!-- Custom Goals -->
   <div class="glass rounded-3xl p-5 mb-5">
     <div class="flex items-baseline justify-between mb-3">
-      <h2 class="text-lg font-bold">🎨 Eigene Goals</h2>
+      <h2 class="text-lg font-bold">Eigene Goals</h2>
       <button onclick="openCustomModal()" class="text-xs neon hover:underline">+ Custom-Goal</button>
     </div>
     <p class="text-xs text-gray-400 mb-4">Z.B. „5.000 bis Ende August" oder „Erstes 10k-Reel" — was du dir konkret vornimmst.</p>
@@ -210,7 +224,7 @@
 
   <!-- History -->
   <div class="glass rounded-3xl p-5 mb-5">
-    <h2 class="text-lg font-bold mb-1">📈 Follower-History</h2>
+    <h2 class="text-lg font-bold mb-1">Follower-History</h2>
     <p class="text-xs text-gray-400 mb-3">Jeder Update wird hier festgehalten. Zeigt deine Climb-Bewegung.</p>
     <div id="historyList" class="space-y-1.5 text-sm"></div>
     <div id="historyEmpty" class="hidden text-center py-6 text-gray-500 text-sm italic">
@@ -219,7 +233,7 @@
   </div>
 
   <div class="text-center text-gray-500 text-xs mt-8">
-    🏔️ powered by PEAKING · Strategie statt Zufall.
+    powered by PEAKING · Strategie statt Zufall.
   </div>
 </div>
 
@@ -227,7 +241,7 @@
 <div id="updateModal" class="hidden fixed inset-0 modal-bg z-50 flex items-center justify-center p-4">
   <div class="glass rounded-3xl p-6 w-full max-w-sm">
     <div class="flex justify-between items-center mb-4">
-      <h2 class="text-xl font-bold">📊 Follower-Update</h2>
+      <h2 class="text-xl font-bold">Follower-Update</h2>
       <button onclick="closeUpdateModal()" class="text-gray-400 hover:text-white text-2xl">×</button>
     </div>
     <div class="space-y-3">
@@ -236,7 +250,7 @@
         <input type="number" id="newCount" class="w-full p-3 rounded-xl text-lg font-bold text-center" placeholder="z.B. 2150">
       </div>
       <div class="text-xs text-gray-500">Klassisch: 1× pro Woche updaten reicht (z.B. Sonntag-Reflexion).</div>
-      <button onclick="saveCount()" class="btn-primary w-full p-3 rounded-xl">💾 Speichern</button>
+      <button onclick="saveCount()" class="btn-primary w-full p-3 rounded-xl inline-flex items-center justify-center gap-2"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><path d="M17 21v-8H7v8M7 3v5h8"/></svg>Speichern</button>
     </div>
   </div>
 </div>
@@ -261,8 +275,8 @@
         <label class="block text-xs text-gray-400 mb-1">Deadline (optional)</label>
         <input type="date" id="customDeadline" class="w-full p-3 rounded-xl text-sm">
       </div>
-      <button onclick="saveCustom()" class="btn-primary w-full p-3 rounded-xl">💾 Speichern</button>
-      <button id="customDeleteBtn" onclick="deleteCustom()" class="hidden w-full p-2 text-sm text-red-400 hover:text-red-300">🗑️ Löschen</button>
+      <button onclick="saveCustom()" class="btn-primary w-full p-3 rounded-xl inline-flex items-center justify-center gap-2"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><path d="M17 21v-8H7v8M7 3v5h8"/></svg>Speichern</button>
+      <button id="customDeleteBtn" onclick="deleteCustom()" class="hidden w-full p-2 text-sm text-red-400 hover:text-red-300 inline-flex items-center justify-center gap-2"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2m2 0v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/></svg>Löschen</button>
     </div>
   </div>
 </div>

@@ -5,7 +5,7 @@
 <meta http-equiv="Content-Security-Policy" content="default-src 'self' https:; script-src 'self' 'unsafe-inline' 'unsafe-eval' https:; style-src 'self' 'unsafe-inline' https:; img-src 'self' data: blob: https:; font-src 'self' data: https:; connect-src 'self' https: wss:; upgrade-insecure-requests">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>📨 Story-Pack — PEAKING</title>
+<title>Story-Pack — PEAKING</title>
 <link rel="icon" href="../assets/logo.svg" type="image/svg+xml">
 <link rel="stylesheet" href="../assets/effects.css">
 <script src="https://cdn.tailwindcss.com"></script>
@@ -14,17 +14,20 @@
 <script src="../js/app.js"></script>
 <style>
   body {
-    background: linear-gradient(135deg, #0B0F14 0%, #11161D 100%);
+    background: linear-gradient(160deg, var(--ink) 0%, var(--ink-800) 60%, var(--ink-700) 100%);
     min-height: 100dvh;
-    color: white;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    color: var(--paper);
+    font-family: var(--ff-body);
   }
+  h1, h2, h3, .font-bold { font-family: var(--ff-display); letter-spacing: -0.01em; }
   .glass {
-    background: rgba(30, 41, 59, 0.6);
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255,255,255,0.1);
+    background: var(--s2s-card-bg);
+    -webkit-backdrop-filter: blur(16px);
+    backdrop-filter: blur(16px);
+    border: var(--s2s-card-border);
+    box-shadow: var(--s2s-card-shadow);
   }
-  .neon { color: #00B888; }
+  .neon { color: var(--emerald-soft); }
   .text-sunrise {
     background: linear-gradient(135deg, #00B888, #1FC998, #28C281);
     -webkit-background-clip: text;
@@ -69,26 +72,32 @@
     background: radial-gradient(circle at top right, #00B88822 0%, transparent 50%), linear-gradient(180deg, #0B0F14 0%, #000 100%);
   }
   .btn-primary {
-    background: linear-gradient(135deg, #00B888, #1FC998);
-    color: #04201A;
-    font-weight: 700;
+    background: linear-gradient(135deg, var(--emerald), var(--emerald-soft));
+    color: #04130D;
+    font-family: var(--ff-display);
+    font-weight: 600;
     padding: 10px 18px;
     border-radius: 12px;
     cursor: pointer;
     border: none;
-    transition: transform 0.15s;
+    box-shadow: 0 14px 34px -14px rgba(0,184,136,0.6), 0 1px 0 rgba(255,255,255,0.35) inset;
+    transition: transform var(--duration) var(--ease), box-shadow var(--duration) var(--ease), filter var(--duration) var(--ease);
     font-size: 13px;
   }
-  .btn-primary:hover { transform: translateY(-1px); }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 20px 46px -14px rgba(0,184,136,0.78), 0 1px 0 rgba(255,255,255,0.4) inset; filter: saturate(1.08); }
   .btn-secondary {
-    background: rgba(15, 23, 42, 0.6);
-    border: 1px solid rgba(0, 184, 136, 0.3);
-    color: white;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.12);
+    color: var(--paper);
+    font-family: var(--ff-display);
+    font-weight: 600;
     padding: 10px 18px;
     border-radius: 12px;
     cursor: pointer;
     font-size: 13px;
+    transition: border-color var(--duration) var(--ease), background var(--duration) var(--ease);
   }
+  .btn-secondary:hover { border-color: rgba(0,184,136,0.5); background: rgba(0,184,136,0.06); }
   .toast {
     position: fixed; bottom: 24px; left: 50%;
     transform: translateX(-50%) translateY(100px);
@@ -99,20 +108,28 @@
   .toast.show { transform: translateX(-50%) translateY(0); }
 </style>
 </head>
-<body class="p-4 md:p-6 pb-12">
+<body class="p-4 md:p-6 pb-12 s2s-ambient">
 
 <div class="max-w-6xl mx-auto">
 
   <!-- Header -->
   <div class="flex justify-between items-center mb-5">
     <div>
-      <a href="../dashboard.html" class="text-xs text-gray-400 hover:text-white">← Dashboard</a>
-      <h1 class="text-2xl md:text-3xl font-bold mt-1">📨 <span class="text-sunrise">Story-Pack</span></h1>
+      <a href="../dashboard.html" class="text-xs text-gray-400 hover:text-white inline-flex items-center gap-1">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+        Dashboard
+      </a>
+      <h1 class="text-2xl md:text-3xl font-bold mt-1 flex items-center gap-2">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="url(#g-story)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><defs><linearGradient id="g-story" x1="0" y1="0" x2="24" y2="24"><stop stop-color="#00B888"/><stop offset="1" stop-color="#28C281"/></linearGradient></defs><rect x="6" y="2" width="12" height="20" rx="3"/><path d="M12 6v6l3 2"/></svg>
+        <span class="text-sunrise">Story-Pack</span>
+      </h1>
       <p class="text-gray-400 text-sm">Auto-Story-Slides für Cross-Post · Reel-Drop · BIP · Hook-Insight</p>
     </div>
     <div class="flex gap-2">
-      <select id="accountSelector" class="bg-slate-800 rounded-lg p-2 text-sm" onchange="reload()"></select>
-      <button onclick="SmashApp.logout()" class="text-sm text-gray-400 hover:text-white">🔒</button>
+      <select id="accountSelector" class="rounded-lg p-2 text-sm" onchange="reload()"></select>
+      <button onclick="SmashApp.logout()" class="text-gray-400 hover:text-white" aria-label="Logout">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="m16 17 5-5-5-5M21 12H9"/></svg>
+      </button>
     </div>
   </div>
 

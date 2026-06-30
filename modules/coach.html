@@ -514,13 +514,13 @@ function renderHeatmap() {
         const intensity = data.maxER > 0 ? h.avgER / data.maxER : 0;
         const heightPct = Math.max(intensity * 100, 4);
         const bg = h.count === 0 ? 'rgba(255,255,255,0.05)' :
-          \`linear-gradient(180deg, #28C281 \${100 - intensity*40}%, #1FC998 \${100 - intensity*20}%, #00B888 100%)\`;
-        return \`
-          <div class="flex-1 group relative" title="\${String(h.hour).padStart(2,'0')}:00 · \${h.avgER.toFixed(1)}% ER · \${h.count} Reels">
-            <div style="height: \${heightPct}%; background: \${bg}; border-radius: 3px 3px 0 0; transition: opacity 0.2s;"></div>
-            \${h.count > 0 ? \`<div class="absolute -top-5 left-1/2 -translate-x-1/2 text-[9px] text-gray-400 opacity-0 group-hover:opacity-100 whitespace-nowrap">\${h.avgER.toFixed(1)}%</div>\` : ''}
+          `linear-gradient(180deg, #28C281 ${100 - intensity*40}%, #1FC998 ${100 - intensity*20}%, #00B888 100%)`;
+        return `
+          <div class="flex-1 group relative" title="${String(h.hour).padStart(2,'0')}:00 · ${h.avgER.toFixed(1)}% ER · ${h.count} Reels">
+            <div style="height: ${heightPct}%; background: ${bg}; border-radius: 3px 3px 0 0; transition: opacity 0.2s;"></div>
+            ${h.count > 0 ? `<div class="absolute -top-5 left-1/2 -translate-x-1/2 text-[9px] text-gray-400 opacity-0 group-hover:opacity-100 whitespace-nowrap">${h.avgER.toFixed(1)}%</div>` : ''}
           </div>
-        \`;
+        `;
       }).join('')}
     </div>
     <div class="flex justify-between text-[10px] text-gray-500 mt-1">
@@ -536,24 +536,24 @@ function renderHeatmap() {
       <thead>
         <tr>
           <td style="width: 24px;"></td>
-          \${Array.from({length: 24}, (_, h) => \`<td class="text-center text-[9px] text-gray-500" style="width: 12px;">\${h % 6 === 0 ? String(h).padStart(2,'0') : ''}</td>\`).join('')}
+          ${Array.from({length: 24}, (_, h) => `<td class="text-center text-[9px] text-gray-500" style="width: 12px;">${h % 6 === 0 ? String(h).padStart(2,'0') : ''}</td>`).join('')}
         </tr>
       </thead>
       <tbody>
-        \${data.grid.map((row, di) => \`
+        ${data.grid.map((row, di) => `
           <tr>
-            <td class="text-xs text-gray-400 font-bold pr-2">\${days[di]}</td>
-            \${row.map((cell, h) => {
+            <td class="text-xs text-gray-400 font-bold pr-2">${days[di]}</td>
+            ${row.map((cell, h) => {
               const intensity = data.maxER > 0 && cell.count > 0 ? cell.avgER / data.maxER : 0;
               const opacity = cell.count > 0 ? 0.3 + intensity * 0.7 : 0.05;
               const bg = cell.count > 0
-                ? \`hsla(\${20 + intensity * 30}, 90%, 55%, \${opacity})\`
+                ? `hsla(${20 + intensity * 30}, 90%, 55%, ${opacity})`
                 : 'rgba(255,255,255,0.04)';
-              return \`<td title="\${days[di]} \${String(h).padStart(2,'0')}:00 · \${cell.count} Reels · \${cell.avgER.toFixed(1)}% ER"
-                style="width: 12px; height: 14px; background: \${bg}; border-radius: 2px; cursor: \${cell.count > 0 ? 'help' : 'default'};"></td>\`;
+              return `<td title="${days[di]} ${String(h).padStart(2,'0')}:00 · ${cell.count} Reels · ${cell.avgER.toFixed(1)}% ER"
+                style="width: 12px; height: 14px; background: ${bg}; border-radius: 2px; cursor: ${cell.count > 0 ? 'help' : 'default'};"></td>`;
             }).join('')}
           </tr>
-        \`).join('')}
+        `).join('')}
       </tbody>
     </table>
     <div class="flex items-center gap-3 mt-3 text-[10px] text-gray-500">

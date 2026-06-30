@@ -5,7 +5,7 @@
 <meta http-equiv="Content-Security-Policy" content="default-src 'self' https:; script-src 'self' 'unsafe-inline' 'unsafe-eval' https:; style-src 'self' 'unsafe-inline' https:; img-src 'self' data: blob: https:; font-src 'self' data: https:; connect-src 'self' https: wss:; upgrade-insecure-requests">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
-<title>🪝 Hook Library — PEAKING</title>
+<title>Hook Library — PEAKING</title>
 <link rel="icon" href="../assets/logo.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="../assets/logo.svg">
 <link rel="manifest" href="../manifest.json">
@@ -15,26 +15,30 @@
 <script src="../js/app.js"></script>
 <style>
   body {
-    background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+    background: var(--ink);
     min-height: 100dvh;
-    color: white;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    color: var(--paper);
+    font-family: var(--ff-body);
   }
+  h1, h2, h3 { font-family: var(--ff-display); letter-spacing: -0.02em; }
   .glass {
-    background: rgba(30, 41, 59, 0.6);
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255,255,255,0.1);
+    background: var(--s2s-card-bg);
+    -webkit-backdrop-filter: blur(16px); backdrop-filter: blur(16px);
+    border: var(--s2s-card-border);
+    box-shadow: var(--s2s-card-shadow);
   }
-  .neon { color: #00B888; }
+  .neon { color: var(--emerald-soft); }
   .btn-primary {
-    background: linear-gradient(135deg, #00B888, #1FC998);
-    color:#04201A;
-    font-weight: bold;
-    transition: all 0.2s;
+    background: linear-gradient(135deg, var(--emerald), var(--emerald-soft));
+    color:#04130D;
+    font-family: var(--ff-display);
+    font-weight: 600;
+    box-shadow: 0 14px 34px -14px rgba(0, 184, 136, 0.6), 0 1px 0 rgba(255, 255, 255, 0.35) inset;
+    transition: transform var(--duration) var(--ease), box-shadow var(--duration) var(--ease), filter var(--duration) var(--ease);
   }
-  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(0, 184, 136, 0.4); }
-  input, select, textarea { background: rgba(15, 23, 42, 0.6); border: 1px solid rgba(255,255,255,0.15); color: white; }
-  input:focus, select:focus, textarea:focus { outline: none; border-color: #00B888; }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 20px 46px -14px rgba(0, 184, 136, 0.78), 0 1px 0 rgba(255, 255, 255, 0.4) inset; filter: saturate(1.08); }
+  input, select, textarea { background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255,255,255,0.1); color: var(--paper); transition: border-color var(--duration-fast), box-shadow var(--duration-fast), background var(--duration-fast); }
+  input:focus, select:focus, textarea:focus { outline: none; border-color: var(--emerald); background: rgba(0, 184, 136, 0.05); box-shadow: 0 0 0 3px rgba(0, 184, 136, 0.16); }
   .modal-bg { background: rgba(0,0,0,0.7); backdrop-filter: blur(4px); }
   .toast {
     position: fixed; bottom: 24px; left: 50%;
@@ -68,13 +72,14 @@
   .filter-scroll::-webkit-scrollbar { display: none; }
   .filter-scroll { -ms-overflow-style: none; scrollbar-width: none; }
   .hook-card {
-    background: rgba(15, 23, 42, 0.4);
+    background: linear-gradient(168deg, rgba(17,22,29,0.7), rgba(8,13,18,0.7));
     border: 1px solid rgba(255,255,255,0.08);
     border-radius: 14px;
     padding: 14px;
-    transition: all 0.2s;
+    box-shadow: 0 1px 0 rgba(255,255,255,0.04) inset;
+    transition: transform var(--duration) var(--ease), border-color var(--duration) var(--ease), box-shadow var(--duration) var(--ease);
   }
-  .hook-card:hover { border-color: rgba(0, 184, 136, 0.3); transform: translateY(-2px); }
+  .hook-card:hover { border-color: rgba(0, 184, 136, 0.4); transform: translateY(-3px); box-shadow: 0 1px 0 rgba(255,255,255,0.06) inset, 0 20px 44px -26px rgba(0,0,0,0.8), 0 0 24px rgba(0, 184, 136, 0.14); }
   .format-tag {
     display: inline-block;
     padding: 3px 10px;
@@ -108,12 +113,14 @@
   .fab {
     position: fixed; bottom: 20px; right: 20px;
     width: 56px; height: 56px; border-radius: 999px;
-    background: linear-gradient(135deg, #00B888, #1FC998);
-    color:#04201A; font-size: 28px; font-weight: bold;
-    box-shadow: 0 8px 24px rgba(0, 184, 136, 0.4);
+    background: linear-gradient(135deg, var(--emerald), var(--emerald-soft));
+    color:#04130D; font-size: 28px; font-family: var(--ff-display); font-weight: 600;
+    box-shadow: 0 14px 34px -14px rgba(0, 184, 136, 0.6), 0 1px 0 rgba(255,255,255,0.35) inset;
     display: flex; align-items: center; justify-content: center;
     cursor: pointer; z-index: 50; border: none;
+    transition: transform var(--duration) var(--ease), box-shadow var(--duration) var(--ease);
   }
+  .fab:hover { transform: translateY(-2px) scale(1.08); box-shadow: 0 20px 46px -14px rgba(0, 184, 136, 0.78), 0 1px 0 rgba(255,255,255,0.4) inset; }
   .var-highlight {
     background: rgba(0, 184, 136, 0.15);
     color: #00B888;
@@ -131,10 +138,10 @@
   <div class="flex justify-between items-center mb-4">
     <div>
       <a href="../dashboard.html" class="text-xs text-gray-400 hover:text-white">← Dashboard</a>
-      <h1 class="text-2xl md:text-3xl font-bold mt-1">🪝 <span class="text-sunrise">Hook Library</span></h1>
+      <h1 class="text-2xl md:text-3xl font-bold mt-1 s2s-grad">Hook Library</h1>
       <p class="text-gray-400 text-sm" id="hookStats">0 Hooks · 0 mit Win-Rate-Daten</p>
     </div>
-    <button onclick="SmashApp.logout()" class="text-sm text-gray-400 hover:text-white">🔒</button>
+    <button onclick="SmashApp.logout()" class="text-sm text-gray-400 hover:text-white">Logout</button>
   </div>
 
   <!-- Algorithm-Tip -->
@@ -199,7 +206,7 @@
   </div>
 
   <div class="text-center text-gray-500 text-xs mt-12">
-    🪝 PEAKING · Hook Library · Hook = 80% des Reach-Erfolgs
+    PEAKING · Hook Library · Hook = 80% des Reach-Erfolgs
   </div>
 </div>
 
@@ -215,7 +222,7 @@
     </div>
     <div id="useVars" class="space-y-2 mb-4"></div>
     <div class="text-xs text-gray-500 mb-2 font-bold uppercase tracking-wider">Live-Preview</div>
-    <div id="usePreview" class="rounded-xl p-3 bg-slate-800/60 border border-orange-500/20 text-sm font-medium leading-snug whitespace-pre-line min-h-[60px] mb-4"></div>
+    <div id="usePreview" class="rounded-xl p-3 bg-slate-800/60 text-sm font-medium leading-snug whitespace-pre-line min-h-[60px] mb-4" style="border:1px solid rgba(0,184,136,0.2)"></div>
     <div class="flex gap-2 flex-wrap">
       <button onclick="copyPreview()" class="btn-primary flex-1 p-3 rounded-xl">📋 Kopieren</button>
       <button onclick="saveAsIdea()" class="p-3 rounded-xl bg-slate-700/60 hover:bg-slate-600/60 text-sm" title="Als Idee in aktuellem Account speichern">💡 → Idea</button>
@@ -325,7 +332,7 @@ const SEED_HOOKS = [
 
   // QUOTE (saves > likes 2026)
   { id: 4901, format: 'quote', text: "[QUOTE].\n\n— Manchmal braucht's 6 Wörter um's zu kapieren." },
-  { id: 4902, format: 'quote', text: "„[STATEMENT]"\n\nLies es nochmal." }
+  { id: 4902, format: 'quote', text: '„[STATEMENT]"\n\nLies es nochmal.' }
 ];
 
 let hooks = [];

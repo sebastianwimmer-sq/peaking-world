@@ -5,7 +5,7 @@
 <meta http-equiv="Content-Security-Policy" content="default-src 'self' https:; script-src 'self' 'unsafe-inline' 'unsafe-eval' https:; style-src 'self' 'unsafe-inline' https:; img-src 'self' data: blob: https:; font-src 'self' data: https:; connect-src 'self' https: wss:; upgrade-insecure-requests">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
-<title>🎨 Captions — PEAKING</title>
+<title>Captions — PEAKING</title>
 <link rel="icon" href="../assets/logo.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="../assets/logo.svg">
 <link rel="manifest" href="../manifest.json">
@@ -15,24 +15,28 @@
 <script src="../js/app.js"></script>
 <style>
   body {
-    background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+    background: var(--ink);
     min-height: 100dvh;
-    color: white;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    color: var(--paper);
+    font-family: var(--ff-body);
   }
+  h1, h2, h3 { font-family: var(--ff-display); letter-spacing: -0.02em; }
   .glass {
-    background: rgba(30, 41, 59, 0.6);
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255,255,255,0.1);
+    background: var(--s2s-card-bg);
+    -webkit-backdrop-filter: blur(16px); backdrop-filter: blur(16px);
+    border: var(--s2s-card-border);
+    box-shadow: var(--s2s-card-shadow);
   }
-  .neon { color: #00B888; }
+  .neon { color: var(--emerald-soft); }
   .btn-primary {
-    background: linear-gradient(135deg, #00B888, #1FC998);
-    color:#04201A;
-    font-weight: bold;
-    transition: all 0.2s;
+    background: linear-gradient(135deg, var(--emerald), var(--emerald-soft));
+    color:#04130D;
+    font-family: var(--ff-display);
+    font-weight: 600;
+    box-shadow: 0 14px 34px -14px rgba(0, 184, 136, 0.6), 0 1px 0 rgba(255, 255, 255, 0.35) inset;
+    transition: transform var(--duration) var(--ease), box-shadow var(--duration) var(--ease), filter var(--duration) var(--ease);
   }
-  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(0, 184, 136, 0.3); }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 20px 46px -14px rgba(0, 184, 136, 0.78), 0 1px 0 rgba(255, 255, 255, 0.4) inset; filter: saturate(1.08); }
   .chip {
     display: inline-flex;
     align-items: center;
@@ -80,13 +84,16 @@
     font-weight: 700;
   }
   input, select, textarea {
-    background: rgba(15, 23, 42, 0.6);
-    border: 1px solid rgba(255,255,255,0.15);
-    color: white;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255,255,255,0.1);
+    color: var(--paper);
+    transition: border-color var(--duration-fast), box-shadow var(--duration-fast), background var(--duration-fast);
   }
   input:focus, select:focus, textarea:focus {
     outline: none;
-    border-color: #00B888;
+    border-color: var(--emerald);
+    background: rgba(0, 184, 136, 0.05);
+    box-shadow: 0 0 0 3px rgba(0, 184, 136, 0.16);
   }
   .modal-bg { background: rgba(0,0,0,0.7); backdrop-filter: blur(4px); }
   .filter-scroll::-webkit-scrollbar { display: none; }
@@ -103,13 +110,13 @@
   .fab {
     position: fixed; bottom: 20px; right: 20px;
     width: 56px; height: 56px; border-radius: 999px;
-    background: linear-gradient(135deg, #00B888, #1FC998);
-    color:#04201A; font-size: 28px; font-weight: bold;
-    box-shadow: 0 8px 24px rgba(0, 184, 136, 0.4);
+    background: linear-gradient(135deg, var(--emerald), var(--emerald-soft));
+    color:#04130D; font-size: 28px; font-family: var(--ff-display); font-weight: 600;
+    box-shadow: 0 14px 34px -14px rgba(0, 184, 136, 0.6), 0 1px 0 rgba(255,255,255,0.35) inset;
     display: flex; align-items: center; justify-content: center;
-    cursor: pointer; z-index: 50; border: none; transition: transform 0.2s;
+    cursor: pointer; z-index: 50; border: none; transition: transform var(--duration) var(--ease), box-shadow var(--duration) var(--ease);
   }
-  .fab:hover { transform: scale(1.1); }
+  .fab:hover { transform: translateY(-2px) scale(1.08); box-shadow: 0 20px 46px -14px rgba(0, 184, 136, 0.78), 0 1px 0 rgba(255,255,255,0.4) inset; }
   .tab-btn {
     flex: 1;
     padding: 10px 12px;
@@ -136,24 +143,24 @@
   }
 </style>
 </head>
-<body class="p-4 md:p-6 pb-24">
+<body class="p-4 md:p-6 pb-24 s2s-ambient">
 
-<div class="max-w-5xl mx-auto">
+<div class="max-w-5xl mx-auto s2s-stack">
 
   <!-- Header -->
   <div class="flex justify-between items-center mb-4">
     <div>
       <a href="../dashboard.html" class="text-xs text-gray-400 hover:text-white">← Dashboard</a>
-      <h1 class="text-2xl md:text-3xl font-bold mt-1">🎨 Caption Library</h1>
+      <h1 class="text-2xl md:text-3xl font-bold mt-1 s2s-grad">Caption Library</h1>
       <p class="text-gray-400 text-sm" id="captionStats">0 Templates</p>
     </div>
-    <button onclick="SmashApp.logout()" class="text-sm text-gray-400 hover:text-white">🔒 Logout</button>
+    <button onclick="SmashApp.logout()" class="text-sm text-gray-400 hover:text-white">Logout</button>
   </div>
 
   <!-- Tabs -->
   <div class="glass rounded-2xl mb-5 flex overflow-hidden">
-    <div class="tab-btn active" data-tab="templates" onclick="switchTab('templates')">📝 Templates</div>
-    <div class="tab-btn" data-tab="hashtags" onclick="switchTab('hashtags')">🏷️ Hashtag-Sets</div>
+    <div class="tab-btn active" data-tab="templates" onclick="switchTab('templates')">Templates</div>
+    <div class="tab-btn" data-tab="hashtags" onclick="switchTab('hashtags')">Hashtag-Sets</div>
   </div>
 
   <!-- TAB: Templates -->
@@ -188,7 +195,7 @@
   </div>
 
   <div class="text-center text-gray-500 text-xs mt-12">
-    🎨 powered by PEAKING · Tap + für eigenes Template
+    powered by PEAKING · Tap + für eigenes Template
   </div>
 </div>
 

@@ -5,7 +5,7 @@
 <meta http-equiv="Content-Security-Policy" content="default-src 'self' https:; script-src 'self' 'unsafe-inline' 'unsafe-eval' https:; style-src 'self' 'unsafe-inline' https:; img-src 'self' data: blob: https:; font-src 'self' data: https:; connect-src 'self' https: wss:; upgrade-insecure-requests">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
-<title>📅 Calendar — PEAKING</title>
+<title>Calendar — PEAKING</title>
 <link rel="icon" href="../assets/logo.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="../assets/logo.svg">
 <link rel="manifest" href="../manifest.json">
@@ -15,24 +15,28 @@
 <script src="../js/app.js"></script>
 <style>
   body {
-    background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+    background: var(--ink);
     min-height: 100dvh;
-    color: white;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    color: var(--paper);
+    font-family: var(--ff-body);
   }
+  h1, h2, h3 { font-family: var(--ff-display); letter-spacing: -0.02em; }
   .glass {
-    background: rgba(30, 41, 59, 0.6);
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255,255,255,0.1);
+    background: var(--s2s-card-bg);
+    -webkit-backdrop-filter: blur(16px); backdrop-filter: blur(16px);
+    border: var(--s2s-card-border);
+    box-shadow: var(--s2s-card-shadow);
   }
-  .neon { color: #00B888; }
+  .neon { color: var(--emerald-soft); }
   .btn-primary {
-    background: linear-gradient(135deg, #00B888, #1FC998);
-    color:#04201A;
-    font-weight: bold;
-    transition: all 0.2s;
+    background: linear-gradient(135deg, var(--emerald), var(--emerald-soft));
+    color:#04130D;
+    font-family: var(--ff-display);
+    font-weight: 600;
+    box-shadow: 0 14px 34px -14px rgba(0, 184, 136, 0.6), 0 1px 0 rgba(255, 255, 255, 0.35) inset;
+    transition: transform var(--duration) var(--ease), box-shadow var(--duration) var(--ease), filter var(--duration) var(--ease);
   }
-  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(0, 184, 136, 0.3); }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 20px 46px -14px rgba(0, 184, 136, 0.78), 0 1px 0 rgba(255, 255, 255, 0.4) inset; filter: saturate(1.08); }
   .day-card {
     transition: all 0.2s;
     position: relative;
@@ -69,11 +73,12 @@
   .status-posted { background: rgba(16, 185, 129, 0.2); color: #34d399; }
   .status-skipped { background: rgba(100, 116, 139, 0.2); color: #94a3b8; }
   input, select, textarea {
-    background: rgba(15, 23, 42, 0.6);
-    border: 1px solid rgba(255,255,255,0.15);
-    color: white;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255,255,255,0.1);
+    color: var(--paper);
+    transition: border-color var(--duration-fast), box-shadow var(--duration-fast), background var(--duration-fast);
   }
-  input:focus, select:focus { outline: none; border-color: #00B888; }
+  input:focus, select:focus { outline: none; border-color: var(--emerald); background: rgba(0, 184, 136, 0.05); box-shadow: 0 0 0 3px rgba(0, 184, 136, 0.16); }
   .modal-bg { background: rgba(0,0,0,0.7); backdrop-filter: blur(4px); }
   .toast {
     position: fixed; bottom: 24px; left: 50%;
@@ -102,17 +107,17 @@
   }
 </style>
 </head>
-<body class="p-4 md:p-6 pb-12">
+<body class="p-4 md:p-6 pb-12 s2s-ambient">
 
-<div class="max-w-4xl mx-auto">
+<div class="max-w-4xl mx-auto s2s-stack">
 
   <!-- Header -->
   <div class="flex justify-between items-center mb-4">
     <div>
       <a href="../dashboard.html" class="text-xs text-gray-400 hover:text-white">← Dashboard</a>
-      <h1 class="text-2xl md:text-3xl font-bold mt-1">📅 Content Calendar</h1>
+      <h1 class="text-2xl md:text-3xl font-bold mt-1 s2s-grad">Content Calendar</h1>
     </div>
-    <button onclick="SmashApp.logout()" class="text-sm text-gray-400 hover:text-white">🔒 Logout</button>
+    <button onclick="SmashApp.logout()" class="text-sm text-gray-400 hover:text-white">Logout</button>
   </div>
 
   <!-- Week Navigation -->
@@ -141,7 +146,7 @@
   <div id="daysGrid" class="space-y-3"></div>
 
   <div class="text-center text-gray-500 text-xs mt-12">
-    📅 powered by PEAKING · Mo · Mi · Fr · So sind Posting-Tage
+    powered by PEAKING · Mo · Mi · Fr · So sind Posting-Tage
   </div>
 </div>
 

@@ -2,6 +2,178 @@
    Premium, klar, datengetrieben: emerald glow, smooth motion, subtle depth
    ============================================================== */
 
+/* =====================================================================
+   PREMIUM DESIGN LANGUAGE (social2scale) — Login-Referenz
+   Wiederverwendbare Klassen für alle Module. Import dieser CSS-Datei
+   genügt; jede Seite kann .s2s-* Klassen + Tokens direkt nutzen.
+   ===================================================================== */
+
+/* ---- Fonts: Display "Space Grotesk", Body "Inter" ---- */
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap');
+
+/* ---- Design-Tokens ---- */
+:root {
+  /* Emerald-Skala */
+  --emerald:       #00B888;
+  --emerald-soft:  #1FC998;
+  --emerald-bright:#28C281;
+  /* Dark-Skala */
+  --ink:        #03080D;
+  --ink-800:    #0B0F14;
+  --ink-700:    #11161D;
+  /* Text */
+  --paper:      #F2F3F1;
+  --muted:      rgba(242, 243, 241, 0.5);
+  --muted-soft: rgba(242, 243, 241, 0.32);
+  /* Fonts */
+  --ff-display: "Space Grotesk", system-ui, -apple-system, sans-serif;
+  --ff-body:    "Inter", system-ui, -apple-system, sans-serif;
+  /* Motion */
+  --ease:          cubic-bezier(0.16, 1, 0.3, 1);
+  --duration-fast: 150ms;
+  --duration:      300ms;
+  /* Glas-Tiefe */
+  --s2s-card-bg:     linear-gradient(168deg, rgba(17, 22, 29, 0.94), rgba(8, 13, 18, 0.94));
+  --s2s-card-border: 1px solid rgba(255, 255, 255, 0.08);
+  --s2s-card-shadow: 0 1px 0 rgba(255, 255, 255, 0.06) inset, 0 30px 80px -30px rgba(0, 0, 0, 0.82);
+}
+
+/* ---- Ambient Emerald-Glow (auf <body> setzen via .s2s-ambient) ---- */
+/* Glow liegt fixed bei z-index:0 (über opakem Body-BG, unter Content).
+   Content wird über .s2s-stack (am Haupt-Wrapper) auf z-index:1 gehoben —
+   NICHT pauschal über `> *`, damit bestehende fixed Overlays (Modals z-50,
+   Toasts/FABs) ihr eigenes Stacking behalten und nicht überschrieben werden. */
+.s2s-ambient { position: relative; }
+.s2s-ambient::before {
+  content: ""; position: fixed; inset: -30%; z-index: 0; pointer-events: none;
+  background:
+    radial-gradient(40% 40% at 30% 30%, rgba(0, 184, 136, 0.12), transparent 60%),
+    radial-gradient(34% 34% at 74% 70%, rgba(31, 201, 152, 0.10), transparent 60%);
+  animation: s2s-glow-drift 18s ease-in-out infinite alternate;
+}
+.s2s-stack { position: relative; z-index: 1; }
+@keyframes s2s-glow-drift {
+  from { transform: translate(-3%, -2%) scale(1); }
+  to   { transform: translate(3%, 2%) scale(1.08); }
+}
+
+/* ---- Glas-Karte mit Tiefe + optionalem Emerald-Top-Border-Glow ---- */
+.s2s-card {
+  position: relative;
+  background: var(--s2s-card-bg);
+  -webkit-backdrop-filter: blur(16px); backdrop-filter: blur(16px);
+  border: var(--s2s-card-border);
+  box-shadow: var(--s2s-card-shadow);
+  border-radius: 22px;
+}
+.s2s-card--glow::before {
+  content: ""; position: absolute; inset: 0 0 auto; height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(0, 184, 136, 0.6), transparent);
+}
+.s2s-card--in { animation: s2s-card-in 0.7s var(--ease) both; }
+@keyframes s2s-card-in {
+  from { opacity: 0; transform: translateY(14px) scale(0.985); }
+  to   { opacity: 1; transform: none; }
+}
+
+/* ---- Interaktive Card-Tile (hover lift, emerald border) ---- */
+.s2s-tile {
+  position: relative;
+  background: var(--s2s-card-bg);
+  -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px);
+  border: var(--s2s-card-border);
+  border-radius: 18px;
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.05) inset, 0 20px 50px -28px rgba(0, 0, 0, 0.8);
+  transition: transform var(--duration) var(--ease),
+              border-color var(--duration) var(--ease),
+              box-shadow var(--duration) var(--ease);
+}
+.s2s-tile:hover {
+  transform: translateY(-4px);
+  border-color: rgba(0, 184, 136, 0.4);
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.06) inset,
+              0 26px 60px -26px rgba(0, 0, 0, 0.85),
+              0 0 28px rgba(0, 184, 136, 0.16);
+}
+
+/* ---- Emerald-Gradient-Button ---- */
+.s2s-btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  padding: 0.85rem 1.4rem; border: none; border-radius: 13px; cursor: pointer;
+  background: linear-gradient(135deg, var(--emerald), var(--emerald-soft));
+  color: #04130D; font-family: var(--ff-display); font-weight: 600; font-size: 0.95rem;
+  letter-spacing: 0.01em; text-decoration: none; line-height: 1;
+  box-shadow: 0 14px 34px -14px rgba(0, 184, 136, 0.6), 0 1px 0 rgba(255, 255, 255, 0.35) inset;
+  transition: transform var(--duration) var(--ease), box-shadow var(--duration) var(--ease), filter var(--duration) var(--ease);
+}
+.s2s-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 20px 46px -14px rgba(0, 184, 136, 0.78), 0 1px 0 rgba(255, 255, 255, 0.4) inset;
+  filter: saturate(1.08);
+}
+.s2s-btn:active { transform: translateY(0); }
+
+/* Ghost-Variante (sekundär) */
+.s2s-btn--ghost {
+  background: rgba(255, 255, 255, 0.03);
+  color: var(--paper);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: none;
+}
+.s2s-btn--ghost:hover {
+  border-color: rgba(0, 184, 136, 0.5);
+  background: rgba(0, 184, 136, 0.06);
+  box-shadow: 0 0 0 3px rgba(0, 184, 136, 0.12);
+  filter: none;
+}
+
+/* ---- Headline / Type (Space Grotesk) ---- */
+.s2s-h { font-family: var(--ff-display); font-weight: 700; letter-spacing: -0.02em; line-height: 1.05; color: var(--paper); }
+.s2s-eyebrow {
+  font-family: var(--ff-display); font-size: 0.7rem; font-weight: 600;
+  letter-spacing: 0.12em; text-transform: uppercase; color: var(--emerald-soft);
+}
+.s2s-label {
+  display: block; font-family: var(--ff-display); font-size: 0.7rem;
+  letter-spacing: 0.07em; text-transform: uppercase; color: var(--muted);
+  font-weight: 600; margin-bottom: 0.45rem;
+}
+.s2s-grad {
+  background: linear-gradient(135deg, var(--emerald), var(--emerald-soft), var(--emerald-bright));
+  -webkit-background-clip: text; background-clip: text;
+  color: transparent; -webkit-text-fill-color: transparent;
+}
+
+/* ---- Eyebrow-/Status-Pill ---- */
+.s2s-pill {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 6px 14px; border-radius: 999px;
+  font-family: var(--ff-display); font-size: 0.7rem; font-weight: 600;
+  letter-spacing: 0.06em; color: var(--emerald-soft);
+  background: rgba(0, 184, 136, 0.1); border: 1px solid rgba(0, 184, 136, 0.28);
+}
+
+/* ---- Inputs (Glas, Emerald-Focus) ---- */
+.s2s-input {
+  width: 100%; padding: 0.85rem 1rem; border-radius: 13px;
+  background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.1);
+  color: var(--paper); font-family: var(--ff-body); font-size: 1rem;
+  transition: border-color var(--duration-fast), box-shadow var(--duration-fast), background var(--duration-fast);
+}
+.s2s-input::placeholder { color: var(--muted-soft); }
+.s2s-input:focus {
+  outline: none; border-color: var(--emerald);
+  background: rgba(0, 184, 136, 0.05); box-shadow: 0 0 0 3px rgba(0, 184, 136, 0.16);
+}
+
+/* ---- Dezenter Divider mit Emerald-Strich ---- */
+.s2s-divider { height: 1px; background: linear-gradient(90deg, transparent, rgba(0, 184, 136, 0.4), transparent); }
+
+@media (prefers-reduced-motion: reduce) {
+  .s2s-ambient::before, .s2s-card--in, .s2s-tile { animation: none; transition: none; }
+}
+
+
 /* ===== ANIMATIONS ===== */
 @keyframes peaking-pulse {
   0%, 100% {

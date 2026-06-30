@@ -5,7 +5,7 @@
 <meta http-equiv="Content-Security-Policy" content="default-src 'self' https:; script-src 'self' 'unsafe-inline' 'unsafe-eval' https:; style-src 'self' 'unsafe-inline' https:; img-src 'self' data: blob: https:; font-src 'self' data: https:; connect-src 'self' https: wss:; upgrade-insecure-requests">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
-<title>🧭 Growth-Coach · PEAKING</title>
+<title>Growth-Coach · PEAKING</title>
 <link rel="icon" href="../assets/logo.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="../assets/logo.svg">
 <link rel="manifest" href="../manifest.json">
@@ -14,13 +14,23 @@
 <script src="https://cdn.tailwindcss.com"></script>
 <style>
   body {
-    background: linear-gradient(135deg, #0B0F14 0%, #11161D 100%);
+    background:
+      radial-gradient(120% 80% at 50% -10%, rgba(0,184,136,0.14), transparent 60%),
+      radial-gradient(90% 70% at 50% 120%, rgba(0,184,136,0.06), transparent 55%),
+      var(--ink);
     min-height: 100dvh;
-    color: white;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Inter, sans-serif;
+    color: var(--paper);
+    font-family: var(--ff-body);
+    -webkit-font-smoothing: antialiased;
   }
-  .glass { background: rgba(30,41,59,0.6); backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.1); }
-  .neon { color: #00B888; }
+  h1, h2, h3 { font-family: var(--ff-display); }
+  .glass {
+    background: var(--s2s-card-bg);
+    -webkit-backdrop-filter: blur(16px); backdrop-filter: blur(16px);
+    border: var(--s2s-card-border);
+    box-shadow: var(--s2s-card-shadow);
+  }
+  .neon { color: var(--emerald-soft); }
   .text-sunrise {
     background: linear-gradient(135deg, #00B888, #1FC998, #28C281);
     -webkit-background-clip: text;
@@ -30,13 +40,17 @@
   }
   .btn-primary {
     background: linear-gradient(135deg, #28C281, #1FC998, #00B888);
-    color: #04201A;
-    font-weight: 800;
-    transition: transform 0.12s, box-shadow 0.25s;
+    color: #04130D;
+    font-family: var(--ff-display);
+    font-weight: 600;
+    transition: transform var(--duration) var(--ease), box-shadow var(--duration) var(--ease), filter var(--duration) var(--ease);
+    box-shadow: 0 14px 34px -14px rgba(0,184,136,0.6), 0 1px 0 rgba(255,255,255,0.35) inset;
   }
-  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 14px 36px rgba(0, 184, 136,0.5); }
-  .tip-card { transition: all 0.2s; }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 20px 46px -14px rgba(0,184,136,0.78), 0 1px 0 rgba(255,255,255,0.4) inset; filter: saturate(1.08); }
+  .tip-card { transition: transform var(--duration) var(--ease), border-color var(--duration) var(--ease); }
   .tip-card:hover { transform: translateY(-2px); border-color: rgba(0, 184, 136,0.3); }
+  .sec-ico { width: 30px; height: 30px; border-radius: 9px; display: inline-flex; align-items: center; justify-content: center; background: rgba(0,184,136,0.1); border: 1px solid rgba(0,184,136,0.22); color: var(--emerald-soft); flex: none; }
+  .sec-ico svg { width: 16px; height: 16px; }
   .sev-red { border-left: 3px solid #ef4444; }
   .sev-yellow { border-left: 3px solid #00B888; }
   .sev-green { border-left: 3px solid #22c55e; }
@@ -48,14 +62,18 @@
   .pill-info { background: rgba(96,165,250,0.15); color: #60a5fa; }
 </style>
 </head>
-<body class="px-4 md:px-8 py-6">
+<body class="px-4 md:px-8 py-6 s2s-ambient">
 <div class="max-w-4xl mx-auto">
 
   <!-- Header -->
   <header class="mb-6">
-    <a href="../dashboard.html" class="text-xs text-gray-400 hover:neon">← Dashboard</a>
-    <h1 class="text-3xl md:text-4xl font-black text-sunrise mt-2">🧭 Growth-Coach</h1>
-    <p class="text-sm text-gray-400 mt-1">Personalisierte Wachstums-Tipps · basiert auf deinen Live-Reel-Daten + 2026-Algorithm-Research</p>
+    <a href="../dashboard.html" class="text-xs hover:neon transition" style="color:var(--muted)">← Dashboard</a>
+    <div class="s2s-eyebrow mt-3">Growth-Coach</div>
+    <h1 class="text-3xl md:text-4xl font-black text-sunrise mt-1 flex items-center gap-3">
+      <span class="sec-ico" style="width:40px;height:40px;border-radius:12px;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></svg></span>
+      Growth-Coach
+    </h1>
+    <p class="text-sm mt-1" style="color:var(--muted)">Personalisierte Wachstums-Tipps · basiert auf deinen Live-Reel-Daten + 2026-Algorithm-Research</p>
   </header>
 
   <!-- Account-Indicator -->
@@ -63,37 +81,40 @@
     <div class="text-2xl" id="accEmoji">🏔️</div>
     <div class="flex-1 min-w-0">
       <div class="font-bold text-sm" id="accLabel">@vegetarianhulk</div>
-      <div class="text-xs text-gray-400" id="accStats">Lade Stats…</div>
+      <div class="text-xs" style="color:var(--muted)" id="accStats">Lade Stats…</div>
     </div>
-    <button onclick="runAnalysis(true)" class="btn-primary rounded-xl px-4 py-2 text-xs">🔄 Refresh</button>
+    <button onclick="runAnalysis(true)" class="btn-primary rounded-xl px-4 py-2 text-xs inline-flex items-center gap-2">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M23 4v6h-6"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
+      Refresh
+    </button>
   </div>
 
   <!-- Daily-Tip-Hero -->
-  <div class="glass rounded-2xl p-6 mb-5" style="background: linear-gradient(135deg, rgba(0, 184, 136,0.12), rgba(31, 201, 152,0.06)); border: 1px solid rgba(0, 184, 136,0.3);">
+  <div class="glass s2s-card--glow rounded-2xl p-6 mb-5" style="border: 1px solid rgba(0, 184, 136,0.3);">
     <div class="flex items-start gap-3 mb-3">
-      <div class="text-3xl">💡</div>
+      <span class="sec-ico" style="width:42px;height:42px;border-radius:13px;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6"/><path d="M10 22h4"/><path d="M15.09 14c.18-.98.65-1.74 1.41-2.5A4.65 4.65 0 0 0 18 8 6 6 0 0 0 6 8c0 1 .23 2.23 1.5 3.5A4.61 4.61 0 0 1 8.91 14"/></svg></span>
       <div class="flex-1 min-w-0">
-        <div class="text-[10px] uppercase tracking-wider text-gray-400 font-bold mb-1">Tipp des Tages</div>
+        <div class="s2s-eyebrow mb-1">Tipp des Tages</div>
         <h2 class="text-xl md:text-2xl font-black text-sunrise" id="dailyTipTitle">Lade Coach-Analyse…</h2>
       </div>
     </div>
-    <p class="text-sm text-gray-200 leading-relaxed" id="dailyTipBody">Eine Analyse deiner Reels läuft.</p>
-    <div class="mt-3 text-xs text-gray-500" id="dailyTipMeta">—</div>
+    <p class="text-sm leading-relaxed" style="color:rgba(242,243,241,0.8)" id="dailyTipBody">Eine Analyse deiner Reels läuft.</p>
+    <div class="mt-3 text-xs" style="color:var(--muted-soft)" id="dailyTipMeta">—</div>
   </div>
 
   <!-- All Triggered Tips -->
-  <h2 class="text-lg font-bold mb-3 mt-6">🎯 Alle aktiven Tipps</h2>
+  <h2 class="text-lg font-bold mb-3 mt-6 flex items-center gap-3"><span class="sec-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></span>Alle aktiven Tipps</h2>
   <div id="tipsList" class="space-y-3">
-    <div class="glass rounded-xl p-4 text-sm text-gray-500 text-center">⏳ Analysiere…</div>
+    <div class="glass rounded-xl p-4 text-sm text-center" style="color:var(--muted)">Analysiere…</div>
   </div>
 
   <!-- All Templates -->
   <details class="mt-8 glass rounded-2xl p-4">
-    <summary class="cursor-pointer font-bold text-sm">📚 Alle 15 Coach-Templates ansehen</summary>
-    <div class="mt-3 space-y-2 text-xs text-gray-300" id="allTemplates"></div>
+    <summary class="cursor-pointer font-bold text-sm flex items-center gap-3"><span class="sec-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></span>Alle 15 Coach-Templates ansehen</summary>
+    <div class="mt-3 space-y-2 text-xs" style="color:var(--muted)" id="allTemplates"></div>
   </details>
 
-  <div class="mt-6 text-[10px] text-gray-600 text-center">
+  <div class="mt-6 text-[10px] text-center" style="color:var(--muted-soft)">
     Algorithm-Research 2026 (Mosseri · Buffer · Hootsuite · OpusClip · Reachbird DACH).
   </div>
 
@@ -159,7 +180,7 @@ async function loadAccountData() {
 
 function renderStats(d) {
   if (!d) return '— · keine Daten';
-  return `${(d.followers||0).toLocaleString('de-DE')} Followers · ${d.totalReels} Reels · ${d.postsLast7d}/Wo · Ø ${d.avgLikes}❤️`;
+  return `${(d.followers||0).toLocaleString('de-DE')} Followers · ${d.totalReels} Reels · ${d.postsLast7d}/Wo · Ø ${d.avgLikes} Likes`;
 }
 
 function getTriggered(data) {
@@ -176,7 +197,7 @@ function pickDailyTip(triggered) {
 }
 
 async function runAnalysis() {
-  document.getElementById('tipsList').innerHTML = '<div class="glass rounded-xl p-4 text-sm text-gray-500 text-center">⏳ Analysiere…</div>';
+  document.getElementById('tipsList').innerHTML = '<div class="glass rounded-xl p-4 text-sm text-center" style="color:var(--muted)">Analysiere…</div>';
   const data = await loadAccountData();
   if (!data) { document.getElementById('accStats').textContent = '— keine Verbindung'; return; }
 
@@ -189,13 +210,13 @@ async function runAnalysis() {
     document.getElementById('dailyTipBody').textContent = dailyTip.body;
     document.getElementById('dailyTipMeta').textContent = `${dailyTip.cat} · Severity: ${dailyTip.sev.toUpperCase()} · ${triggered.length} aktive Tipps insgesamt`;
   } else {
-    document.getElementById('dailyTipTitle').textContent = 'Du bist im Flow ✨';
+    document.getElementById('dailyTipTitle').textContent = 'Du bist im Flow';
     document.getElementById('dailyTipBody').textContent = 'Keine kritischen Trigger. Post 3-5 Reels/Woche, vary Hooks, halt deine Pillars 80/20. Social, das skaliert.';
     document.getElementById('dailyTipMeta').textContent = '0 aktive Tipps · grünes Licht';
   }
 
   if (triggered.length === 0) {
-    document.getElementById('tipsList').innerHTML = '<div class="glass rounded-xl p-6 text-center text-gray-400 text-sm">🟢 Keine kritischen Trigger. Du bist auf Kurs.</div>';
+    document.getElementById('tipsList').innerHTML = '<div class="glass rounded-xl p-6 text-center text-sm" style="color:var(--muted)"><span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#22c55e;box-shadow:0 0 10px #22c55e;margin-right:8px;vertical-align:middle;"></span>Keine kritischen Trigger. Du bist auf Kurs.</div>';
   } else {
     document.getElementById('tipsList').innerHTML = triggered.map(t => `
       <div class="glass rounded-xl p-4 tip-card sev-${t.sev}">
@@ -204,16 +225,16 @@ async function runAnalysis() {
           <span class="pill pill-info">${t.cat}</span>
         </div>
         <div class="font-bold text-sm mb-1">${t.title}</div>
-        <div class="text-xs text-gray-300 leading-relaxed">${t.body}</div>
+        <div class="text-xs leading-relaxed" style="color:var(--muted)">${t.body}</div>
       </div>
     `).join('');
   }
 
   document.getElementById('allTemplates').innerHTML = TEMPLATES.map(t => `
     <div class="border-l-2 pl-3" style="border-color:${t.sev==='red'?'#ef4444':t.sev==='yellow'?'#00B888':t.sev==='green'?'#22c55e':'#60a5fa'}">
-      <div class="font-bold">${t.title}</div>
-      <div class="text-gray-500">${t.body}</div>
-      <div class="text-[9px] uppercase tracking-wider text-gray-600 mt-1">${t.cat} · ${t.sev}</div>
+      <div class="font-bold" style="color:var(--paper)">${t.title}</div>
+      <div style="color:var(--muted)">${t.body}</div>
+      <div class="text-[9px] uppercase tracking-wider mt-1" style="color:var(--muted-soft)">${t.cat} · ${t.sev}</div>
     </div>
   `).join('');
 }

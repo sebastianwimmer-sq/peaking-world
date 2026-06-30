@@ -11,15 +11,18 @@
 <script src="https://cdn.tailwindcss.com"></script>
 <style>
   body {
-    background: linear-gradient(135deg, #0B0F14 0%, #11161D 100%);
+    background: linear-gradient(160deg, var(--ink) 0%, var(--ink-800) 60%, var(--ink-700) 100%);
     min-height: 100dvh;
-    color: white;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    color: var(--paper);
+    font-family: var(--ff-body);
   }
+  h1, h2, h3, .font-bold { font-family: var(--ff-display); letter-spacing: -0.01em; }
   .glass {
-    background: rgba(30, 41, 59, 0.6);
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255,255,255,0.1);
+    background: var(--s2s-card-bg);
+    -webkit-backdrop-filter: blur(16px);
+    backdrop-filter: blur(16px);
+    border: var(--s2s-card-border);
+    box-shadow: var(--s2s-card-shadow);
   }
   .text-sunrise {
     background: linear-gradient(135deg, #00B888, #1FC998, #28C281);
@@ -28,7 +31,7 @@
     color: transparent;
     -webkit-text-fill-color: transparent;
   }
-  .neon { color: #00B888; }
+  .neon { color: var(--emerald-soft); }
   .reel-card {
     transition: all 0.2s;
     cursor: pointer;
@@ -95,31 +98,43 @@
   }
   .copy-btn:hover { background: rgba(0, 184, 136, 0.25); }
   .btn-primary {
-    background: linear-gradient(135deg, #00B888, #1FC998);
-    color: #04201A;
-    font-weight: 700;
+    background: linear-gradient(135deg, var(--emerald), var(--emerald-soft));
+    color: #04130D;
+    font-family: var(--ff-display);
+    font-weight: 600;
     padding: 12px 20px;
-    border-radius: 14px;
+    border-radius: 13px;
     border: none;
     cursor: pointer;
-    transition: transform 0.15s;
+    box-shadow: 0 14px 34px -14px rgba(0,184,136,0.6), 0 1px 0 rgba(255,255,255,0.35) inset;
+    transition: transform var(--duration) var(--ease), box-shadow var(--duration) var(--ease), filter var(--duration) var(--ease);
   }
-  .btn-primary:hover { transform: translateY(-1px); }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 20px 46px -14px rgba(0,184,136,0.78), 0 1px 0 rgba(255,255,255,0.4) inset; filter: saturate(1.08); }
   .btn-secondary {
-    background: rgba(15, 23, 42, 0.6);
-    border: 1px solid rgba(0, 184, 136, 0.3);
-    color: white;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.12);
+    color: var(--paper);
+    font-family: var(--ff-display);
+    font-weight: 600;
     padding: 12px 20px;
-    border-radius: 14px;
+    border-radius: 13px;
     cursor: pointer;
+    transition: border-color var(--duration) var(--ease), background var(--duration) var(--ease);
   }
+  .btn-secondary:hover { border-color: rgba(0,184,136,0.5); background: rgba(0,184,136,0.06); }
 </style>
 </head>
 <body>
 
 <header class="px-5 py-4 border-b border-white/10 flex items-center gap-3 max-w-5xl mx-auto">
-  <a href="../dashboard.html" class="neon hover:underline">← Dashboard</a>
-  <h1 class="text-xl font-bold">🔄 Cross-Posting Helper</h1>
+  <a href="../dashboard.html" class="neon hover:underline inline-flex items-center gap-1">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+    Dashboard
+  </a>
+  <h1 class="text-xl font-bold flex items-center gap-2">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="url(#g-cp)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><defs><linearGradient id="g-cp" x1="0" y1="0" x2="24" y2="24"><stop stop-color="#00B888"/><stop offset="1" stop-color="#28C281"/></linearGradient></defs><path d="M3 12a9 9 0 0 1 15-6.7L21 8M21 3v5h-5M21 12a9 9 0 0 1-15 6.7L3 16M3 21v-5h5"/></svg>
+    Cross-Posting Helper
+  </h1>
 </header>
 
 <main class="px-5 py-6 max-w-5xl mx-auto">
@@ -132,13 +147,13 @@
         <div class="text-lg font-bold" id="directionLabel">Lade …</div>
         <div class="text-xs text-gray-400 mt-1">Wähle einen Reel des Source-Accounts → ich generiere Re-Cut-Vorschläge für Target.</div>
       </div>
-      <button id="swapBtn" class="btn-secondary text-sm">🔁 Direction tauschen</button>
+      <button id="swapBtn" class="btn-secondary text-sm inline-flex items-center gap-2"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m17 2 4 4-4 4M3 11v-1a4 4 0 0 1 4-4h14M7 22l-4-4 4-4M21 13v1a4 4 0 0 1-4 4H3"/></svg>Direction tauschen</button>
     </div>
   </div>
 
   <!-- Source-Account Reels -->
   <div class="mb-3 flex items-center justify-between">
-    <h2 class="text-lg font-bold">📥 Reels von <span class="text-sunrise" id="sourceLabel">@…</span></h2>
+    <h2 class="text-lg font-bold">Reels von <span class="text-sunrise" id="sourceLabel">@…</span></h2>
     <span class="text-xs text-gray-500" id="reelCount">0 Reels</span>
   </div>
 
@@ -148,21 +163,21 @@
 
   <!-- Empty-State -->
   <div id="emptyState" class="hidden glass rounded-2xl p-8 text-center">
-    <div class="text-4xl mb-3">📭</div>
+    <svg width="42" height="42" viewBox="0 0 24 24" fill="none" stroke="var(--emerald-soft)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="mx-auto mb-3"><path d="M22 12h-6l-2 3h-4l-2-3H2"/><path d="M5.45 5.11 2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"/></svg>
     <h3 class="font-bold mb-2">Noch keine Reels im Source-Account</h3>
     <p class="text-sm text-gray-400 mb-4">Trage erst Reels im Tracker ein — dann kannst du sie hier cross-posten.</p>
-    <a href="tracker.html" class="btn-primary inline-block">→ Zum Tracker</a>
+    <a href="tracker.html" class="btn-primary inline-block">Zum Tracker</a>
   </div>
 
   <!-- Cross-Post-Log -->
   <div class="mt-8 glass rounded-2xl p-5">
-    <h3 class="font-bold mb-3">🗂️ Cross-Post-Log</h3>
+    <h3 class="font-bold mb-3">Cross-Post-Log</h3>
     <div id="crossPostLog" class="space-y-2 text-sm text-gray-400">Noch keine Cross-Posts geloggt.</div>
   </div>
 
   <!-- WHY -->
   <div class="mt-8 glass rounded-2xl p-5">
-    <h3 class="font-bold mb-2 text-sunrise">⛰️ Warum Cross-Posten?</h3>
+    <h3 class="font-bold mb-2 text-sunrise">Warum Cross-Posten?</h3>
     <ul class="text-sm text-gray-300 space-y-1 leading-relaxed">
       <li>• <b>Hebel pro Idee</b>: 1 Reel → 2 Audiences. ROI verdoppelt ohne Doppel-Aufwand.</li>
       <li>• <b>Pillar-Switch</b>: Outdoor-Story wird zur Tool-Story-Lens (oder umgekehrt). Andere Audience sieht andere Wahrheit.</li>
@@ -186,39 +201,39 @@
 
     <!-- Original -->
     <div class="reframe-tile mb-4">
-      <h4>📌 Original</h4>
+      <h4>Original</h4>
       <div class="text-sm text-gray-300" id="origHook">—</div>
       <div class="text-xs text-gray-500 mt-2" id="origMeta">—</div>
     </div>
 
     <!-- Hook-Translation -->
     <div class="reframe-tile mb-4">
-      <h4>🪝 Hook-Translation (3 Vorschläge)</h4>
+      <h4>Hook-Translation (3 Vorschläge)</h4>
       <div id="hookSuggestions" class="space-y-2"></div>
     </div>
 
     <!-- Caption-Reframe -->
     <div class="reframe-tile mb-4">
-      <h4>✍️ Caption-Reframe-Template</h4>
+      <h4>Caption-Reframe-Template</h4>
       <textarea id="captionReframe" class="w-full bg-slate-900 text-gray-200 text-sm p-3 rounded-lg border border-white/10" rows="6"></textarea>
       <button class="copy-btn mt-2" onclick="copyText(document.getElementById('captionReframe').value, this)">Copy</button>
     </div>
 
     <!-- Hashtag-Switch -->
     <div class="reframe-tile mb-4">
-      <h4>🏷️ Hashtag-Switch (Target-Pillar)</h4>
+      <h4>Hashtag-Switch (Target-Pillar)</h4>
       <div id="hashtagSet" class="text-sm text-gray-300 leading-relaxed"></div>
       <button class="copy-btn mt-2" onclick="copyHashtags(this)">Copy</button>
     </div>
 
     <!-- Optimal Window -->
     <div class="reframe-tile mb-5">
-      <h4>⏱️ Cross-Post-Window</h4>
+      <h4>Cross-Post-Window</h4>
       <div class="text-sm text-gray-300" id="postWindow">—</div>
     </div>
 
     <div class="flex gap-2 flex-wrap">
-      <button onclick="saveAsIdea()" class="btn-primary flex-1">💾 In <span id="targetIdeaLabel">@…</span> als Idee speichern</button>
+      <button onclick="saveAsIdea()" class="btn-primary flex-1 inline-flex items-center justify-center gap-2"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><path d="M17 21v-8H7v8M7 3v5h8"/></svg>In <span id="targetIdeaLabel">@…</span> als Idee speichern</button>
       <button onclick="closeModal()" class="btn-secondary">Schließen</button>
     </div>
   </div>
