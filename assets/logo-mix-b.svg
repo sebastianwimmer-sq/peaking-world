@@ -2,30 +2,30 @@
   <title>PEAKING Logo Mix-B — Mountain-Range Sunrise + Wordmark Right</title>
   <defs>
     <radialGradient id="sunriseB" cx="30%" cy="35%" r="55%">
-      <stop offset="0%" stop-color="#FFE066" stop-opacity="0.55"/>
-      <stop offset="50%" stop-color="#FFA94D" stop-opacity="0.25"/>
+      <stop offset="0%" stop-color="#5FE3BE" stop-opacity="0.55"/>
+      <stop offset="50%" stop-color="#1FC998" stop-opacity="0.25"/>
       <stop offset="100%" stop-color="transparent"/>
     </radialGradient>
     <linearGradient id="peakBackB" x1="50%" y1="0%" x2="50%" y2="100%">
-      <stop offset="0%" stop-color="#FFD43B"/>
-      <stop offset="100%" stop-color="#FFA94D"/>
+      <stop offset="0%" stop-color="#28C281"/>
+      <stop offset="100%" stop-color="#1FC998"/>
     </linearGradient>
     <linearGradient id="peakMidB" x1="50%" y1="0%" x2="50%" y2="100%">
-      <stop offset="0%" stop-color="#FFA94D"/>
-      <stop offset="100%" stop-color="#FF6B6B"/>
+      <stop offset="0%" stop-color="#1FC998"/>
+      <stop offset="100%" stop-color="#00B888"/>
     </linearGradient>
     <linearGradient id="peakFrontB" x1="50%" y1="0%" x2="50%" y2="100%">
-      <stop offset="0%" stop-color="#FF6B6B"/>
-      <stop offset="100%" stop-color="#7A2828"/>
+      <stop offset="0%" stop-color="#00B888"/>
+      <stop offset="100%" stop-color="#0A5240"/>
     </linearGradient>
     <linearGradient id="peakSmallB" x1="50%" y1="0%" x2="50%" y2="100%">
-      <stop offset="0%" stop-color="#FFE066"/>
-      <stop offset="100%" stop-color="#FFA94D"/>
+      <stop offset="0%" stop-color="#5FE3BE"/>
+      <stop offset="100%" stop-color="#1FC998"/>
     </linearGradient>
     <linearGradient id="wordmarkB" x1="0%" y1="0%" x2="100%" y2="0%">
-      <stop offset="0%" stop-color="#FFD43B"/>
-      <stop offset="50%" stop-color="#FFA94D"/>
-      <stop offset="100%" stop-color="#FF6B6B"/>
+      <stop offset="0%" stop-color="#28C281"/>
+      <stop offset="50%" stop-color="#1FC998"/>
+      <stop offset="100%" stop-color="#00B888"/>
     </linearGradient>
   </defs>
   <!-- Sunrise-Background-Halo (top-left, behind range) -->
@@ -40,13 +40,13 @@
   <!-- Front (largest, deepest red) -->
   <path d="M 0 200 L 75 30 L 150 200 Z" fill="url(#peakFrontB)"/>
   <!-- Center-spine highlights on largest peak -->
-  <path d="M 75 30 L 75 200" stroke="#FFD43B" stroke-width="1.2" stroke-opacity="0.6" stroke-linecap="round"/>
+  <path d="M 75 30 L 75 200" stroke="#5FE3BE" stroke-width="1.2" stroke-opacity="0.6" stroke-linecap="round"/>
   <!-- Ground baseline -->
-  <line x1="0" y1="200" x2="220" y2="200" stroke="#FFA94D" stroke-width="0.5" stroke-opacity="0.3"/>
+  <line x1="0" y1="200" x2="220" y2="200" stroke="#1FC998" stroke-width="0.5" stroke-opacity="0.3"/>
 
   <!-- Wordmark Right Side -->
   <text x="240" y="120" font-family="-apple-system, system-ui, sans-serif" font-size="48" font-weight="900" fill="url(#wordmarkB)" letter-spacing="3">PEAKING</text>
-  <text x="240" y="148" font-family="-apple-system, system-ui, sans-serif" font-size="13" font-weight="500" fill="#FFA94D" letter-spacing="6" opacity="0.75">ALWAYS PEAKING.</text>
+  <text x="240" y="148" font-family="-apple-system, system-ui, sans-serif" font-size="13" font-weight="500" fill="#1FC998" letter-spacing="6" opacity="0.75">STRATEGIE STATT ZUFALL.</text>
   <!-- Sub-Subline -->
-  <text x="240" y="172" font-family="-apple-system, system-ui, sans-serif" font-size="11" font-weight="400" fill="#94a3b8" letter-spacing="2">From climb to peak.</text>
+  <text x="240" y="172" font-family="-apple-system, system-ui, sans-serif" font-size="11" font-weight="400" fill="#94a3b8" letter-spacing="2">powered by PEAKING</text>
 </svg>

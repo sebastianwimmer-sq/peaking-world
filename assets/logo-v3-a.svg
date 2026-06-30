@@ -2,14 +2,14 @@
   <title>PEAKING Logo V3-A — Faceted Mountain</title>
   <defs>
     <linearGradient id="lightFaceA" x1="50%" y1="0%" x2="0%" y2="100%">
-      <stop offset="0%" stop-color="#FFD43B"/>
-      <stop offset="50%" stop-color="#FFA94D"/>
-      <stop offset="100%" stop-color="#FF8E5A"/>
+      <stop offset="0%" stop-color="#28C281"/>
+      <stop offset="50%" stop-color="#1FC998"/>
+      <stop offset="100%" stop-color="#00B888"/>
     </linearGradient>
     <linearGradient id="darkFaceA" x1="50%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#C73E3E"/>
-      <stop offset="60%" stop-color="#7A2828"/>
-      <stop offset="100%" stop-color="#3F1414"/>
+      <stop offset="0%" stop-color="#0A6E54"/>
+      <stop offset="60%" stop-color="#0A5240"/>
+      <stop offset="100%" stop-color="#05291F"/>
     </linearGradient>
     <linearGradient id="ridgeHighlight" x1="0%" y1="0%" x2="0%" y2="100%">
       <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.6"/>

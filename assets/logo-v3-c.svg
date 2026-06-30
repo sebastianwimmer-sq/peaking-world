@@ -2,16 +2,16 @@
   <title>PEAKING Logo V3-C — Isometric 3D Peak</title>
   <defs>
     <linearGradient id="topFaceC" x1="50%" y1="0%" x2="50%" y2="100%">
-      <stop offset="0%" stop-color="#FFE066"/>
-      <stop offset="100%" stop-color="#FFA94D"/>
+      <stop offset="0%" stop-color="#5FE3BE"/>
+      <stop offset="100%" stop-color="#1FC998"/>
     </linearGradient>
     <linearGradient id="leftFaceC" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#FF8E5A"/>
-      <stop offset="100%" stop-color="#C73E3E"/>
+      <stop offset="0%" stop-color="#1FC998"/>
+      <stop offset="100%" stop-color="#0A6E54"/>
     </linearGradient>
     <linearGradient id="rightFaceC" x1="100%" y1="0%" x2="0%" y2="100%">
-      <stop offset="0%" stop-color="#7A2828"/>
-      <stop offset="100%" stop-color="#3F1414"/>
+      <stop offset="0%" stop-color="#0A5240"/>
+      <stop offset="100%" stop-color="#05291F"/>
     </linearGradient>
     <radialGradient id="baseShadowC" cx="50%" cy="50%" r="50%">
       <stop offset="0%" stop-color="#000" stop-opacity="0.5"/>
@@ -25,7 +25,7 @@
   <!-- Left face (mid) -->
   <path d="M 32 6 L 8 50 L 32 58 Z" fill="url(#leftFaceC)"/>
   <!-- Top edge highlight -->
-  <path d="M 32 6 L 32 58" stroke="#FFD43B" stroke-width="0.6" stroke-opacity="0.85" stroke-linecap="round"/>
+  <path d="M 32 6 L 32 58" stroke="#5FE3BE" stroke-width="0.6" stroke-opacity="0.85" stroke-linecap="round"/>
   <!-- Snowy peak (small triangle on top) -->
   <path d="M 32 6 L 28 14 L 36 14 Z" fill="url(#topFaceC)"/>
 </svg>

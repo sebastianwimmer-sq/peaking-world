@@ -1,26 +1,26 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 1920" preserveAspectRatio="xMidYMid meet">
-  <title>PEAKING Insta Story-Banner — Always peaking.</title>
+  <title>PEAKING Insta Story-Banner — Strategie statt Zufall.</title>
   <defs>
     <!-- Sunrise-BG: diagonal gradient -->
     <linearGradient id="bgSunrise" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#FF6B6B"/>
-      <stop offset="50%" stop-color="#FFA94D"/>
-      <stop offset="100%" stop-color="#FFD43B"/>
+      <stop offset="0%" stop-color="#00B888"/>
+      <stop offset="50%" stop-color="#1FC998"/>
+      <stop offset="100%" stop-color="#28C281"/>
     </linearGradient>
     <!-- Sun-Disk hinter Wordmark -->
     <radialGradient id="sunDisk" cx="50%" cy="50%" r="50%">
-      <stop offset="0%" stop-color="#FFFCEC" stop-opacity="0.45"/>
-      <stop offset="50%" stop-color="#FFE066" stop-opacity="0.30"/>
-      <stop offset="100%" stop-color="#FFA94D" stop-opacity="0"/>
+      <stop offset="0%" stop-color="#EAFBF5" stop-opacity="0.45"/>
+      <stop offset="50%" stop-color="#A8F0DC" stop-opacity="0.30"/>
+      <stop offset="100%" stop-color="#1FC998" stop-opacity="0"/>
     </radialGradient>
     <!-- Mountain-silhouette gradient -->
     <linearGradient id="mtnDark" x1="0%" y1="0%" x2="0%" y2="100%">
-      <stop offset="0%" stop-color="#5C1F1F" stop-opacity="0.92"/>
-      <stop offset="100%" stop-color="#2A0E0E" stop-opacity="1"/>
+      <stop offset="0%" stop-color="#0B1A16" stop-opacity="0.92"/>
+      <stop offset="100%" stop-color="#03080D" stop-opacity="1"/>
     </linearGradient>
     <linearGradient id="mtnMid" x1="0%" y1="0%" x2="0%" y2="100%">
-      <stop offset="0%" stop-color="#7A2C2C" stop-opacity="0.78"/>
-      <stop offset="100%" stop-color="#3D1414" stop-opacity="0.92"/>
+      <stop offset="0%" stop-color="#0B2620" stop-opacity="0.78"/>
+      <stop offset="100%" stop-color="#0B0F14" stop-opacity="0.92"/>
     </linearGradient>
   </defs>
 
@@ -36,11 +36,11 @@
         text-anchor="middle" letter-spacing="-6"
         style="text-shadow: 0 4px 24px rgba(0,0,0,0.18);">PEAKING</text>
 
-  <!-- Subtitle "Always peaking." italic -->
+  <!-- Subtitle "Strategie statt Zufall." italic -->
   <text x="540" y="930" font-family="Inter, -apple-system, system-ui, sans-serif"
         font-size="64" font-weight="500" font-style="italic"
         fill="#ffffff" fill-opacity="0.92"
-        text-anchor="middle" letter-spacing="0.5">Always peaking.</text>
+        text-anchor="middle" letter-spacing="0.5">Strategie statt Zufall.</text>
 
   <!-- Mountain silhouette layers (bottom) -->
   <!-- Back layer (lighter, taller) -->
@@ -58,7 +58,7 @@
   <text x="540" y="1810" font-family="Inter, -apple-system, system-ui, sans-serif"
         font-size="34" font-weight="700"
         fill="#ffffff" fill-opacity="0.85"
-        text-anchor="middle" letter-spacing="6">THE CLIMB IS THE PEAK</text>
+        text-anchor="middle" letter-spacing="6">POWERED BY PEAKING</text>
 
   <!-- Top-Left Mini-Wordmark for context -->
   <text x="80" y="120" font-family="Inter, -apple-system, system-ui, sans-serif"

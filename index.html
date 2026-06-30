@@ -76,10 +76,17 @@
 
   <div id="loginForm" class="space-y-4">
     <div>
+      <label class="block text-sm text-gray-400 mb-2">E-Mail</label>
+      <input type="text" id="userInput" placeholder="deine@email.de" autocomplete="username"
+             class="w-full p-4 rounded-xl text-lg"
+             autofocus
+             onkeypress="if(event.key==='Enter') tryLogin()">
+    </div>
+    <div>
       <label class="block text-sm text-gray-400 mb-2">Passwort</label>
-      <input type="password" id="passwordInput" placeholder="••••••••" 
-             class="w-full p-4 rounded-xl text-lg" 
-             autofocus 
+      <input type="password" id="passwordInput" placeholder="••••••••"
+             class="w-full p-4 rounded-xl text-lg"
+             autocomplete="current-password"
              onkeypress="if(event.key==='Enter') tryLogin()">
     </div>
 
@@ -107,6 +114,7 @@ if ('serviceWorker' in navigator) {
 }
 
 async function tryLogin() {
+  const user = (document.getElementById('userInput').value || '').trim();
   const input = document.getElementById('passwordInput').value;
   const errorMsg = document.getElementById('errorMsg');
 
@@ -118,7 +126,8 @@ async function tryLogin() {
   }
 
   try {
-    const success = await SmashApp.login(input);
+    // Mit E-Mail → Pro-Kunde-Login (Backend); ohne → Owner-Login (SHA-256).
+    const success = user ? await SmashApp.login(user, input) : await SmashApp.login(input);
 
     if (success) {
       window.location.href = 'dashboard.html';

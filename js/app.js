@@ -130,6 +130,8 @@ const SmashApp = (function() {
   }
   // Run migration immediately
   try { _migrateLegacyData(); } catch (e) { console.error('Migration error:', e); }
+  // Eingeloggten Kunden-Account bei jedem Load re-registrieren (Reload-Persistenz).
+  try { _registerClientAccount(); } catch (e) { console.error('Client-account error:', e); }
 
   // ============ AUTH ============
 
@@ -215,8 +217,81 @@ const SmashApp = (function() {
     return result;
   }
 
-  async function login(password) {
-    const hash = await sha256(password);
+  // ===== social2scale-Backend: Pro-Kunde-Login + Daten (PEAKING bleibt eigene Domain) =====
+  const PK_API = 'https://closing.social2scale.com/api/peaking';
+
+  // Client-id aus dem Bearer-Token lesen (payload = base64url "peaking:<id>|exp").
+  function _pkClientIdFromToken(token) {
+    try {
+      const b = token.split('.')[0].replace(/-/g, '+').replace(/_/g, '/');
+      const decoded = atob(b + '==='.slice((b.length + 3) % 4));
+      const m = decoded.match(/^peaking:(\d+)\|/);
+      return m ? m[1] : '';
+    } catch (e) { return ''; }
+  }
+
+  // Eingeloggten Kunden als eigenen Daten-"Account" registrieren (auch nach Reload —
+  // sonst fällt getCurrentAccount auf vegetarianhulk zurück = falscher Daten-Space).
+  function _registerClientAccount() {
+    const token = localStorage.getItem(STORAGE_PREFIX + 'pkToken');
+    if (!token) return null;
+    const acct = localStorage.getItem(STORAGE_PREFIX + 'currentAccount') || ('client' + _pkClientIdFromToken(token));
+    const name = localStorage.getItem(STORAGE_PREFIX + 'pkClient') || 'Mein Account';
+    ACCOUNTS[acct] = { key: acct, handle: name, emoji: '📈', label: name, color: '#00B888' };
+    return acct;
+  }
+
+  // Kundendaten vom Backend → localStorage (Module lesen danach sync wie gehabt).
+  async function _hydrateFromBackend(acct, token) {
+    try {
+      const r = await fetch(PK_API + '/data', { headers: { 'Authorization': 'Bearer ' + token } });
+      const j = await r.json().catch(() => ({}));
+      if (j && j.success && j.data) {
+        Object.keys(j.data).forEach(function (k) {
+          if (j.data[k] != null) localStorage.setItem(STORAGE_PREFIX + acct + ':' + k, j.data[k]);
+        });
+      }
+    } catch (e) { /* offline → localStorage-Cache bleibt nutzbar */ }
+  }
+
+  // setData spiegelt best-effort ans Backend (nur im Kunden-Modus, GLOBAL_KEYS ausgenommen).
+  function _pushToBackend(rawKey, jsonStr) {
+    if (GLOBAL_KEYS.includes(rawKey)) return;
+    const token = localStorage.getItem(STORAGE_PREFIX + 'pkToken');
+    if (!token) return;
+    try {
+      fetch(PK_API + '/data', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token },
+        body: JSON.stringify({ key: rawKey, value: jsonStr })
+      }).catch(function () {});
+    } catch (e) {}
+  }
+
+  async function login(userOrPass, pass) {
+    // Pro-Kunde-Login übers social2scale-Backend (user + pass)
+    if (pass !== undefined && pass !== null && pass !== '') {
+      try {
+        const r = await fetch(PK_API + '/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ user: userOrPass, pass: pass })
+        });
+        const j = await r.json().catch(() => ({}));
+        if (!r.ok || !j.success || !j.data || !j.data.token) return false;
+        const token = j.data.token;
+        const acct = 'client' + _pkClientIdFromToken(token);
+        localStorage.setItem(STORAGE_PREFIX + 'pkToken', token);
+        localStorage.setItem(STORAGE_PREFIX + 'pkClient', j.data.name || '');
+        localStorage.setItem(STORAGE_PREFIX + 'currentAccount', acct);
+        ACCOUNTS[acct] = { key: acct, handle: j.data.name || 'Mein Account', emoji: '📈', label: j.data.name || '', color: '#00B888' };
+        localStorage.setItem(STORAGE_PREFIX + 'auth', JSON.stringify({ loggedIn: true, expires: Date.now() + SESSION_DURATION_MS }));
+        await _hydrateFromBackend(acct, token);
+        return true;
+      } catch (e) { return false; }
+    }
+    // Owner-Login (SHA-256) — Fallback für Sebi/intern
+    const hash = await sha256(userOrPass);
     if (hash === PASSWORD_HASH) {
       localStorage.setItem(STORAGE_PREFIX + 'auth', JSON.stringify({
         loggedIn: true,
@@ -229,6 +304,8 @@ const SmashApp = (function() {
 
   function logout() {
     localStorage.removeItem(STORAGE_PREFIX + 'auth');
+    localStorage.removeItem(STORAGE_PREFIX + 'pkToken');
+    localStorage.removeItem(STORAGE_PREFIX + 'pkClient');
     window.location.href = 'index.html';
   }
 
@@ -292,7 +369,9 @@ const SmashApp = (function() {
 
   function setData(key, value) {
     try {
-      localStorage.setItem(_storageKey(key), JSON.stringify(value));
+      const json = JSON.stringify(value);
+      localStorage.setItem(_storageKey(key), json);
+      _pushToBackend(key, json); // best-effort Backend-Sync (Kunden-Modus)
       return true;
     } catch (e) {
       console.error('Storage write error:', e);

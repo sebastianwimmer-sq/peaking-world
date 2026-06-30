@@ -2,21 +2,21 @@
   <title>PEAKING Logo V3-D Still — 3D Pyramide Frozen-Mid-Rotation</title>
   <defs>
     <linearGradient id="pdFrontD" x1="50%" y1="0%" x2="50%" y2="100%">
-      <stop offset="0%" stop-color="#FFE066"/>
-      <stop offset="50%" stop-color="#FFA94D"/>
-      <stop offset="100%" stop-color="#FF8E5A"/>
+      <stop offset="0%" stop-color="#5FE3BE"/>
+      <stop offset="50%" stop-color="#1FC998"/>
+      <stop offset="100%" stop-color="#00B888"/>
     </linearGradient>
     <linearGradient id="pdRightD" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#FF6B6B"/>
-      <stop offset="100%" stop-color="#7A2828"/>
+      <stop offset="0%" stop-color="#00B888"/>
+      <stop offset="100%" stop-color="#0A5240"/>
     </linearGradient>
     <linearGradient id="pdLeftD" x1="100%" y1="0%" x2="0%" y2="100%">
-      <stop offset="0%" stop-color="#FFA94D"/>
-      <stop offset="100%" stop-color="#C73E3E"/>
+      <stop offset="0%" stop-color="#1FC998"/>
+      <stop offset="100%" stop-color="#0A6E54"/>
     </linearGradient>
     <radialGradient id="pdGroundD" cx="50%" cy="50%" r="50%">
-      <stop offset="0%" stop-color="#FFA94D" stop-opacity="0.5"/>
-      <stop offset="60%" stop-color="#FFA94D" stop-opacity="0.15"/>
+      <stop offset="0%" stop-color="#1FC998" stop-opacity="0.5"/>
+      <stop offset="60%" stop-color="#1FC998" stop-opacity="0.15"/>
       <stop offset="100%" stop-color="transparent"/>
     </radialGradient>
     <filter id="pdGlowD" x="-30%" y="-30%" width="160%" height="160%">
@@ -34,6 +34,6 @@
     <!-- Front Face (visible mid-rotation, brightest) -->
     <path d="M 32 6 L 26 56 L 38 56 Z" fill="url(#pdFrontD)"/>
     <!-- Top Apex highlight -->
-    <circle cx="32" cy="6" r="1.2" fill="#FFE066" opacity="0.9"/>
+    <circle cx="32" cy="6" r="1.2" fill="#5FE3BE" opacity="0.9"/>
   </g>
 </svg>

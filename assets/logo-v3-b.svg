@@ -2,15 +2,15 @@
   <title>PEAKING Logo V3-B — Mountain mit Rising Sun</title>
   <defs>
     <radialGradient id="sunB" cx="50%" cy="50%" r="50%">
-      <stop offset="0%" stop-color="#FFE4A0"/>
-      <stop offset="40%" stop-color="#FFD43B"/>
-      <stop offset="80%" stop-color="#FFA94D"/>
-      <stop offset="100%" stop-color="#FF6B6B"/>
+      <stop offset="0%" stop-color="#A8F0DC"/>
+      <stop offset="40%" stop-color="#5FE3BE"/>
+      <stop offset="80%" stop-color="#1FC998"/>
+      <stop offset="100%" stop-color="#00B888"/>
     </radialGradient>
     <linearGradient id="mountainB" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#1F1A2E"/>
-      <stop offset="50%" stop-color="#2C2547"/>
-      <stop offset="100%" stop-color="#1A1729"/>
+      <stop offset="0%" stop-color="#0B0F14"/>
+      <stop offset="50%" stop-color="#0B1A16"/>
+      <stop offset="100%" stop-color="#03080D"/>
     </linearGradient>
     <linearGradient id="snowCapB" x1="0%" y1="0%" x2="0%" y2="100%">
       <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.9"/>
@@ -28,5 +28,5 @@
   <!-- Snow-cap on peak -->
   <path d="M 32 10 L 28 18 L 36 18 Z" fill="url(#snowCapB)"/>
   <!-- Subtle ridge highlight -->
-  <path d="M 32 10 L 60 56" stroke="#FFA94D" stroke-width="0.5" stroke-opacity="0.4" stroke-linecap="round"/>
+  <path d="M 32 10 L 60 56" stroke="#1FC998" stroke-width="0.5" stroke-opacity="0.4" stroke-linecap="round"/>
 </svg>

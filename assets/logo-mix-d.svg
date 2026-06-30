@@ -3,10 +3,10 @@
   <defs>
     <!-- Voll-Sonnen-Gradient (kompakter Disk-Look) -->
     <linearGradient id="sunFillD" x1="50%" y1="0%" x2="50%" y2="100%">
-      <stop offset="0%"  stop-color="#FFE066"/>
-      <stop offset="35%" stop-color="#FFD43B"/>
-      <stop offset="70%" stop-color="#FFA94D"/>
-      <stop offset="100%" stop-color="#FF6B6B"/>
+      <stop offset="0%"  stop-color="#5FE3BE"/>
+      <stop offset="35%" stop-color="#28C281"/>
+      <stop offset="70%" stop-color="#1FC998"/>
+      <stop offset="100%" stop-color="#00B888"/>
     </linearGradient>
     <!-- Pyramid mask (negative-space cut) -->
     <mask id="peakCutD">
@@ -14,14 +14,14 @@
       <path d="M 140 70 L 200 218 L 80 218 Z" fill="black"/>
     </mask>
     <linearGradient id="wordmarkD" x1="0%" y1="0%" x2="100%" y2="0%">
-      <stop offset="0%"  stop-color="#FF6B6B"/>
-      <stop offset="50%" stop-color="#FFA94D"/>
-      <stop offset="100%" stop-color="#FFD43B"/>
+      <stop offset="0%"  stop-color="#00B888"/>
+      <stop offset="50%" stop-color="#1FC998"/>
+      <stop offset="100%" stop-color="#28C281"/>
     </linearGradient>
     <filter id="softShadowD" x="-15%" y="-15%" width="130%" height="130%">
       <feGaussianBlur in="SourceAlpha" stdDeviation="3"/>
       <feOffset dx="0" dy="4"/>
-      <feFlood flood-color="#FFA94D" flood-opacity="0.35"/>
+      <feFlood flood-color="#1FC998" flood-opacity="0.35"/>
       <feComposite in2="SourceAlpha" operator="in"/>
       <feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge>
     </filter>
@@ -40,5 +40,5 @@
   <!-- Sub-Tagline -->
   <text x="140" y="302" text-anchor="middle"
         font-family="-apple-system, system-ui, sans-serif"
-        font-size="11" font-weight="500" fill="#FFA94D" letter-spacing="6" opacity="0.7">ALWAYS PEAKING.</text>
+        font-size="11" font-weight="500" fill="#1FC998" letter-spacing="6" opacity="0.7">STRATEGIE STATT ZUFALL.</text>
 </svg>
