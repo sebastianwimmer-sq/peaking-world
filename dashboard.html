@@ -111,11 +111,6 @@
 </head>
 <body class="p-4 md:p-6 s2s-ambient">
 
-<!-- Beta-Banner (toggle in Settings) -->
-<div id="betaBanner" style="display:none; position:sticky; top:0; z-index:40; background:linear-gradient(90deg, #00B888, #1FC998); color:#04201A; text-align:center; font-size:11px; font-weight:600; font-family:var(--ff-display); padding:6px 12px; letter-spacing:0.5px; text-transform:uppercase;">
-  <span id="appVersion">v1.6.0</span> · Social, das skaliert. Sebi-Build, läuft live.
-</div>
-
 <!-- Account-Tint Top-Border (toggle in Settings) -->
 <div id="accountTintBar" style="display:none; height:3px; background:#00B888; box-shadow: 0 0 18px currentColor;"></div>
 
@@ -124,8 +119,8 @@
   <!-- Header -->
   <div class="flex justify-between items-center mb-6">
     <div>
-      <h1 class="text-2xl md:text-4xl font-bold flex items-center gap-2.5"><span class="s2s-grad">social2scale</span></h1>
-      <p class="text-sm" style="color:var(--muted)"><span class="neon font-semibold">Social, das skaliert.</span> · <span id="todayDate"></span></p>
+      <h1 class="flex items-center"><img src="assets/s2s-wordmark.png" alt="social2scale" class="h-7 md:h-9 w-auto" style="filter: drop-shadow(0 0 18px rgba(0,184,136,0.18))"></h1>
+      <p class="text-sm mt-1.5" style="color:var(--muted)"><span id="todayDate"></span></p>
     </div>
     <div class="flex items-center gap-2 relative">
       <div class="relative">
@@ -149,7 +144,7 @@
   <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6 stagger">
     <div class="glass rounded-2xl p-4 stat-card lift-glow">
       <div class="text-xs" style="color:var(--muted)">Follower</div>
-      <div class="text-2xl md:text-3xl font-bold neon" id="followerCount">2.080</div>
+      <div class="text-2xl md:text-3xl font-bold neon" id="followerCount">–</div>
     </div>
     <div class="glass rounded-2xl p-4 stat-card lift-glow">
       <div class="text-xs" style="color:var(--muted)">Diese Woche</div>
@@ -402,7 +397,7 @@
 
   <!-- Footer -->
   <div class="text-center text-xs mt-8" style="color:var(--muted-soft)">
-    social2scale · Social, das skaliert. · powered by PEAKING
+    social2scale · powered by PEAKING
   </div>
 </div>
 
@@ -629,13 +624,13 @@ function maybeShowOnboarding() {
     },
     {
       icon: 'cross',
-      title: '2 Accounts? 1 Click zum Cross-Post',
-      body: 'Wenn du @vegetarianhulk + @peakingworld pflegst: 1 Reel auf Account A → Re-Cut für Account B in 3 Klicks. Hebel pro Idee verdoppelt.'
+      title: 'Content-Recycling',
+      body: 'Was performt, wird wiederverwendet: Top-Hooks neu aufnehmen, Formate variieren. Der größte Hebel pro Idee — <b class="neon">Analytics</b> zeigt dir, was sich lohnt.'
     },
     {
       icon: 'peak',
       title: 'Du bist soweit.',
-      body: 'Web-Only. Keine App-Store-Wartezeit. Iteration in Minuten. <b class="neon">Social, das skaliert.</b> Lass uns skalieren.'
+      body: 'Konsequent dranbleiben schlägt jeden Trick. <b class="neon">Lass uns skalieren.</b>'
     }
   ];
   let idx = 0;
