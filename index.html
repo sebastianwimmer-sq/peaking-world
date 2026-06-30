@@ -23,86 +23,102 @@
 <link rel="stylesheet" href="assets/effects.css">
 <script src="https://cdn.tailwindcss.com"></script>
 <style>
+  @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap');
+  :root{
+    --emerald:#00B888; --emerald-soft:#1FC998; --ink:#03080D; --paper:#F2F3F1;
+    --ff-display:"Space Grotesk", system-ui, -apple-system, sans-serif;
+    --ff-body:"Inter", system-ui, -apple-system, sans-serif;
+    --ease:cubic-bezier(.16,1,.3,1);
+  }
   body {
     background:
-      radial-gradient(120% 80% at 50% -10%, rgba(0,184,136,0.14), transparent 60%),
-      radial-gradient(90% 60% at 50% 120%, rgba(0,184,136,0.08), transparent 55%),
-      #03080D;
-    min-height: 100dvh;
-    color: white;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 1rem;
+      radial-gradient(120% 80% at 50% -10%, rgba(0,184,136,0.16), transparent 60%),
+      radial-gradient(90% 70% at 50% 120%, rgba(0,184,136,0.08), transparent 55%),
+      var(--ink);
+    min-height: 100dvh; color: var(--paper); font-family: var(--ff-body);
+    display: flex; align-items: center; justify-content: center; padding: 1.25rem;
+    -webkit-font-smoothing: antialiased; overflow: hidden;
   }
+  /* Ambient animierter Emerald-Glow (wie Hero) */
+  body::before{
+    content:""; position:fixed; inset:-30%; z-index:0; pointer-events:none;
+    background:
+      radial-gradient(40% 40% at 30% 30%, rgba(0,184,136,.12), transparent 60%),
+      radial-gradient(34% 34% at 74% 70%, rgba(31,201,152,.10), transparent 60%);
+    animation: glowDrift 18s ease-in-out infinite alternate;
+  }
+  @keyframes glowDrift{ from{transform:translate(-3%,-2%) scale(1)} to{transform:translate(3%,2%) scale(1.08)} }
+  /* Glas-Karte mit Tiefe + Border-Glow */
   .glass {
-    background: rgba(30, 41, 59, 0.6);
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255,255,255,0.1);
+    position:relative; z-index:1;
+    background: linear-gradient(168deg, rgba(17,22,29,.94), rgba(8,13,18,.94));
+    -webkit-backdrop-filter: blur(16px); backdrop-filter: blur(16px);
+    border: 1px solid rgba(255,255,255,.08);
+    box-shadow: 0 1px 0 rgba(255,255,255,.06) inset, 0 30px 80px -30px rgba(0,0,0,.82);
+    animation: cardIn .7s var(--ease) both;
   }
-  .neon { color: #00B888; }
+  .glass::before{
+    content:""; position:absolute; inset:0 0 auto; height:1px;
+    background: linear-gradient(90deg, transparent, rgba(0,184,136,.6), transparent);
+  }
+  @keyframes cardIn{ from{opacity:0; transform:translateY(14px) scale(.985)} to{opacity:1; transform:none} }
+  .brand-sub{ font-family:var(--ff-display); color:var(--emerald-soft); font-size:.84rem; font-weight:600; letter-spacing:.04em; }
+  label{ display:block; font-family:var(--ff-display); font-size:.7rem; letter-spacing:.07em; text-transform:uppercase; color:rgba(242,243,241,.5); font-weight:600; margin-bottom:.45rem; }
   input {
-    background: rgba(15, 23, 42, 0.6);
-    border: 1px solid rgba(255,255,255,0.15);
-    color: white;
+    width:100%; padding:.95rem 1rem; border-radius:13px;
+    background: rgba(255,255,255,.03); border: 1px solid rgba(255,255,255,.1); color: var(--paper);
+    font-family: var(--ff-body); font-size: 1rem; transition: border-color .2s, box-shadow .2s, background .2s;
   }
-  input:focus {
-    outline: none;
-    border-color: #00B888;
-  }
+  input::placeholder{ color: rgba(242,243,241,.32); }
+  input:focus { outline:none; border-color: var(--emerald); background: rgba(0,184,136,.05); box-shadow: 0 0 0 3px rgba(0,184,136,.16); }
   .btn-primary {
-    background: linear-gradient(135deg, #00B888, #1FC998);
-    color: #04201A;
-    transition: all 0.2s;
-    font-weight: bold;
+    width:100%; padding:.95rem 1rem; border:none; border-radius:13px; cursor:pointer;
+    background: linear-gradient(135deg, var(--emerald), var(--emerald-soft));
+    color:#04130D; font-family:var(--ff-display); font-weight:600; font-size:1rem; letter-spacing:.01em;
+    transition: transform .2s var(--ease), box-shadow .2s, filter .2s;
+    box-shadow: 0 14px 34px -14px rgba(0,184,136,.6), 0 1px 0 rgba(255,255,255,.35) inset;
   }
-  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(0, 184, 136, 0.3); }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 20px 46px -14px rgba(0,184,136,.78), 0 1px 0 rgba(255,255,255,.4) inset; filter: saturate(1.08); }
+  .btn-primary:active { transform: translateY(0); }
+  .foot{ color: rgba(242,243,241,.42); font-size:.72rem; line-height:1.9; }
+  .foot .claim{ font-family:Georgia, serif; font-style:italic; color: var(--emerald-soft); }
+  .foot .pk{ color: rgba(242,243,241,.3); letter-spacing:.05em; }
+  .lock{ width:12px; height:12px; vertical-align:-2px; margin-right:6px; opacity:.55; }
+  .err{ color:#ff8a80; font-size:.85rem; text-align:center; }
   .shake { animation: shake 0.4s; }
-  @keyframes shake {
-    0%, 100% { transform: translateX(0); }
-    25% { transform: translateX(-10px); }
-    75% { transform: translateX(10px); }
-  }
+  @keyframes shake { 0%,100%{transform:translateX(0)} 25%{transform:translateX(-9px)} 75%{transform:translateX(9px)} }
+  @media (prefers-reduced-motion:reduce){ body::before, .glass{ animation:none } }
 </style>
 </head>
 <body class="bg-depth">
 
-<div class="glass rounded-3xl p-8 w-full max-w-md scale-in">
-  <div class="text-center mb-8">
-    <img src="assets/s2s-wordmark.png" alt="social2scale" class="logo-glow-strong" style="height:42px;width:auto;margin:0 auto 14px;display:block">
-    <p class="neon text-sm font-bold tracking-wide">Dein Wachstums-Cockpit</p>
+<div class="glass" style="width:100%;max-width:25rem;border-radius:22px;padding:2.6rem 2.1rem 2rem">
+  <div style="text-align:center;margin-bottom:1.9rem">
+    <img src="assets/s2s-wordmark.png" alt="social2scale" style="height:40px;width:auto;margin:0 auto 14px;display:block">
+    <p class="brand-sub">Dein Wachstums-Cockpit</p>
   </div>
 
-  <div id="loginForm" class="space-y-4">
+  <div id="loginForm" style="display:grid;gap:1rem">
     <div>
-      <label class="block text-sm text-gray-400 mb-2">E-Mail</label>
-      <input type="text" id="userInput" placeholder="deine@email.de" autocomplete="username"
-             class="w-full p-4 rounded-xl text-lg"
-             autofocus
+      <label for="userInput">E-Mail</label>
+      <input type="text" id="userInput" placeholder="deine@email.de" autocomplete="username" autofocus
              onkeypress="if(event.key==='Enter') tryLogin()">
     </div>
     <div>
-      <label class="block text-sm text-gray-400 mb-2">Passwort</label>
-      <input type="password" id="passwordInput" placeholder="••••••••"
-             class="w-full p-4 rounded-xl text-lg"
-             autocomplete="current-password"
+      <label for="passwordInput">Passwort</label>
+      <input type="password" id="passwordInput" placeholder="••••••••" autocomplete="current-password"
              onkeypress="if(event.key==='Enter') tryLogin()">
     </div>
 
-    <div id="errorMsg" class="hidden text-red-400 text-sm text-center">
-      ❌ Falsches Passwort. Versuch's nochmal!
-    </div>
+    <div id="errorMsg" class="hidden err">Falsche Zugangsdaten. Bitte erneut versuchen.</div>
 
-    <button onclick="tryLogin()" class="btn-primary btn-shimmer btn-glow-strong press-feedback w-full p-4 rounded-xl text-lg">
-      🔓 Login
-    </button>
+    <button onclick="tryLogin()" class="btn-primary" style="margin-top:.3rem">Login</button>
   </div>
 
-  <div class="mt-8 text-center text-xs text-gray-500">
-    <p>🔐 Geschützter Bereich</p>
-    <p class="mt-1">Strategie statt Zufall.</p>
-    <p class="mt-1 text-gray-600">powered by PEAKING</p>
+  <div class="foot" style="margin-top:1.9rem;text-align:center">
+    <p><svg class="lock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>Geschützter Bereich</p>
+    <p class="claim" style="margin-top:.5rem">Strategie statt Zufall.</p>
+    <p class="pk" style="margin-top:.5rem">powered by PEAKING</p>
   </div>
 </div>
 
@@ -132,7 +148,7 @@ async function tryLogin() {
     if (success) {
       window.location.href = 'dashboard.html';
     } else {
-      errorMsg.textContent = '❌ Falsches Passwort. Versuch\'s nochmal!';
+      errorMsg.textContent = 'Falsche Zugangsdaten. Bitte erneut versuchen.';
       errorMsg.classList.remove('hidden');
       document.getElementById('passwordInput').value = '';
       document.querySelector('.glass').classList.add('shake');
@@ -140,7 +156,7 @@ async function tryLogin() {
     }
   } catch (err) {
     // Surface JS errors instead of silent fail
-    errorMsg.textContent = '⚠️ Login-Fehler: ' + (err.message || err);
+    errorMsg.textContent = 'Login-Fehler: ' + (err.message || err);
     errorMsg.classList.remove('hidden');
     console.error('Login error:', err);
   }
