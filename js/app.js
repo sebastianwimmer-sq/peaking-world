@@ -70,7 +70,20 @@ const SmashApp = (function() {
   // Keys die NICHT account-spezifisch sind (global)
   const GLOBAL_KEYS = ['auth', 'currentAccount'];
 
+  // Kunden-Modus: ein eingeloggter Pro-Kunde (pkToken vorhanden) ist KEIN Owner.
+  // Er sieht ausschließlich seinen eigenen Daten-Space — kein Switcher, kein Admin,
+  // nie Fallback auf Sebi-Accounts (vegetarianhulk/peakingworld).
+  function isClientMode() {
+    return !!localStorage.getItem(STORAGE_PREFIX + 'pkToken');
+  }
+
   function getCurrentAccount() {
+    // Kunde: immer der eigene Space aus dem Token — hart, ohne Fallback.
+    if (isClientMode()) {
+      const token = localStorage.getItem(STORAGE_PREFIX + 'pkToken');
+      const id = _pkClientIdFromToken(token);
+      if (id) return 'client' + id;
+    }
     const stored = localStorage.getItem(STORAGE_PREFIX + 'currentAccount');
     if (ACCOUNTS[stored]) return stored;
     // Fallback: smash:profile.defaultAccount (Settings → Profile)
@@ -79,6 +92,15 @@ const SmashApp = (function() {
       if (profile.defaultAccount && ACCOUNTS[profile.defaultAccount]) return profile.defaultAccount;
     } catch (e) {}
     return 'vegetarianhulk';
+  }
+
+  // Sichtbare Accounts für den Switcher: im Kunden-Modus NUR der eigene.
+  function getVisibleAccounts() {
+    if (isClientMode()) {
+      const acct = getCurrentAccount();
+      return ACCOUNTS[acct] ? { [acct]: ACCOUNTS[acct] } : {};
+    }
+    return ACCOUNTS;
   }
 
   function getProfile() {
@@ -93,6 +115,8 @@ const SmashApp = (function() {
   }
 
   function switchAccount(accountKey) {
+    // Kunde darf seinen Space nicht verlassen (Isolation).
+    if (isClientMode()) return false;
     if (!ACCOUNTS[accountKey]) return false;
     localStorage.setItem(STORAGE_PREFIX + 'currentAccount', accountKey);
     return true;
@@ -321,6 +345,14 @@ const SmashApp = (function() {
   function requireAuth() {
     if (!isAuthenticated()) {
       window.location.href = 'index.html';
+    }
+  }
+
+  // Owner-only-Seiten (Cross-Account, Multi-Account-Settings): Kunden raus.
+  // Modul-Pfade liegen in /modules/, daher relativ ../dashboard.html.
+  function requireOwner() {
+    if (isClientMode()) {
+      window.location.href = '../dashboard.html';
     }
   }
 
@@ -676,6 +708,7 @@ const SmashApp = (function() {
     logout,
     isAuthenticated,
     requireAuth,
+    requireOwner,
     adminLogin,
     adminLogout,
     isAdminAuthenticated,
@@ -693,6 +726,8 @@ const SmashApp = (function() {
     getCurrentAccount,
     switchAccount,
     getAccount,
+    isClientMode,
+    getVisibleAccounts,
 
     // Profile + Prefs (Basics)
     getProfile,

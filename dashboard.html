@@ -124,7 +124,7 @@
   <!-- Header -->
   <div class="flex justify-between items-center mb-6">
     <div>
-      <h1 class="text-2xl md:text-4xl font-bold flex items-center gap-2.5"><img src="assets/logo.svg" alt="" class="w-8 h-8 md:w-10 md:h-10 logo-glow"> <span class="s2s-grad">social2scale</span></h1>
+      <h1 class="text-2xl md:text-4xl font-bold flex items-center gap-2.5"><span class="s2s-grad">social2scale</span></h1>
       <p class="text-sm" style="color:var(--muted)"><span class="neon font-semibold">Social, das skaliert.</span> · <span id="todayDate"></span></p>
     </div>
     <div class="flex items-center gap-2 relative">
@@ -251,7 +251,7 @@
         <div class="font-bold mb-1">BIP Daily-Log</div>
         <div class="text-xs" style="color:var(--muted)">Building in Public · Streak</div>
       </a>
-      <a href="modules/achievements.html" class="mod-tile glass module-card lift-glow press-feedback rounded-2xl p-5" data-keywords="achievements badges trophies xp tier bronze silver gold diamond legend">
+      <a href="modules/achievements.html" data-owner-only class="mod-tile glass module-card lift-glow press-feedback rounded-2xl p-5" data-keywords="achievements badges trophies xp tier bronze silver gold diamond legend">
         <div class="mod-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/></svg></div>
         <div class="font-bold mb-1">Achievements</div>
         <div class="text-xs" style="color:var(--muted)">33 Auto-Unlock-Badges</div>
@@ -311,7 +311,7 @@
         <div class="font-bold mb-1">Reel Series</div>
         <div class="text-xs" style="color:var(--muted)">Multi-Reel-Story-Arcs</div>
       </a>
-      <a href="modules/cross-post.html" class="mod-tile glass module-card lift-glow press-feedback rounded-2xl p-5" data-keywords="cross post recut reframe hook account multi vegetarianhulk peakingworld">
+      <a href="modules/cross-post.html" data-owner-only class="mod-tile glass module-card lift-glow press-feedback rounded-2xl p-5" data-keywords="cross post recut reframe hook account multi vegetarianhulk peakingworld">
         <div class="mod-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 2v6h-6"/><path d="M3 12a9 9 0 0 1 15-6.7L21 8"/><path d="M3 22v-6h6"/><path d="M21 12a9 9 0 0 1-15 6.7L3 16"/></svg></div>
         <div class="font-bold mb-1">Cross-Posting</div>
         <div class="text-xs" style="color:var(--muted)">Re-Cut: Account A → Account B</div>
@@ -346,7 +346,7 @@
         <div class="font-bold mb-1">Quick Replies</div>
         <div class="text-xs" style="color:var(--muted)">DM · Comment · Story</div>
       </a>
-      <a href="modules/story-pack.html" class="mod-tile glass module-card lift-glow press-feedback rounded-2xl p-5" data-keywords="story pack stories slides cross post reel drop bip insight png download">
+      <a href="modules/story-pack.html" data-owner-only class="mod-tile glass module-card lift-glow press-feedback rounded-2xl p-5" data-keywords="story pack stories slides cross post reel drop bip insight png download">
         <div class="mod-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></svg></div>
         <div class="font-bold mb-1">Story-Pack</div>
         <div class="text-xs" style="color:var(--muted)">Auto-Slides · PNG-Download</div>
@@ -681,9 +681,24 @@ function renderAccountSwitcher() {
   document.getElementById('accountEmoji').textContent = account.emoji;
   document.getElementById('accountHandle').textContent = account.handle;
 
+  // Kunden-Modus: kein Account-Wechsel — nur der eigene Account, statisch (kein Dropdown).
+  if (SmashApp.isClientMode && SmashApp.isClientMode()) {
+    const btn = document.querySelector('.account-switch');
+    if (btn) {
+      btn.removeAttribute('onclick');
+      btn.style.cursor = 'default';
+      btn.style.pointerEvents = 'none';
+      const chevron = btn.querySelector('svg');
+      if (chevron) chevron.style.display = 'none';
+    }
+    const menu = document.getElementById('accountMenu');
+    if (menu) menu.innerHTML = '';
+    return;
+  }
+
   const menu = document.getElementById('accountMenu');
   // Keep header label, then add dynamic buttons
-  const buttons = Object.values(SmashApp.ACCOUNTS).map(acc => `
+  const buttons = Object.values(SmashApp.getVisibleAccounts()).map(acc => `
     <button onclick="doSwitchAccount('${acc.key}')" class="${acc.key === current ? 'current' : ''}">
       <span style="font-size: 18px;">${acc.emoji}</span>
       <div style="flex: 1;">
@@ -713,6 +728,15 @@ document.addEventListener('click', (e) => {
     menu.classList.add('hidden');
   }
 });
+
+// Kunden-Modus: Owner-only-Bereiche (Admin/Settings) ausblenden.
+// Kunden bekommen später einen eigenen, schlanken Einstellungs-Bereich (siehe Roadmap).
+function applyClientModeUI() {
+  if (!(SmashApp.isClientMode && SmashApp.isClientMode())) return;
+  // Admin-Bereich + Module die fremde Accounts lesen (Cross-Post, Achievements, Story-Pack) raus.
+  document.querySelectorAll('[data-cat="admin"], [data-owner-only]').forEach(el => el.style.display = 'none');
+}
+applyClientModeUI();
 
 renderAccountSwitcher();
 renderCoachHero();
