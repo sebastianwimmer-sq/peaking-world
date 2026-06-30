@@ -9,13 +9,13 @@
 <link rel="icon" href="../assets/logo.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="../assets/logo.svg">
 <link rel="manifest" href="../manifest.json">
-<meta name="theme-color" content="#FFA94D">
+<meta name="theme-color" content="#00B888">
 <link rel="stylesheet" href="../assets/effects.css">
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="../js/app.js"></script>
 <style>
   body {
-    background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+    background: linear-gradient(135deg, #0B0F14 0%, #11161D 100%);
     min-height: 100dvh;
     color: white;
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
@@ -25,14 +25,14 @@
     backdrop-filter: blur(10px);
     border: 1px solid rgba(255,255,255,0.1);
   }
-  .neon { color: #FFA94D; }
+  .neon { color: #00B888; }
   .btn-primary {
-    background: linear-gradient(135deg, #FFA94D, #FF6B6B);
-    color: #0f172a;
+    background: linear-gradient(135deg, #00B888, #1FC998);
+    color: #04201A;
     font-weight: bold;
     transition: all 0.2s;
   }
-  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(255, 169, 77, 0.4); }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(0, 184, 136, 0.4); }
   .btn-danger {
     background: rgba(239, 68, 68, 0.15);
     color: #f87171;
@@ -53,9 +53,9 @@
   .toast {
     position: fixed; bottom: 24px; left: 50%;
     transform: translateX(-50%) translateY(100px);
-    background: #FFA94D; color: #0f172a;
+    background: #00B888; color: #04201A;
     padding: 12px 24px; border-radius: 999px; font-weight: bold;
-    box-shadow: 0 8px 24px rgba(255, 169, 77, 0.4);
+    box-shadow: 0 8px 24px rgba(0, 184, 136, 0.4);
     transition: transform 0.3s ease; z-index: 100;
   }
   .toast.show { transform: translateX(-50%) translateY(0); }
@@ -66,8 +66,8 @@
     border: 1px solid rgba(255,255,255,0.08);
   }
   .account-card.current {
-    border-color: rgba(255, 169, 77, 0.4);
-    background: rgba(255, 169, 77, 0.05);
+    border-color: rgba(0, 184, 136, 0.4);
+    background: rgba(0, 184, 136, 0.05);
   }
 </style>
 </head>
@@ -139,7 +139,7 @@
 
   <!-- UI / Theme -->
   <div class="glass rounded-3xl p-5 mb-5 float-in">
-    <h2 class="text-lg font-bold mb-1">🌅 UI / Theme</h2>
+    <h2 class="text-lg font-bold mb-1">📈 UI / Theme</h2>
     <p class="text-xs text-gray-400 mb-4">Visuelle Helfer — Brand bleibt Sunrise, aber Account-Tint markiert wo du bist.</p>
     <label class="flex items-center justify-between p-3 rounded-xl bg-slate-900/40 mb-2 cursor-pointer">
       <div>
@@ -288,7 +288,7 @@
   </div>
 
   <!-- Admin-Panel-Link (versteckt bis erstes Admin-Login) -->
-  <div id="adminPanelRow" class="glass rounded-3xl p-5 mb-5 float-in" style="border-color: rgba(255, 169, 77, 0.3); display:none;">
+  <div id="adminPanelRow" class="glass rounded-3xl p-5 mb-5 float-in" style="border-color: rgba(0, 184, 136, 0.3); display:none;">
     <h2 class="text-lg font-bold mb-1">👑 Admin-Panel</h2>
     <p class="text-xs text-gray-400 mb-3">Sebi-only Backstage: Ideen · Brain · Activity · Tech. <span id="adminAuthStatus"></span></p>
     <div class="flex gap-2 flex-wrap">
@@ -354,7 +354,7 @@
   </div>
 
   <div class="text-center text-gray-500 text-xs mt-8">
-    ⚙️ PEAKING · Always peaking. · Daten-Safety first
+    ⚙️ powered by PEAKING · Social, das skaliert. · Daten-Safety first
   </div>
 </div>
 
@@ -471,7 +471,7 @@ function renderPillars() {
     <div class="flex items-center gap-2 p-2 rounded-lg bg-slate-900/40" data-pillar-key="${key}">
       <input type="text" value="${escapeAttr(p.emoji||'📍')}" maxlength="3" class="w-12 text-center bg-slate-800 rounded p-1 text-sm" data-field="emoji" oninput="updatePillarField('${key}','emoji',this.value)">
       <input type="text" value="${escapeAttr(p.name||'')}" placeholder="Name" class="flex-1 bg-slate-800 rounded p-1 text-sm px-2" data-field="name" oninput="updatePillarField('${key}','name',this.value)">
-      <input type="color" value="${p.color||'#FFA94D'}" class="w-10 h-8 rounded bg-transparent cursor-pointer" oninput="updatePillarField('${key}','color',this.value)">
+      <input type="color" value="${p.color||'#00B888'}" class="w-10 h-8 rounded bg-transparent cursor-pointer" oninput="updatePillarField('${key}','color',this.value)">
       <input type="number" value="${p.target||0}" min="0" max="100" class="w-14 text-center bg-slate-800 rounded p-1 text-sm" oninput="updatePillarField('${key}','target',Number(this.value))" title="Target-%">
       <button onclick="removePillar('${key}')" class="text-red-400 hover:text-red-300 px-2" title="Entfernen">×</button>
     </div>
@@ -484,7 +484,7 @@ function updatePillarField(key, field, value) {
 
 function addPillar() {
   const key = 'p' + Date.now().toString(36);
-  pillarsDraft[key] = { emoji: '📍', name: 'Neuer Pillar', color: '#FFA94D', target: 10 };
+  pillarsDraft[key] = { emoji: '📍', name: 'Neuer Pillar', color: '#00B888', target: 10 };
   renderPillarsFromDraft();
 }
 
@@ -503,7 +503,7 @@ function renderPillarsFromDraft() {
     <div class="flex items-center gap-2 p-2 rounded-lg bg-slate-900/40" data-pillar-key="${key}">
       <input type="text" value="${escapeAttr(p.emoji||'📍')}" maxlength="3" class="w-12 text-center bg-slate-800 rounded p-1 text-sm" oninput="updatePillarField('${key}','emoji',this.value)">
       <input type="text" value="${escapeAttr(p.name||'')}" placeholder="Name" class="flex-1 bg-slate-800 rounded p-1 text-sm px-2" oninput="updatePillarField('${key}','name',this.value)">
-      <input type="color" value="${p.color||'#FFA94D'}" class="w-10 h-8 rounded bg-transparent cursor-pointer" oninput="updatePillarField('${key}','color',this.value)">
+      <input type="color" value="${p.color||'#00B888'}" class="w-10 h-8 rounded bg-transparent cursor-pointer" oninput="updatePillarField('${key}','color',this.value)">
       <input type="number" value="${p.target||0}" min="0" max="100" class="w-14 text-center bg-slate-800 rounded p-1 text-sm" oninput="updatePillarField('${key}','target',Number(this.value))">
       <button onclick="removePillar('${key}')" class="text-red-400 hover:text-red-300 px-2">×</button>
     </div>

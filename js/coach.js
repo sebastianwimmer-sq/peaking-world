@@ -76,7 +76,7 @@ const Coach = (function() {
       const slot = plan[today];
       const pillarInfo = _pillars()[slot.pillar];
       return {
-        emoji: '🌅',
+        emoji: '📈',
         priority: 'high',
         title: `Heute ${today} · ${slot.emoji||''} ${slot.name||'Reel-Tag'}`,
         body: pillarInfo
@@ -135,7 +135,7 @@ const Coach = (function() {
       emoji: '⛰️',
       priority: 'low',
       title: 'Steady climb.',
-      body: `Du bist on track. ${reels.length} Reels getrackt. Always peaking — heute 1 Schritt weiter.`,
+      body: `Du bist on track. ${reels.length} Reels getrackt. System statt Zufall — heute ein Schritt weiter.`,
       cta: { text: '→ Today', href: '../dashboard.html' }
     });
   }
@@ -389,8 +389,8 @@ const Coach = (function() {
     { emoji: '🧠', topic: 'Identity', text: '„Ich bin Creator" funktioniert besser als „Ich will posten". Identity > Action.' },
     { emoji: '📊', topic: 'Track',    text: 'Was du nicht trackst, kannst du nicht verbessern. Tracker ist Pflicht, nicht optional.' },
     { emoji: '🤝', topic: 'Engage',   text: 'Erste 30 Min nach Posting: aktiv Comments beantworten. Algo belohnt Real-Time-Engagement.' },
-    { emoji: '🌅', topic: 'Authority',text: 'Authority-Hook (Stat/Mistake/BIP) > Curiosity-Hook für Long-Term-Followers.' },
-    { emoji: '⛰️', topic: 'Climb',    text: 'The climb is the peak. Always peaking heißt: heute 1 Schritt weiter, nicht alles auf einmal.' }
+    { emoji: '📈', topic: 'Authority',text: 'Authority-Hook (Stat/Mistake/BIP) > Curiosity-Hook für Long-Term-Followers.' },
+    { emoji: '📈', topic: 'Konstanz', text: 'Konstanz schlägt Zufall: heute ein Schritt weiter, nicht alles auf einmal.' }
   ];
 
   function getMastermindToday() {

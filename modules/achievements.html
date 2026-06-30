@@ -9,7 +9,7 @@
 <link rel="icon" href="../assets/logo.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="../assets/logo.svg">
 <link rel="manifest" href="../manifest.json">
-<meta name="theme-color" content="#FFA94D">
+<meta name="theme-color" content="#00B888">
 <link rel="stylesheet" href="../assets/effects.css">
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="../js/app.js"></script>
@@ -25,13 +25,13 @@
     backdrop-filter: blur(10px);
     border: 1px solid rgba(255,255,255,0.1);
   }
-  .neon { color: #FFA94D; }
+  .neon { color: #00B888; }
   .toast {
     position: fixed; bottom: 24px; left: 50%;
     transform: translateX(-50%) translateY(100px);
-    background: #FFA94D; color: #0f172a;
+    background: #00B888; color:#04201A;
     padding: 12px 24px; border-radius: 999px; font-weight: bold;
-    box-shadow: 0 8px 24px rgba(255, 169, 77, 0.4);
+    box-shadow: 0 8px 24px rgba(0, 184, 136, 0.4);
     transition: transform 0.3s ease; z-index: 100;
   }
   .toast.show { transform: translateX(-50%) translateY(0); }
@@ -50,9 +50,9 @@
     white-space: nowrap;
   }
   .chip.active {
-    background: linear-gradient(135deg, #FFA94D, #FF6B6B);
-    color: #0f172a;
-    border-color: #FFA94D;
+    background: linear-gradient(135deg, #00B888, #1FC998);
+    color:#04201A;
+    border-color: #00B888;
   }
 
   /* Badge */
@@ -67,12 +67,12 @@
     overflow: hidden;
   }
   .badge-card.unlocked {
-    border-color: rgba(255, 169, 77, 0.4);
-    background: linear-gradient(135deg, rgba(255, 169, 77, 0.08), rgba(255, 212, 59, 0.05));
+    border-color: rgba(0, 184, 136, 0.4);
+    background: linear-gradient(135deg, rgba(0, 184, 136, 0.08), rgba(31, 201, 152, 0.05));
   }
   .badge-card.unlocked:hover {
     transform: translateY(-3px);
-    box-shadow: 0 12px 28px rgba(0,0,0,0.4), 0 0 24px rgba(255, 169, 77, 0.25);
+    box-shadow: 0 12px 28px rgba(0,0,0,0.4), 0 0 24px rgba(0, 184, 136, 0.25);
   }
   .badge-card.locked {
     opacity: 0.4;
@@ -88,13 +88,13 @@
     border: 3px solid rgba(255,255,255,0.1);
   }
   .badge-card.unlocked .badge-icon {
-    border-color: var(--tier-color, #FFA94D);
-    box-shadow: 0 0 20px var(--tier-glow, rgba(255, 169, 77, 0.4));
+    border-color: var(--tier-color, #00B888);
+    box-shadow: 0 0 20px var(--tier-glow, rgba(0, 184, 136, 0.4));
     animation: badge-shine 4s ease-in-out infinite;
   }
   @keyframes badge-shine {
-    0%, 100% { box-shadow: 0 0 20px var(--tier-glow, rgba(255, 169, 77, 0.4)); }
-    50% { box-shadow: 0 0 32px var(--tier-glow, rgba(255, 169, 77, 0.7)); }
+    0%, 100% { box-shadow: 0 0 20px var(--tier-glow, rgba(0, 184, 136, 0.4)); }
+    50% { box-shadow: 0 0 32px var(--tier-glow, rgba(0, 184, 136, 0.7)); }
   }
   .tier-pill {
     display: inline-block;
@@ -108,13 +108,13 @@
   }
   .tier-bronze { background: rgba(205, 127, 50, 0.25); color: #d49a6a; }
   .tier-silver { background: rgba(192, 192, 192, 0.25); color: #d4d4d4; }
-  .tier-gold { background: rgba(255, 215, 0, 0.25); color: #ffd700; }
+  .tier-gold { background: rgba(31, 201, 152, 0.25); color: #1FC998; }
   .tier-diamond { background: rgba(185, 242, 255, 0.25); color: #b9f2ff; }
-  .tier-legend { background: linear-gradient(135deg, rgba(255, 107, 107, 0.3), rgba(255, 212, 59, 0.3)); color: #FFA94D; }
+  .tier-legend { background: linear-gradient(135deg, rgba(0, 184, 136, 0.3), rgba(31, 201, 152, 0.3)); color: #00B888; }
 
   .hero-stats {
-    background: linear-gradient(135deg, rgba(255, 107, 107, 0.12), rgba(255, 212, 59, 0.12));
-    border: 1px solid rgba(255, 169, 77, 0.3);
+    background: linear-gradient(135deg, rgba(0, 184, 136, 0.12), rgba(31, 201, 152, 0.12));
+    border: 1px solid rgba(0, 184, 136, 0.3);
   }
 
   /* Confetti-Burst on new unlock */
@@ -303,7 +303,7 @@ const ACHIEVEMENTS = [
     desc: 'Macro-Influencer-Tier erreicht', xp: 1000,
     check: () => (SmashApp.getData('goals') || {}).current >= 100000 },
   { id: 'g_1m', tier: 'legend', category: 'goals', icon: '🏔️', title: '1M Peak',
-    desc: 'The destination — Always peaking achieved', xp: 5000,
+    desc: 'The destination — Skalierung erreicht', xp: 5000,
     check: () => (SmashApp.getData('goals') || {}).current >= 1000000 },
 
   // === SERIES ===
@@ -426,9 +426,9 @@ function bindFilters() {
 const TIER_COLORS = {
   bronze: { color: '#cd7f32', glow: 'rgba(205, 127, 50, 0.5)' },
   silver: { color: '#c0c0c0', glow: 'rgba(192, 192, 192, 0.5)' },
-  gold: { color: '#FFD700', glow: 'rgba(255, 215, 0, 0.5)' },
+  gold: { color: '#1FC998', glow: 'rgba(31, 201, 152, 0.5)' },
   diamond: { color: '#b9f2ff', glow: 'rgba(185, 242, 255, 0.6)' },
-  legend: { color: '#FFA94D', glow: 'rgba(255, 169, 77, 0.7)' }
+  legend: { color: '#00B888', glow: 'rgba(0, 184, 136, 0.7)' }
 };
 
 function render() {

@@ -6,7 +6,7 @@
 <title>peaking · brain · KW 20 recap</title>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Playfair+Display:ital,wght@1,500;1,600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
 
 <style>
 /* ─────────────────────────────────────────────────────
@@ -19,15 +19,15 @@
   --surface: rgba(255,255,255,0.035);
   --surface-hi: rgba(255,255,255,0.06);
   --line: rgba(255,255,255,0.07);
-  --line-hi: rgba(255, 169, 77, 0.20);
+  --line-hi: rgba(0, 184, 136, 0.20);
   --text: #f5ecdf;
   --text-2: rgba(245, 236, 223, 0.62);
   --text-3: rgba(245, 236, 223, 0.34);
 
-  --sun-1: #ff6b6b;
-  --sun-2: #ffa94d;
-  --sun-3: #ffd43b;
-  --sunrise: linear-gradient(135deg, #ff6b6b 0%, #ffa94d 55%, #ffd43b 100%);
+  --sun-1: #00B888;
+  --sun-2: #1FC998;
+  --sun-3: #28C281;
+  --sunrise: linear-gradient(135deg, #00B888 0%, #1FC998 55%, #28C281 100%);
 
   --good: #5ddc8a;
   --bad: #f87171;
@@ -44,8 +44,8 @@ body {
   font-feature-settings: 'ss01', 'cv11';
   color: var(--text);
   background:
-    radial-gradient(120% 70% at 50% -10%, rgba(255, 169, 77, 0.18), transparent 60%),
-    radial-gradient(80% 40% at 50% 8%, rgba(255, 107, 107, 0.10), transparent 65%),
+    radial-gradient(120% 70% at 50% -10%, rgba(0, 184, 136, 0.18), transparent 60%),
+    radial-gradient(80% 40% at 50% 8%, rgba(0, 184, 136, 0.10), transparent 65%),
     linear-gradient(180deg, var(--bg-1) 0%, var(--bg-0) 60%);
   background-attachment: fixed;
   min-height: 100vh;
@@ -55,7 +55,7 @@ body {
 
 button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer; padding: 0; }
 input { font: inherit; color: inherit; background: none; border: 0; padding: 0; outline: none; }
-::selection { background: rgba(255, 169, 77, 0.4); color: #1a0f0a; }
+::selection { background: rgba(0, 184, 136, 0.4); color: #04201A; }
 
 /* ─── ambient ─── */
 .amb {
@@ -67,14 +67,14 @@ input { font: inherit; color: inherit; background: none; border: 0; padding: 0; 
   transform: translateX(-50%);
   width: 110vw; height: 65vh; max-width: 1400px;
   border-radius: 50%;
-  background: radial-gradient(closest-side, rgba(255, 212, 59, 0.16), rgba(255, 107, 107, 0.05) 55%, transparent 75%);
+  background: radial-gradient(closest-side, rgba(31, 201, 152, 0.16), rgba(0, 184, 136, 0.05) 55%, transparent 75%);
   filter: blur(40px);
 }
 .amb__grain {
   position: absolute; inset: 0;
   background-image:
     radial-gradient(rgba(255,255,255,0.012) 1px, transparent 1px),
-    radial-gradient(rgba(255,170,77,0.020) 1px, transparent 1px);
+    radial-gradient(rgba(40, 194, 129,0.020) 1px, transparent 1px);
   background-size: 3px 3px, 7px 7px;
   background-position: 0 0, 1px 1px;
   mix-blend-mode: screen;
@@ -103,7 +103,7 @@ input { font: inherit; color: inherit; background: none; border: 0; padding: 0; 
 .brand__dot {
   width: 9px; height: 9px; border-radius: 50%;
   background: var(--sunrise);
-  box-shadow: 0 0 12px rgba(255, 169, 77, 0.7);
+  box-shadow: 0 0 12px rgba(0, 184, 136, 0.7);
 }
 .brand__path { color: var(--text-2); font-weight: 600; }
 
@@ -123,7 +123,7 @@ input { font: inherit; color: inherit; background: none; border: 0; padding: 0; 
   text-align: left;
 }
 .hero__eyebrow {
-  font-family: 'Playfair Display', serif;
+  font-family: 'Space Grotesk', 'Inter', sans-serif;
   font-style: italic;
   font-size: 15px;
   color: var(--sun-2);
@@ -198,7 +198,7 @@ input { font: inherit; color: inherit; background: none; border: 0; padding: 0; 
   text-wrap: balance;
 }
 .sect__sub {
-  font-family: 'Playfair Display', serif;
+  font-family: 'Space Grotesk', 'Inter', sans-serif;
   font-style: italic;
   font-size: 14px; color: var(--text-2);
   max-width: 280px; text-align: right;
@@ -222,10 +222,10 @@ input { font: inherit; color: inherit; background: none; border: 0; padding: 0; 
   padding: 22px 22px 20px;
   border-radius: 22px;
   background:
-    radial-gradient(140% 80% at 100% 0%, rgba(255, 169, 77, 0.10), transparent 60%),
+    radial-gradient(140% 80% at 100% 0%, rgba(0, 184, 136, 0.10), transparent 60%),
     linear-gradient(180deg, rgba(255,255,255,0.045), rgba(255,255,255,0.012)),
     rgba(255, 255, 255, 0.025);
-  border: 1px solid rgba(255, 169, 77, 0.14);
+  border: 1px solid rgba(0, 184, 136, 0.14);
   backdrop-filter: blur(28px) saturate(170%);
   -webkit-backdrop-filter: blur(28px) saturate(170%);
   overflow: hidden;
@@ -300,7 +300,7 @@ input { font: inherit; color: inherit; background: none; border: 0; padding: 0; 
   transform: translateY(calc((1 - var(--reveal)) * 14px));
   transition: opacity .5s ease, transform .5s cubic-bezier(.2,.85,.25,1.1), border-color .25s ease;
 }
-.reel:hover { border-color: rgba(255, 169, 77, 0.30); }
+.reel:hover { border-color: rgba(0, 184, 136, 0.30); }
 
 .reel--dim {
   opacity: calc(var(--reveal) * 0.72);
@@ -316,8 +316,8 @@ input { font: inherit; color: inherit; background: none; border: 0; padding: 0; 
   font-family: 'JetBrains Mono', monospace;
   font-size: 11px; font-weight: 700;
   display: grid; place-items: center;
-  background: var(--sunrise); color: #1a0f0a;
-  box-shadow: 0 6px 14px -4px rgba(255, 107, 107, 0.5);
+  background: var(--sunrise); color: #04201A;
+  box-shadow: 0 6px 14px -4px rgba(0, 184, 136, 0.5);
 }
 .reel--dim .reel__rank {
   background: rgba(248, 113, 113, 0.18);
@@ -357,11 +357,11 @@ input { font: inherit; color: inherit; background: none; border: 0; padding: 0; 
   font-size: 10px; font-weight: 700; letter-spacing: 0.4px;
   text-transform: uppercase;
 }
-.tag--food  { background: rgba(255, 122, 61, 0.14); color: #ffb077; border: 1px solid rgba(255, 122, 61, 0.30); }
+.tag--food  { background: rgba(0, 184, 136, 0.14); color: #1FC998; border: 1px solid rgba(0, 184, 136, 0.30); }
 .tag--lift  { background: rgba(93, 220, 138, 0.10); color: #88e8a8; border: 1px solid rgba(93, 220, 138, 0.22); }
 .tag--build { background: rgba(120, 180, 255, 0.10); color: #92c0ff; border: 1px solid rgba(120, 180, 255, 0.22); }
 .tag--howto { background: rgba(220, 150, 255, 0.10); color: #d4a8ff; border: 1px solid rgba(220, 150, 255, 0.22); }
-.tag--story { background: rgba(255, 200, 100, 0.10); color: #f0c878; border: 1px solid rgba(255, 200, 100, 0.22); }
+.tag--story { background: rgba(31, 201, 152, 0.10); color: #f0c878; border: 1px solid rgba(31, 201, 152, 0.22); }
 
 .reel__num {
   text-align: right;
@@ -399,14 +399,14 @@ input { font: inherit; color: inherit; background: none; border: 0; padding: 0; 
   padding: 28px 26px;
   border-radius: 24px;
   background:
-    radial-gradient(80% 80% at 0% 0%, rgba(255, 107, 107, 0.10), transparent 55%),
-    radial-gradient(60% 80% at 100% 100%, rgba(255, 212, 59, 0.07), transparent 55%),
+    radial-gradient(80% 80% at 0% 0%, rgba(0, 184, 136, 0.10), transparent 55%),
+    radial-gradient(60% 80% at 100% 100%, rgba(31, 201, 152, 0.07), transparent 55%),
     linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.01));
-  border: 1px solid rgba(255, 169, 77, 0.22);
+  border: 1px solid rgba(0, 184, 136, 0.22);
   backdrop-filter: blur(28px) saturate(170%);
   -webkit-backdrop-filter: blur(28px) saturate(170%);
   overflow: hidden;
-  box-shadow: inset 0 1px 0 rgba(255,255,255,0.07), 0 24px 60px -30px rgba(255, 107, 107, 0.20);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.07), 0 24px 60px -30px rgba(0, 184, 136, 0.20);
   opacity: var(--reveal);
   transform: translateY(calc((1 - var(--reveal)) * 16px));
   transition: opacity .55s ease, transform .55s cubic-bezier(.2,.85,.25,1.1);
@@ -420,8 +420,8 @@ input { font: inherit; color: inherit; background: none; border: 0; padding: 0; 
   background: var(--sunrise);
   display: grid; place-items: center;
   font-size: 14px;
-  color: #1a0f0a; font-weight: 800;
-  box-shadow: 0 8px 16px -6px rgba(255, 107, 107, 0.5);
+  color: #04201A; font-weight: 800;
+  box-shadow: 0 8px 16px -6px rgba(0, 184, 136, 0.5);
 }
 .ai__title {
   font-size: 13px; font-weight: 700; letter-spacing: 0.4px;
@@ -502,13 +502,13 @@ input { font: inherit; color: inherit; background: none; border: 0; padding: 0; 
   transition: border-color .2s ease, background .2s ease;
 }
 .plan__row:focus-within {
-  border-color: rgba(255, 169, 77, 0.4);
-  background: rgba(255, 169, 77, 0.04);
+  border-color: rgba(0, 184, 136, 0.4);
+  background: rgba(0, 184, 136, 0.04);
 }
 .plan__n {
   width: 36px; height: 36px; border-radius: 12px;
-  background: rgba(255, 169, 77, 0.10);
-  border: 1px solid rgba(255, 169, 77, 0.28);
+  background: rgba(0, 184, 136, 0.10);
+  border: 1px solid rgba(0, 184, 136, 0.28);
   display: grid; place-items: center;
   font-family: 'JetBrains Mono', monospace;
   font-size: 13px; font-weight: 700; color: var(--sun-2);
@@ -563,7 +563,7 @@ input { font: inherit; color: inherit; background: none; border: 0; padding: 0; 
   padding: 12px 12px 12px 18px;
   border-radius: 22px;
   background: rgba(12, 16, 22, 0.7);
-  border: 1px solid rgba(255, 169, 77, 0.20);
+  border: 1px solid rgba(0, 184, 136, 0.20);
   backdrop-filter: blur(24px) saturate(170%);
   -webkit-backdrop-filter: blur(24px) saturate(170%);
   box-shadow: 0 20px 50px -20px rgba(0,0,0,0.65), inset 0 1px 0 rgba(255,255,255,0.06);
@@ -577,9 +577,9 @@ input { font: inherit; color: inherit; background: none; border: 0; padding: 0; 
   padding: 12px 18px;
   border-radius: 14px;
   font-size: 13px; font-weight: 700;
-  color: #1a0f0a;
+  color: #04201A;
   background: var(--sunrise);
-  box-shadow: 0 10px 24px -8px rgba(255, 107, 107, 0.55);
+  box-shadow: 0 10px 24px -8px rgba(0, 184, 136, 0.55);
   display: inline-flex; align-items: center; gap: 8px;
   transition: transform .15s ease, box-shadow .15s ease;
   white-space: nowrap;
@@ -593,7 +593,7 @@ input { font: inherit; color: inherit; background: none; border: 0; padding: 0; 
   margin-top: 48px;
   text-align: center;
   padding: 28px 12px;
-  font-family: 'Playfair Display', serif;
+  font-family: 'Space Grotesk', 'Inter', sans-serif;
   font-style: italic;
   font-size: 20px;
   color: var(--text-2);
@@ -683,10 +683,10 @@ input { font: inherit; color: inherit; background: none; border: 0; padding: 0; 
         <span class="hstat__chip hstat__chip--down">↓ 2 vs. KW 19</span>
         <svg class="hstat__spark" viewBox="0 0 90 24" preserveAspectRatio="none" aria-hidden="true">
           <defs>
-            <linearGradient id="sp1" x1="0" x2="1"><stop offset="0%" stop-color="#ff6b6b"/><stop offset="100%" stop-color="#ffd43b"/></linearGradient>
+            <linearGradient id="sp1" x1="0" x2="1"><stop offset="0%" stop-color="#00B888"/><stop offset="100%" stop-color="#1FC998"/></linearGradient>
           </defs>
           <path d="M0,8 L15,4 L30,6 L45,3 L60,8 L75,14 L90,12" fill="none" stroke="url(#sp1)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-          <circle cx="90" cy="12" r="2.4" fill="#ffd43b"/>
+          <circle cx="90" cy="12" r="2.4" fill="#1FC998"/>
         </svg>
       </div>
     </article>
@@ -810,8 +810,8 @@ input { font: inherit; color: inherit; background: none; border: 0; padding: 0; 
 
   <!-- FOOT QUOTE -->
   <div class="foot-quote">
-    „The climb <b>is</b> the peak."
-    <span class="foot-mono">— Always peaking. · brain_v3.0.1</span>
+    „Strategie statt <b>Zufall</b>."
+    <span class="foot-mono">— powered by PEAKING · brain_v3.0.1</span>
   </div>
 
   <!-- SHARE BAR -->
@@ -884,9 +884,9 @@ function thumbStyle(hue) {
         <stop offset="100%" stop-color="oklch(0.10 0.04 ${hue - 20})"/>
       </linearGradient>
       <radialGradient id="sun" cx="0.5" cy="0.30" r="0.28">
-        <stop offset="0%" stop-color="#ffe9c8"/>
-        <stop offset="55%" stop-color="#ffaa3d"/>
-        <stop offset="100%" stop-color="#ff7a3d" stop-opacity="0.5"/>
+        <stop offset="0%" stop-color="#28C281"/>
+        <stop offset="55%" stop-color="#00B888"/>
+        <stop offset="100%" stop-color="#00B888" stop-opacity="0.5"/>
       </radialGradient>
     </defs>
     <rect width="200" height="360" fill="url(#bg)"/>
@@ -1053,9 +1053,9 @@ function drawSunSilhouette(ctx, x, y, w, h, hue) {
   // sun
   const cx = x + w / 2, cy = y + h * 0.32, r = Math.min(w, h) * 0.20;
   const sun = ctx.createRadialGradient(cx, cy, 0, cx, cy, r * 1.6);
-  sun.addColorStop(0,   '#ffe9c8');
-  sun.addColorStop(0.55,'#ffaa3d');
-  sun.addColorStop(1,   'rgba(255, 122, 61, 0)');
+  sun.addColorStop(0,   '#28C281');
+  sun.addColorStop(0.55,'#00B888');
+  sun.addColorStop(1,   'rgba(0, 184, 136, 0)');
   ctx.fillStyle = sun;
   ctx.fillRect(x, y, w, h);
 
@@ -1109,15 +1109,15 @@ function drawShareCanvas() {
 
   // ambient sun
   const sun = ctx.createRadialGradient(W / 2, -100, 0, W / 2, -100, 800);
-  sun.addColorStop(0, 'rgba(255, 212, 59, 0.30)');
-  sun.addColorStop(0.4, 'rgba(255, 107, 107, 0.10)');
-  sun.addColorStop(1, 'rgba(255, 107, 107, 0)');
+  sun.addColorStop(0, 'rgba(31, 201, 152, 0.30)');
+  sun.addColorStop(0.4, 'rgba(0, 184, 136, 0.10)');
+  sun.addColorStop(1, 'rgba(0, 184, 136, 0)');
   ctx.fillStyle = sun;
   ctx.fillRect(0, 0, W, 900);
 
   // grain
   for (let i = 0; i < 800; i++) {
-    ctx.fillStyle = `rgba(255, 245, 235, ${Math.random() * 0.025})`;
+    ctx.fillStyle = `rgba(40, 194, 129, ${Math.random() * 0.025})`;
     ctx.fillRect(Math.random() * W, Math.random() * H, 2, 2);
   }
 
@@ -1125,10 +1125,10 @@ function drawShareCanvas() {
   let cursor = 110;
 
   // brand bar
-  ctx.fillStyle = '#ff6b6b';
+  ctx.fillStyle = '#00B888';
   ctx.beginPath();
   ctx.arc(PAD + 10, cursor, 9, 0, Math.PI * 2);
-  ctx.fillStyle = '#ffa94d';
+  ctx.fillStyle = '#00B888';
   ctx.fill();
   ctx.fillStyle = '#f5ecdf';
   ctx.font = '700 22px Inter, sans-serif';
@@ -1140,8 +1140,8 @@ function drawShareCanvas() {
   cursor += 80;
 
   // eyebrow
-  ctx.fillStyle = '#ffa94d';
-  ctx.font = 'italic 500 30px "Playfair Display", serif';
+  ctx.fillStyle = '#00B888';
+  ctx.font = '600 30px "Space Grotesk", sans-serif';
   ctx.textBaseline = 'alphabetic';
   ctx.fillText('Sunday-Recap · 17. Mai · 21:00', PAD, cursor);
   cursor += 50;
@@ -1154,9 +1154,9 @@ function drawShareCanvas() {
 
   // gradient "Woche"
   const wgrad = ctx.createLinearGradient(PAD, cursor, PAD + 400, cursor + 110);
-  wgrad.addColorStop(0, '#ff6b6b');
-  wgrad.addColorStop(0.55, '#ffa94d');
-  wgrad.addColorStop(1, '#ffd43b');
+  wgrad.addColorStop(0, '#00B888');
+  wgrad.addColorStop(0.55, '#00B888');
+  wgrad.addColorStop(1, '#1FC998');
   ctx.fillStyle = wgrad;
   ctx.font = 'italic 800 124px Inter, sans-serif';
   ctx.fillText('Woche.', PAD, cursor + 95);
@@ -1182,7 +1182,7 @@ function drawShareCanvas() {
     roundRect(ctx, sx, cursor, sw, sh, 24);
     ctx.fillStyle = 'rgba(255,255,255,0.03)';
     ctx.fill();
-    ctx.strokeStyle = 'rgba(255, 169, 77, 0.18)';
+    ctx.strokeStyle = 'rgba(0, 184, 136, 0.18)';
     ctx.lineWidth = 2;
     ctx.stroke();
     ctx.restore();
@@ -1205,9 +1205,9 @@ function drawShareCanvas() {
 
     // value
     const vgrad = ctx.createLinearGradient(sx, cursor, sx + sw, cursor + sh);
-    vgrad.addColorStop(0, '#ff6b6b');
-    vgrad.addColorStop(0.55, '#ffa94d');
-    vgrad.addColorStop(1, '#ffd43b');
+    vgrad.addColorStop(0, '#00B888');
+    vgrad.addColorStop(0.55, '#00B888');
+    vgrad.addColorStop(1, '#1FC998');
     ctx.fillStyle = vgrad;
     const big = s.v.length > 6;
     ctx.font = big ? '800 50px Inter, sans-serif' : '800 76px Inter, sans-serif';
@@ -1240,17 +1240,17 @@ function drawShareCanvas() {
   roundRect(ctx, PAD, ay, aw, ah, 24);
   // sunrise tint
   const ag = ctx.createLinearGradient(PAD, ay, PAD + aw, ay + ah);
-  ag.addColorStop(0, 'rgba(255, 107, 107, 0.10)');
-  ag.addColorStop(1, 'rgba(255, 212, 59, 0.02)');
+  ag.addColorStop(0, 'rgba(0, 184, 136, 0.10)');
+  ag.addColorStop(1, 'rgba(31, 201, 152, 0.02)');
   ctx.fillStyle = ag;
   ctx.fill();
-  ctx.strokeStyle = 'rgba(255, 169, 77, 0.30)';
+  ctx.strokeStyle = 'rgba(0, 184, 136, 0.30)';
   ctx.lineWidth = 2;
   ctx.stroke();
   ctx.restore();
 
-  ctx.fillStyle = '#ffa94d';
-  ctx.font = 'italic 500 22px "Playfair Display", serif';
+  ctx.fillStyle = '#00B888';
+  ctx.font = '600 22px "Space Grotesk", sans-serif';
   ctx.fillText('✦ Coach-Read', PAD + 28, ay + 48);
 
   ctx.fillStyle = '#f5ecdf';
@@ -1264,17 +1264,17 @@ function drawShareCanvas() {
   // ── FOOTER ──
   ctx.fillStyle = 'rgba(245, 236, 223, 0.32)';
   ctx.font = '400 22px "JetBrains Mono", monospace';
-  ctx.fillText('peaking.world/brain · always peaking.', PAD, H - 90);
+  ctx.fillText('peaking.world/brain · powered by PEAKING', PAD, H - 90);
 
   ctx.fillStyle = 'rgba(245, 236, 223, 0.62)';
-  ctx.font = 'italic 500 26px "Playfair Display", serif';
-  const quote = '„The climb is the peak."';
+  ctx.font = '600 26px "Space Grotesk", sans-serif';
+  const quote = '„Strategie statt Zufall."';
   const qw = ctx.measureText(quote).width;
   ctx.fillText(quote, W - PAD - qw, H - 90);
 }
 
 function drawSectionHead(ctx, num, title, x, y) {
-  ctx.fillStyle = '#ffa94d';
+  ctx.fillStyle = '#00B888';
   ctx.font = '500 22px "JetBrains Mono", monospace';
   ctx.fillText(num, x, y + 4);
   ctx.fillStyle = '#f5ecdf';
@@ -1301,15 +1301,15 @@ function drawReelRow(ctx, r, x, y, dim) {
     ctx.fillStyle = 'rgba(248, 113, 113, 0.18)';
   } else {
     const rgrad = ctx.createLinearGradient(rx, ry, rx + rs, ry + rs);
-    rgrad.addColorStop(0, '#ff6b6b');
-    rgrad.addColorStop(0.55, '#ffa94d');
-    rgrad.addColorStop(1, '#ffd43b');
+    rgrad.addColorStop(0, '#00B888');
+    rgrad.addColorStop(0.55, '#00B888');
+    rgrad.addColorStop(1, '#1FC998');
     ctx.fillStyle = rgrad;
   }
   ctx.beginPath();
   ctx.arc(rx + rs / 2, ry + rs / 2, rs / 2, 0, Math.PI * 2);
   ctx.fill();
-  ctx.fillStyle = dim ? '#f87171' : '#1a0f0a';
+  ctx.fillStyle = dim ? '#f87171' : '#04201A';
   ctx.font = '700 19px "JetBrains Mono", monospace';
   ctx.textAlign = 'center';
   ctx.textBaseline = 'middle';
@@ -1347,9 +1347,9 @@ function drawReelRow(ctx, r, x, y, dim) {
     ctx.fillStyle = '#f87171';
   } else {
     const mg = ctx.createLinearGradient(0, y, 0, y + rowH);
-    mg.addColorStop(0, '#ff6b6b');
-    mg.addColorStop(0.55, '#ffa94d');
-    mg.addColorStop(1, '#ffd43b');
+    mg.addColorStop(0, '#00B888');
+    mg.addColorStop(0.55, '#00B888');
+    mg.addColorStop(1, '#1FC998');
     ctx.fillStyle = mg;
   }
   ctx.font = '800 50px Inter, sans-serif';

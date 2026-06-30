@@ -63,7 +63,7 @@ const SmashApp = (function() {
       handle: '@peakingworld',
       emoji: '🚀',
       label: 'AI + Creator Tools (BIP)',
-      color: '#FFA94D'
+      color: '#00B888'
     }
   };
 
@@ -340,9 +340,9 @@ const SmashApp = (function() {
       plantbased: { emoji: '🌿', name: 'Plant-Based', color: '#84cc16', target: 15 }
     },
     peakingworld: {
-      tools:     { emoji: '🛠️', name: 'Tools',             color: '#FFA94D', target: 35 },
-      bip:       { emoji: '📊', name: 'Building-in-Public', color: '#FF6B6B', target: 30 },
-      marketing: { emoji: '🧠', name: 'Marketing',          color: '#FFD43B', target: 25 },
+      tools:     { emoji: '🛠️', name: 'Tools',             color: '#00B888', target: 35 },
+      bip:       { emoji: '📊', name: 'Building-in-Public', color: '#1FC998', target: 30 },
+      marketing: { emoji: '🧠', name: 'Marketing',          color: '#28C281', target: 25 },
       bts:       { emoji: '🚀', name: 'Behind-the-Scenes',  color: '#a78bfa', target: 10 }
     }
   };
@@ -649,7 +649,7 @@ const SmashApp = (function() {
 
 
 // ============ v24 UPDATE-BANNER ============
-// Zeigt sunrise-Banner wenn Service-Worker neue Version detected.
+// Zeigt Emerald-Banner wenn Service-Worker neue Version detected.
 // User tappt Reload -> window.location.reload() -> fetch neueste Files.
 (function setupPeakingUpdateBanner() {
   if (!('serviceWorker' in navigator)) return;
@@ -667,14 +667,14 @@ const SmashApp = (function() {
     if (!document.getElementById('peakingUpdateBannerStyles')) {
       const s = document.createElement('style');
       s.id = 'peakingUpdateBannerStyles';
-      s.textContent = '@keyframes peakingBnrSlide{from{transform:translateY(-100%);opacity:0}to{transform:translateY(0);opacity:1}}@keyframes peakingBnrPulse{0%,100%{box-shadow:0 4px 16px rgba(255,169,77,.5)}50%{box-shadow:0 4px 24px rgba(255,169,77,.75)}}';
+      s.textContent = '@keyframes peakingBnrSlide{from{transform:translateY(-100%);opacity:0}to{transform:translateY(0);opacity:1}}@keyframes peakingBnrPulse{0%,100%{box-shadow:0 4px 16px rgba(0,184,136,.5)}50%{box-shadow:0 4px 24px rgba(0,184,136,.75)}}';
       document.head.appendChild(s);
     }
 
     const banner = document.createElement('div');
     banner.id = 'peakingUpdateBanner';
-    banner.style.cssText = 'position:fixed;top:0;left:0;right:0;z-index:99999;padding:12px 16px;background:linear-gradient(135deg,#FF6B6B,#FFA94D,#FFD43B);color:#0f172a;display:flex;align-items:center;justify-content:space-between;gap:12px;font-family:Inter,-apple-system,BlinkMacSystemFont,sans-serif;font-size:13px;font-weight:700;animation:peakingBnrSlide .35s cubic-bezier(.16,1,.3,1),peakingBnrPulse 2.5s ease-in-out infinite;padding-top:max(12px,env(safe-area-inset-top))';
-    banner.innerHTML = '<div style="flex:1;display:flex;align-items:center;gap:8px"><span style="font-size:18px">⛰️</span><span><b>Neue Version verfügbar</b><span style="opacity:.7;margin-left:6px">— tap zum Reload</span></span></div><button id="peakingUpdateReload" style="background:rgba(15,23,42,.85);color:#FFA94D;border:0;padding:8px 16px;border-radius:10px;font-weight:800;cursor:pointer;font-family:inherit;font-size:13px">Reload →</button><button id="peakingUpdateDismiss" style="background:transparent;border:0;color:#0f172a;font-size:20px;cursor:pointer;padding:0 6px;line-height:1;font-weight:900">×</button>';
+    banner.style.cssText = 'position:fixed;top:0;left:0;right:0;z-index:99999;padding:12px 16px;background:linear-gradient(135deg,#00B888,#1FC998,#28C281);color:#04201A;display:flex;align-items:center;justify-content:space-between;gap:12px;font-family:Inter,-apple-system,BlinkMacSystemFont,sans-serif;font-size:13px;font-weight:700;animation:peakingBnrSlide .35s cubic-bezier(.16,1,.3,1),peakingBnrPulse 2.5s ease-in-out infinite;padding-top:max(12px,env(safe-area-inset-top))';
+    banner.innerHTML = '<div style="flex:1;display:flex;align-items:center;gap:8px"><span style="font-size:18px">▲</span><span><b>Neue Version verfügbar</b><span style="opacity:.7;margin-left:6px">— tap zum Reload · powered by PEAKING</span></span></div><button id="peakingUpdateReload" style="background:rgba(3,8,13,.85);color:#1FC998;border:0;padding:8px 16px;border-radius:10px;font-weight:800;cursor:pointer;font-family:inherit;font-size:13px">Reload →</button><button id="peakingUpdateDismiss" style="background:transparent;border:0;color:#04201A;font-size:20px;cursor:pointer;padding:0 6px;line-height:1;font-weight:900">×</button>';
     document.body.appendChild(banner);
 
     document.getElementById('peakingUpdateReload').onclick = () => {

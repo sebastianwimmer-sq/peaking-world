@@ -9,7 +9,7 @@
 <link rel="icon" href="../assets/logo.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="../assets/logo.svg">
 <link rel="manifest" href="../manifest.json">
-<meta name="theme-color" content="#FFA94D">
+<meta name="theme-color" content="#00B888">
 <link rel="stylesheet" href="../assets/effects.css">
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -26,21 +26,21 @@
     backdrop-filter: blur(10px);
     border: 1px solid rgba(255,255,255,0.1);
   }
-  .neon { color: #FFA94D; }
+  .neon { color: #00B888; }
   .btn-primary {
-    background: linear-gradient(135deg, #FFA94D, #FF6B6B);
-    color: #0f172a;
+    background: linear-gradient(135deg, #00B888, #1FC998);
+    color:#04201A;
     font-weight: bold;
     transition: all 0.2s;
   }
-  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(255, 169, 77, 0.3); }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(0, 184, 136, 0.3); }
   .pillar-pill {
     display: inline-block;
     padding: 3px 10px;
     border-radius: 999px;
     font-size: 11px;
     font-weight: 700;
-    color: #0f172a;
+    color:#04201A;
   }
   .heatmap-cell {
     aspect-ratio: 1;
@@ -50,7 +50,7 @@
     justify-content: center;
     font-size: 9px;
     font-weight: 700;
-    color: #0f172a;
+    color:#04201A;
     cursor: default;
     transition: transform 0.1s;
   }
@@ -63,9 +63,9 @@
   .toast {
     position: fixed; bottom: 24px; left: 50%;
     transform: translateX(-50%) translateY(100px);
-    background: #FFA94D; color: #0f172a;
+    background: #00B888; color:#04201A;
     padding: 12px 24px; border-radius: 999px; font-weight: bold;
-    box-shadow: 0 8px 24px rgba(255, 169, 77, 0.4);
+    box-shadow: 0 8px 24px rgba(0, 184, 136, 0.4);
     transition: transform 0.3s ease; z-index: 100;
   }
   .toast.show { transform: translateX(-50%) translateY(0); }
@@ -100,7 +100,7 @@
   <div id="content" class="hidden">
 
     <!-- HERO 2026: Sends-per-Reach (Mosseri Jan 2025: NEW King-Metric) -->
-    <div class="glass rounded-3xl p-6 mb-3 text-center" style="border: 1px solid rgba(255,169,77,0.4); background: linear-gradient(135deg, rgba(255, 107, 107, 0.08), rgba(255, 212, 59, 0.08));">
+    <div class="glass rounded-3xl p-6 mb-3 text-center" style="border: 1px solid rgba(0, 184, 136,0.4); background: linear-gradient(135deg, rgba(0, 184, 136, 0.08), rgba(31, 201, 152, 0.08));">
       <div class="text-xs text-gray-400 uppercase tracking-wider mb-1">📨 Sends-per-Reach <span class="neon">2026 KING-METRIC</span></div>
       <div class="text-5xl md:text-6xl font-bold text-sunrise" id="heroSPR">0%</div>
       <div class="text-xs text-gray-500 mt-2">DM-Shares schlagen Likes+Saves als Distribution-Signal</div>
@@ -166,11 +166,11 @@
       <div class="flex items-center gap-2 mt-3 text-xs text-gray-500">
         <span>weniger</span>
         <div class="flex gap-0.5">
-          <div class="w-4 h-4 rounded" style="background: rgba(255,169,77,0.1)"></div>
-          <div class="w-4 h-4 rounded" style="background: rgba(255,169,77,0.3)"></div>
-          <div class="w-4 h-4 rounded" style="background: rgba(255,169,77,0.55)"></div>
-          <div class="w-4 h-4 rounded" style="background: rgba(255,169,77,0.8)"></div>
-          <div class="w-4 h-4 rounded" style="background: rgba(255,169,77,1)"></div>
+          <div class="w-4 h-4 rounded" style="background: rgba(0, 184, 136,0.1)"></div>
+          <div class="w-4 h-4 rounded" style="background: rgba(0, 184, 136,0.3)"></div>
+          <div class="w-4 h-4 rounded" style="background: rgba(0, 184, 136,0.55)"></div>
+          <div class="w-4 h-4 rounded" style="background: rgba(0, 184, 136,0.8)"></div>
+          <div class="w-4 h-4 rounded" style="background: rgba(0, 184, 136,1)"></div>
         </div>
         <span>mehr</span>
       </div>
@@ -205,7 +205,7 @@
   </div>
 
   <div class="text-center text-gray-500 text-xs mt-8">
-    📈 PEAKING · Always peaking. · ER beats Vanity-Numbers
+    📈 powered by PEAKING · ER beats Vanity-Numbers
   </div>
 </div>
 
@@ -275,9 +275,9 @@ function computeAndRender(reels) {
     if (funnel[layer] != null) funnel[layer]++;
   });
   const funnelLabels = {
-    reach: { emoji: '🎯', name: 'Reach', target: 50, color: '#FFD43B' },
-    authority: { emoji: '🧠', name: 'Authority', target: 30, color: '#FFA94D' },
-    conversion: { emoji: '⚡', name: 'Conversion', target: 20, color: '#FF6B6B' }
+    reach: { emoji: '🎯', name: 'Reach', target: 50, color: '#1FC998' },
+    authority: { emoji: '🧠', name: 'Authority', target: 30, color: '#00B888' },
+    conversion: { emoji: '⚡', name: 'Conversion', target: 20, color: '#00B888' }
   };
   document.getElementById('funnelDist').innerHTML = Object.entries(funnelLabels).map(([k, info]) => {
     const count = funnel[k];
@@ -458,7 +458,7 @@ function renderHeatmap(reels) {
       } else {
         const a = avg(cell);
         const intensity = Math.min(1, a / maxER);
-        const bg = `rgba(255,169,77,${0.1 + intensity * 0.9})`;
+        const bg = `rgba(0, 184, 136,${0.1 + intensity * 0.9})`;
         html += `<div class="heatmap-cell" style="background: ${bg};" title="${DAY_LABELS[d]} ${h}h: ${a.toFixed(2)}% ER · ${cell.length} Reels">${cell.length > 1 ? cell.length : ''}</div>`;
       }
     }
@@ -536,7 +536,7 @@ function renderHourChart(hourER, reels) {
       datasets: [{
         label: 'Posts',
         data: counts,
-        backgroundColor: 'rgba(255,169,77,0.7)',
+        backgroundColor: 'rgba(0, 184, 136,0.7)',
         borderRadius: 4
       }]
     },

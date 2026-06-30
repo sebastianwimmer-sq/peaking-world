@@ -1,0 +1,43 @@
+{
+  "_meta": {
+    "description": "Seed-Daten für Reel-Tracker. Werden idempotent in localStorage gemerged — NUR wenn die id noch nicht existiert. Manuell eingetragene Reels bleiben unangetastet.",
+    "loader": "loadSeedReels() in modules/tracker.html",
+    "schema_ref": "addReel() in modules/tracker.html (Z.458-491)",
+    "todos_filled_by": "Sebi — alle null-Felder sind Platzhalter (Metrik-Werte aus Meta-Insights ergänzen). Loader normalisiert null→0 für required-numeric Felder, Insight-Felder bleiben null und werden in Charts mit '!= null' gefiltert."
+  },
+  "reels": [
+    {
+      "_todo": "Metrik-Werte ersetzen — alle null-Felder sind Platzhalter. Sebi füllt aus Meta-Insights.",
+      "id": 1748390400000,
+      "title": "Plot Twist Mindset",
+      "date": "2026-05-28",
+      "pillar": "mindset",
+      "hour": 19,
+      "length": 17,
+      "audio": "",
+      "notes": "📝 SEED — Werte in data/seed-reels.json ergänzen, dann localStorage-Eintrag löschen (Console: `SmashApp.setData('reels', SmashApp.getData('reels', []).filter(r => r.id !== 1748390400000))`) und Browser reloaden.",
+      "funnelLayer": "reach",
+      "isTrial": false,
+      "views": null,
+      "reach": null,
+      "watchTime": null,
+      "likes": null,
+      "comments": null,
+      "saves": null,
+      "shares": null,
+      "followers": null,
+      "hookHold2s": null,
+      "sends": null,
+      "profileVisits": null,
+      "skipRate": null,
+      "followerReach": null,
+      "nonFollowerReach": null,
+      "sourceFeed": null,
+      "sourceStories": null,
+      "sourceReelsTab": null,
+      "sourceProfile": null,
+      "audienceMale": null,
+      "audienceFemale": null
+    }
+  ]
+}

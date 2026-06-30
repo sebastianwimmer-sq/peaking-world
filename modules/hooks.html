@@ -9,7 +9,7 @@
 <link rel="icon" href="../assets/logo.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="../assets/logo.svg">
 <link rel="manifest" href="../manifest.json">
-<meta name="theme-color" content="#FFA94D">
+<meta name="theme-color" content="#00B888">
 <link rel="stylesheet" href="../assets/effects.css">
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="../js/app.js"></script>
@@ -25,23 +25,23 @@
     backdrop-filter: blur(10px);
     border: 1px solid rgba(255,255,255,0.1);
   }
-  .neon { color: #FFA94D; }
+  .neon { color: #00B888; }
   .btn-primary {
-    background: linear-gradient(135deg, #FFA94D, #FF6B6B);
-    color: #0f172a;
+    background: linear-gradient(135deg, #00B888, #1FC998);
+    color:#04201A;
     font-weight: bold;
     transition: all 0.2s;
   }
-  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(255, 169, 77, 0.4); }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(0, 184, 136, 0.4); }
   input, select, textarea { background: rgba(15, 23, 42, 0.6); border: 1px solid rgba(255,255,255,0.15); color: white; }
-  input:focus, select:focus, textarea:focus { outline: none; border-color: #FFA94D; }
+  input:focus, select:focus, textarea:focus { outline: none; border-color: #00B888; }
   .modal-bg { background: rgba(0,0,0,0.7); backdrop-filter: blur(4px); }
   .toast {
     position: fixed; bottom: 24px; left: 50%;
     transform: translateX(-50%) translateY(100px);
-    background: #FFA94D; color: #0f172a;
+    background: #00B888; color:#04201A;
     padding: 12px 24px; border-radius: 999px; font-weight: bold;
-    box-shadow: 0 8px 24px rgba(255, 169, 77, 0.4);
+    box-shadow: 0 8px 24px rgba(0, 184, 136, 0.4);
     transition: transform 0.3s ease; z-index: 100;
   }
   .toast.show { transform: translateX(-50%) translateY(0); }
@@ -59,11 +59,11 @@
     transition: all 0.15s;
     white-space: nowrap;
   }
-  .chip:hover { border-color: rgba(255, 169, 77, 0.5); }
+  .chip:hover { border-color: rgba(0, 184, 136, 0.5); }
   .chip.active {
-    background: linear-gradient(135deg, #FFA94D, #FF6B6B);
-    color: #0f172a;
-    border-color: #FFA94D;
+    background: linear-gradient(135deg, #00B888, #1FC998);
+    color:#04201A;
+    border-color: #00B888;
   }
   .filter-scroll::-webkit-scrollbar { display: none; }
   .filter-scroll { -ms-overflow-style: none; scrollbar-width: none; }
@@ -74,7 +74,7 @@
     padding: 14px;
     transition: all 0.2s;
   }
-  .hook-card:hover { border-color: rgba(255, 169, 77, 0.3); transform: translateY(-2px); }
+  .hook-card:hover { border-color: rgba(0, 184, 136, 0.3); transform: translateY(-2px); }
   .format-tag {
     display: inline-block;
     padding: 3px 10px;
@@ -86,14 +86,14 @@
   }
   .fmt-loss { background: rgba(239, 68, 68, 0.2); color: #fca5a5; }
   .fmt-twist { background: rgba(168, 85, 247, 0.2); color: #c084fc; }
-  .fmt-stat { background: rgba(255, 169, 77, 0.2); color: #FFA94D; }
+  .fmt-stat { background: rgba(0, 184, 136, 0.2); color: #00B888; }
   .fmt-mistake { background: rgba(245, 158, 11, 0.2); color: #fbbf24; }
   .fmt-curiosity { background: rgba(59, 130, 246, 0.2); color: #93c5fd; }
   .fmt-pov { background: rgba(20, 184, 166, 0.2); color: #5eead4; }
   .fmt-comparison { background: rgba(236, 72, 153, 0.2); color: #f9a8d4; }
   .fmt-story { background: rgba(132, 204, 22, 0.2); color: #bef264; }
   .fmt-quote { background: rgba(100, 116, 139, 0.2); color: #cbd5e1; }
-  .fmt-question { background: rgba(255, 107, 107, 0.2); color: #FF6B6B; }
+  .fmt-question { background: rgba(0, 184, 136, 0.2); color: #00B888; }
   .win-rate-pill {
     display: inline-flex;
     align-items: center;
@@ -102,21 +102,21 @@
     border-radius: 999px;
     font-size: 11px;
     font-weight: 700;
-    background: linear-gradient(135deg, #FFA94D, #FF6B6B);
-    color: #0f172a;
+    background: linear-gradient(135deg, #00B888, #1FC998);
+    color:#04201A;
   }
   .fab {
     position: fixed; bottom: 20px; right: 20px;
     width: 56px; height: 56px; border-radius: 999px;
-    background: linear-gradient(135deg, #FFA94D, #FF6B6B);
-    color: #0f172a; font-size: 28px; font-weight: bold;
-    box-shadow: 0 8px 24px rgba(255, 169, 77, 0.4);
+    background: linear-gradient(135deg, #00B888, #1FC998);
+    color:#04201A; font-size: 28px; font-weight: bold;
+    box-shadow: 0 8px 24px rgba(0, 184, 136, 0.4);
     display: flex; align-items: center; justify-content: center;
     cursor: pointer; z-index: 50; border: none;
   }
   .var-highlight {
-    background: rgba(255, 169, 77, 0.15);
-    color: #FFA94D;
+    background: rgba(0, 184, 136, 0.15);
+    color: #00B888;
     padding: 1px 4px;
     border-radius: 4px;
     font-weight: 700;
@@ -138,7 +138,7 @@
   </div>
 
   <!-- Algorithm-Tip -->
-  <div class="glass rounded-2xl p-4 mb-4 float-in" style="background: linear-gradient(135deg, rgba(255, 107, 107, 0.08), rgba(255, 212, 59, 0.08)); border-color: rgba(255, 169, 77, 0.3);">
+  <div class="glass rounded-2xl p-4 mb-4 float-in" style="background: linear-gradient(135deg, rgba(0, 184, 136, 0.08), rgba(31, 201, 152, 0.08)); border-color: rgba(0, 184, 136, 0.3);">
     <div class="text-xs text-gray-400 uppercase tracking-wider mb-1 font-bold">⚡ 2026 Algo-Reality</div>
     <p class="text-sm leading-relaxed">
       <b class="neon">Hook = 80% des Reach-Erfolgs.</b> Die ersten 2 Sekunden entscheiden ob dein Reel 5-10× weiter reicht.
@@ -147,7 +147,7 @@
   </div>
 
   <!-- 🔥 Top für deinen Account heute -->
-  <div class="glass rounded-2xl p-5 mb-5 float-in" style="border: 1px solid rgba(255, 169, 77, 0.3);">
+  <div class="glass rounded-2xl p-5 mb-5 float-in" style="border: 1px solid rgba(0, 184, 136, 0.3);">
     <div class="flex items-center justify-between gap-2 flex-wrap mb-1">
       <h2 class="text-lg font-bold">🔥 Top für <span class="text-sunrise" id="recAccountLabel">@—</span></h2>
       <span class="text-xs text-gray-500" id="recReason">—</span>
@@ -427,7 +427,7 @@ function renderRecommendations() {
   document.getElementById('topRecs').innerHTML = top3.map(({ hook: h, reasons }) => {
     const text = h.text.length > 90 ? h.text.slice(0, 90) + '…' : h.text;
     return `
-      <div class="hook-card" style="border: 1px solid rgba(255, 169, 77, 0.25); cursor:pointer;" onclick="useHook(${h.id})">
+      <div class="hook-card" style="border: 1px solid rgba(0, 184, 136, 0.25); cursor:pointer;" onclick="useHook(${h.id})">
         <div class="flex items-center justify-between mb-1 gap-1">
           <span class="format-tag fmt-${h.format} text-[10px]">${FORMAT_LABELS[h.format]}</span>
           ${h.format === 'loss' ? '<span class="text-[10px] neon">⚡ 2-3×</span>' : ''}
@@ -456,7 +456,7 @@ function renderInsights() {
       <span class="neon font-bold">💡 Insight:</span>
       Du nutzt Loss-Hooks nur in <b>${(lossRatio * 100).toFixed(0)}%</b> deiner Hook-Picks. Loss-Format performt im 2026-Algo <b>2-3× besser</b> als Win-Hooks (Greg Isenberg). Probier eins bei deinem nächsten Reel.
     `;
-    banner.style.borderLeft = '3px solid #FFA94D';
+    banner.style.borderLeft = '3px solid #00B888';
   } else if (totalUsageCount >= 5) {
     const formatCounts = {};
     Object.entries(hookUsage).forEach(([id, u]) => {
@@ -470,7 +470,7 @@ function renderInsights() {
         <span class="neon font-bold">📊 Pattern:</span>
         Dein meistgenutztes Format ist <b>${FORMAT_LABELS[topFormat[0]] || topFormat[0]}</b> (${topFormat[1]}× verwendet). Variation hilft Algo-Diversität.
       `;
-      banner.style.borderLeft = '3px solid #FFA94D';
+      banner.style.borderLeft = '3px solid #00B888';
     }
   }
 }
@@ -599,7 +599,7 @@ function renderCard(h) {
   const wrPill = wr ? `<span class="win-rate-pill">⚡ ${wr.score} · ${wr.uses}×</span>` : '';
   const usage = hookUsage[h.id];
   const usagePill = usage?.count > 0 ? `<span class="text-[10px] text-gray-500">↻ ${usage.count}×</span>` : '';
-  const lossBoost = h.format === 'loss' ? 'style="border-color: rgba(255, 169, 77, 0.4); background: linear-gradient(135deg, rgba(255, 107, 107, 0.06), rgba(255, 169, 77, 0.04));"' : '';
+  const lossBoost = h.format === 'loss' ? 'style="border-color: rgba(0, 184, 136, 0.4); background: linear-gradient(135deg, rgba(0, 184, 136, 0.06), rgba(0, 184, 136, 0.04));"' : '';
   const lossBadge = h.format === 'loss' ? '<span class="text-[10px] neon font-bold" title="Loss-Hooks performen 2-3× besser">⚡ 2-3× ALGO</span>' : '';
   return `
     <div class="hook-card" ${lossBoost}>

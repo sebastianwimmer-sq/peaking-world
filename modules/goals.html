@@ -9,7 +9,7 @@
 <link rel="icon" href="../assets/logo.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="../assets/logo.svg">
 <link rel="manifest" href="../manifest.json">
-<meta name="theme-color" content="#FFA94D">
+<meta name="theme-color" content="#00B888">
 <link rel="stylesheet" href="../assets/effects.css">
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="../js/app.js"></script>
@@ -25,30 +25,30 @@
     backdrop-filter: blur(10px);
     border: 1px solid rgba(255,255,255,0.1);
   }
-  .neon { color: #FFA94D; }
+  .neon { color: #00B888; }
   .btn-primary {
-    background: linear-gradient(135deg, #FFA94D, #FF6B6B);
-    color: #0f172a;
+    background: linear-gradient(135deg, #00B888, #1FC998);
+    color:#04201A;
     font-weight: bold;
     transition: all 0.2s;
   }
-  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(255, 169, 77, 0.4); }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(0, 184, 136, 0.4); }
   input { background: rgba(15, 23, 42, 0.6); border: 1px solid rgba(255,255,255,0.15); color: white; }
-  input:focus { outline: none; border-color: #FFA94D; }
+  input:focus { outline: none; border-color: #00B888; }
   .toast {
     position: fixed; bottom: 24px; left: 50%;
     transform: translateX(-50%) translateY(100px);
-    background: #FFA94D; color: #0f172a;
+    background: #00B888; color:#04201A;
     padding: 12px 24px; border-radius: 999px; font-weight: bold;
-    box-shadow: 0 8px 24px rgba(255, 169, 77, 0.4);
+    box-shadow: 0 8px 24px rgba(0, 184, 136, 0.4);
     transition: transform 0.3s ease; z-index: 100;
   }
   .toast.show { transform: translateX(-50%) translateY(0); }
 
   /* Hero progress */
   .hero {
-    background: linear-gradient(135deg, rgba(255, 107, 107, 0.12), rgba(255, 212, 59, 0.12));
-    border: 1px solid rgba(255, 169, 77, 0.3);
+    background: linear-gradient(135deg, rgba(0, 184, 136, 0.12), rgba(31, 201, 152, 0.12));
+    border: 1px solid rgba(0, 184, 136, 0.3);
     border-radius: 24px;
     padding: 28px 24px;
     text-align: center;
@@ -57,7 +57,7 @@
   .hero-current {
     font-size: 56px;
     font-weight: 900;
-    background: linear-gradient(135deg, #FF6B6B, #FFA94D, #FFD43B);
+    background: linear-gradient(135deg, #00B888, #1FC998, #28C281);
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
@@ -82,10 +82,10 @@
   }
   .progress-fill {
     height: 100%;
-    background: linear-gradient(90deg, #FF6B6B, #FFA94D, #FFD43B);
+    background: linear-gradient(90deg, #00B888, #1FC998, #28C281);
     border-radius: 999px;
     transition: width 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-    box-shadow: 0 0 16px rgba(255, 169, 77, 0.5);
+    box-shadow: 0 0 16px rgba(0, 184, 136, 0.5);
   }
 
   /* Milestones */
@@ -102,12 +102,12 @@
     transition: all 0.2s;
   }
   .mile.done {
-    background: rgba(255, 169, 77, 0.08);
-    border-color: rgba(255, 169, 77, 0.4);
+    background: rgba(0, 184, 136, 0.08);
+    border-color: rgba(0, 184, 136, 0.4);
   }
   .mile.next {
-    background: rgba(255, 107, 107, 0.08);
-    border-color: rgba(255, 107, 107, 0.4);
+    background: rgba(0, 184, 136, 0.08);
+    border-color: rgba(0, 184, 136, 0.4);
   }
   .mile-icon {
     width: 44px; height: 44px;
@@ -119,14 +119,14 @@
     font-weight: 900;
   }
   .mile.done .mile-icon {
-    background: linear-gradient(135deg, #FFA94D, #FF6B6B);
-    color: #0f172a;
-    border-color: #FFA94D;
-    box-shadow: 0 4px 12px rgba(255, 169, 77, 0.4);
+    background: linear-gradient(135deg, #00B888, #1FC998);
+    color:#04201A;
+    border-color: #00B888;
+    box-shadow: 0 4px 12px rgba(0, 184, 136, 0.4);
   }
   .mile.next .mile-icon {
-    border-color: #FF6B6B;
-    color: #FF6B6B;
+    border-color: #00B888;
+    color: #00B888;
   }
   .mile-info { min-width: 0; }
   .mile-num {
@@ -139,15 +139,15 @@
     color: #94a3b8;
     margin-top: 4px;
   }
-  .mile.done .mile-num { color: #FFA94D; }
+  .mile.done .mile-num { color: #00B888; }
   .mile-status {
     font-size: 11px;
     font-weight: 700;
     padding: 4px 10px;
     border-radius: 999px;
   }
-  .mile-status.done { background: rgba(255, 169, 77, 0.2); color: #FFA94D; }
-  .mile-status.next { background: rgba(255, 107, 107, 0.2); color: #FF6B6B; }
+  .mile-status.done { background: rgba(0, 184, 136, 0.2); color: #00B888; }
+  .mile-status.next { background: rgba(0, 184, 136, 0.2); color: #00B888; }
   .mile-status.pending { background: rgba(100, 116, 139, 0.2); color: #94a3b8; }
 
   .modal-bg { background: rgba(0,0,0,0.7); backdrop-filter: blur(4px); }
@@ -162,7 +162,7 @@
     <div>
       <a href="../dashboard.html" class="text-xs text-gray-400 hover:text-white">← Dashboard</a>
       <h1 class="text-2xl md:text-3xl font-bold mt-1">🏔️ <span class="text-sunrise">Goals</span></h1>
-      <p class="text-gray-400 text-sm">From climb to peak — your journey 2k → 1M</p>
+      <p class="text-gray-400 text-sm">Von der Strategie zur Skalierung — dein Weg 2k → 1M</p>
     </div>
     <button onclick="SmashApp.logout()" class="text-sm text-gray-400 hover:text-white">🔒</button>
   </div>
@@ -219,7 +219,7 @@
   </div>
 
   <div class="text-center text-gray-500 text-xs mt-8">
-    🏔️ PEAKING · The climb is the peak.
+    🏔️ powered by PEAKING · Strategie statt Zufall.
   </div>
 </div>
 
@@ -504,7 +504,7 @@ function renderCustom() {
             <span class="neon font-bold">${pct.toFixed(0)}%</span>
           </div>
           <div class="h-1.5 bg-slate-900/60 rounded-full overflow-hidden">
-            <div class="h-full" style="width: ${pct}%; background: linear-gradient(90deg, #FFA94D, #FF6B6B);"></div>
+            <div class="h-full" style="width: ${pct}%; background: linear-gradient(90deg, #00B888, #1FC998);"></div>
           </div>
         ` : ''}
       </div>

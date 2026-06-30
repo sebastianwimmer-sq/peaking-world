@@ -9,7 +9,7 @@
 <link rel="icon" href="assets/logo.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="assets/logo.svg">
 <link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#FFA94D">
+<meta name="theme-color" content="#00B888">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="PEAKING">
@@ -18,7 +18,7 @@
 <script src="js/app.js"></script>
 <style>
   body {
-    background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+    background: linear-gradient(135deg, #0B0F14 0%, #11161D 100%);
     min-height: 100dvh;
     color: white;
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
@@ -28,9 +28,9 @@
     backdrop-filter: blur(10px);
     border: 1px solid rgba(255,255,255,0.1);
   }
-  .neon { color: #FFA94D; }
+  .neon { color: #00B888; }
   .text-sunrise {
-    background: linear-gradient(135deg, #FF6B6B, #FFA94D, #FFD43B);
+    background: linear-gradient(135deg, #00B888, #1FC998, #28C281);
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
@@ -50,8 +50,8 @@
   }
   .tab-btn:hover { background: rgba(15, 23, 42, 0.8); }
   .tab-btn.active {
-    background: linear-gradient(135deg, #FFA94D, #FF6B6B);
-    color: #0f172a;
+    background: linear-gradient(135deg, #00B888, #1FC998);
+    color: #04201A;
     border-color: transparent;
   }
   .tab-pane { display: none; }
@@ -72,7 +72,7 @@
     text-transform: uppercase;
     letter-spacing: 0.5px;
   }
-  .status-idea     { background: rgba(255, 169, 77, 0.15); color: #FFA94D; border: 1px solid rgba(255, 169, 77, 0.3); }
+  .status-idea     { background: rgba(0, 184, 136, 0.15); color: #00B888; border: 1px solid rgba(0, 184, 136, 0.3); }
   .status-doing    { background: rgba(132, 204, 22, 0.15); color: #84cc16; border: 1px solid rgba(132, 204, 22, 0.3); }
   .status-done     { background: rgba(16, 185, 129, 0.15); color: #10b981; border: 1px solid rgba(16, 185, 129, 0.3); }
   .status-backlog  { background: rgba(168, 139, 250, 0.15); color: #a78bfa; border: 1px solid rgba(168, 139, 250, 0.3); }
@@ -96,7 +96,7 @@
   .toast {
     position: fixed; bottom: 24px; left: 50%;
     transform: translateX(-50%) translateY(100px);
-    background: #FFA94D; color: #0f172a;
+    background: #00B888; color: #04201A;
     padding: 12px 24px; border-radius: 999px; font-weight: bold;
     z-index: 100; transition: transform 0.3s;
   }
@@ -115,7 +115,7 @@
       <p class="text-gray-400 text-sm">Sebi-only Backstage · Web-Only Backlog · Brain · Activity · Tech</p>
     </div>
     <div class="flex gap-2">
-      <button onclick="adminEnd()" class="text-sm text-gray-400 hover:text-orange-400" title="Admin-Session beenden">🚪 Admin-Logout</button>
+      <button onclick="adminEnd()" class="text-sm text-gray-400 hover:text-emerald-400" title="Admin-Session beenden">🚪 Admin-Logout</button>
       <button onclick="SmashApp.logout()" class="text-sm text-gray-400 hover:text-white" title="Komplett ausloggen">🔒</button>
     </div>
   </div>
@@ -138,7 +138,7 @@
       <!-- Add new -->
       <div class="flex gap-2 mb-4 flex-wrap">
         <input type="text" id="newIdeaInput" placeholder="Neue Idee… (Enter zum Speichern)" class="flex-1 min-w-[200px] bg-slate-800 rounded-lg p-3 text-sm" onkeydown="if(event.key==='Enter') addIdea()">
-        <button onclick="addIdea()" class="px-4 py-2 rounded-lg bg-gradient-to-br from-orange-400 to-red-400 text-slate-900 font-bold text-sm">+ Idee</button>
+        <button onclick="addIdea()" class="px-4 py-2 rounded-lg font-bold text-sm" style="background: linear-gradient(135deg, #00B888, #1FC998); color: #04201A;">+ Idee</button>
       </div>
 
       <!-- Filter pills -->
@@ -160,7 +160,7 @@
   <div class="tab-pane" data-pane="brain">
 
     <!-- 🚀 Capture-Inbox (Quick-Add für Ideen unterwegs) -->
-    <div class="glass rounded-3xl p-5 mb-4" style="border: 1px solid rgba(255, 169, 77, 0.3);">
+    <div class="glass rounded-3xl p-5 mb-4" style="border: 1px solid rgba(0, 184, 136, 0.3);">
       <div class="flex items-center justify-between mb-2 flex-wrap gap-2">
         <h2 class="text-lg font-bold">🚀 Capture-Inbox</h2>
         <span class="text-xs text-gray-500" id="captureCount">0 Items</span>
@@ -175,7 +175,7 @@
           <option value="brand">💼 Brand-Deal</option>
           <option value="general">💡 General</option>
         </select>
-        <button onclick="addCapture()" class="px-4 py-2 rounded-lg bg-gradient-to-br from-orange-400 to-red-400 text-slate-900 font-bold text-sm">+ Capture</button>
+        <button onclick="addCapture()" class="px-4 py-2 rounded-lg font-bold text-sm" style="background: linear-gradient(135deg, #00B888, #1FC998); color: #04201A;">+ Capture</button>
       </div>
       <div id="captureList" class="space-y-2"></div>
       <div id="captureEmpty" class="text-gray-500 text-sm text-center py-4 hidden">Noch nix gecapturet — schreib oben einfach was rein.</div>
@@ -185,7 +185,7 @@
     <div class="glass rounded-3xl p-5 mb-4">
       <h2 class="text-lg font-bold mb-2">🧠 Brain-Dump · long-form</h2>
       <p class="text-xs text-gray-400 mb-4">Notizen, Reminder, längere Gedanken. Auto-save nach 1s. Markdown-friendly.</p>
-      <textarea id="brainText" rows="14" placeholder="# Heute&#10;&#10;- Was hab ich gelernt&#10;- Was hat sich angefühlt&#10;- Was als Nächstes" class="w-full bg-slate-800 rounded-xl p-4 text-sm font-mono leading-relaxed border border-white/10 focus:border-orange-400/40 outline-none"></textarea>
+      <textarea id="brainText" rows="14" placeholder="# Heute&#10;&#10;- Was hab ich gelernt&#10;- Was hat sich angefühlt&#10;- Was als Nächstes" class="w-full bg-slate-800 rounded-xl p-4 text-sm font-mono leading-relaxed border border-white/10 focus:border-emerald-400/40 outline-none"></textarea>
       <div class="flex justify-between items-center mt-2 text-xs text-gray-500">
         <span id="brainSaveStatus">—</span>
         <span><span id="brainCharCount">0</span> Zeichen</span>
@@ -236,7 +236,7 @@
     <div class="glass rounded-3xl p-5 mb-4">
       <h2 class="text-lg font-bold mb-2">📐 PNG-Multi-Size-Generator <span class="text-xs neon font-normal">· 2× Retina-Quality</span></h2>
       <p class="text-xs text-gray-400 mb-2">Wähle ein Logo + Size. Wird browser-side mit 2× supersampling gerendert (extra-scharf) + als PNG runtergeladen.</p>
-      <div class="text-xs text-gray-500 mb-3 p-2 rounded-lg" style="background: rgba(255, 169, 77, 0.08); border-left: 3px solid #FFA94D;">
+      <div class="text-xs text-gray-500 mb-3 p-2 rounded-lg" style="background: rgba(0, 184, 136, 0.08); border-left: 3px solid #00B888;">
         💡 <b>Quick-Reference:</b> Insta-Profilbild = <b>320</b> oder <b>1024</b> · Apple-Touch-Icon = <b>180</b> · Open-Graph (Social-Share) = <b>1200</b> · Favicon Browser-Tab = <b>32</b>
       </div>
       <div class="flex gap-2 flex-wrap mb-3">
@@ -264,7 +264,7 @@
           <option value="32">🔖 32 × 32 (Browser-Favicon)</option>
           <option value="16">🔖 16 × 16 (Favicon mini)</option>
         </select>
-        <button onclick="generatePng()" class="px-4 py-2 rounded-lg bg-gradient-to-br from-orange-400 to-red-400 text-slate-900 font-bold text-sm">📥 PNG generieren</button>
+        <button onclick="generatePng()" class="px-4 py-2 rounded-lg font-bold text-sm" style="background: linear-gradient(135deg, #00B888, #1FC998); color: #04201A;">📥 PNG generieren</button>
       </div>
       <div id="pngPreview" class="text-center"></div>
     </div>
@@ -281,37 +281,37 @@
     <!-- Brand-Tokens Quick-Ref -->
     <div class="glass rounded-3xl p-5 mb-4">
       <h2 class="text-lg font-bold mb-2">🎨 Brand-Tokens · Quick-Reference</h2>
-      <p class="text-xs text-gray-400 mb-3">Sunrise-Brand. Single-Source-of-Truth in <code>assets/BRAND.md</code>. Hier zum Copy-Pasten.</p>
+      <p class="text-xs text-gray-400 mb-3">Emerald-Brand. Single-Source-of-Truth in <code>assets/BRAND.md</code>. Hier zum Copy-Pasten.</p>
       <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
         <div class="p-3 rounded-lg bg-slate-900/40">
-          <div class="text-xs text-gray-500 font-bold uppercase mb-2">Sunrise-Gradient</div>
-          <div style="height:30px; background: linear-gradient(135deg, #FF6B6B, #FFA94D, #FFD43B); border-radius:8px; margin-bottom:6px;"></div>
-          <div class="text-[10px] font-mono text-gray-400">#FF6B6B · #FFA94D · #FFD43B</div>
-          <button onclick="copyText('linear-gradient(135deg, #FF6B6B, #FFA94D, #FFD43B)', this)" class="mt-2 text-xs neon hover:underline">Copy CSS</button>
+          <div class="text-xs text-gray-500 font-bold uppercase mb-2">Emerald-Gradient</div>
+          <div style="height:30px; background: linear-gradient(135deg, #00B888, #1FC998, #28C281); border-radius:8px; margin-bottom:6px;"></div>
+          <div class="text-[10px] font-mono text-gray-400">#00B888 · #1FC998 · #28C281</div>
+          <button onclick="copyText('linear-gradient(135deg, #00B888, #1FC998, #28C281)', this)" class="mt-2 text-xs neon hover:underline">Copy CSS</button>
         </div>
         <div class="p-3 rounded-lg bg-slate-900/40">
           <div class="text-xs text-gray-500 font-bold uppercase mb-2">Single-Color-Accent</div>
-          <div style="height:30px; background:#FFA94D; border-radius:8px; margin-bottom:6px;"></div>
-          <div class="text-[10px] font-mono text-gray-400">#FFA94D · Sunrise-Orange</div>
-          <button onclick="copyText('#FFA94D', this)" class="mt-2 text-xs neon hover:underline">Copy Hex</button>
+          <div style="height:30px; background:#00B888; border-radius:8px; margin-bottom:6px;"></div>
+          <div class="text-[10px] font-mono text-gray-400">#00B888 · s2s Emerald</div>
+          <button onclick="copyText('#00B888', this)" class="mt-2 text-xs neon hover:underline">Copy Hex</button>
         </div>
         <div class="p-3 rounded-lg bg-slate-900/40">
           <div class="text-xs text-gray-500 font-bold uppercase mb-2">Dark-Background</div>
-          <div style="height:30px; background: linear-gradient(135deg, #0f172a, #1e293b); border-radius:8px; margin-bottom:6px;"></div>
-          <div class="text-[10px] font-mono text-gray-400">#0f172a → #1e293b</div>
-          <button onclick="copyText('linear-gradient(135deg, #0f172a, #1e293b)', this)" class="mt-2 text-xs neon hover:underline">Copy CSS</button>
+          <div style="height:30px; background: linear-gradient(135deg, #0B0F14, #11161D); border-radius:8px; margin-bottom:6px;"></div>
+          <div class="text-[10px] font-mono text-gray-400">#0B0F14 → #11161D</div>
+          <button onclick="copyText('linear-gradient(135deg, #0B0F14, #11161D)', this)" class="mt-2 text-xs neon hover:underline">Copy CSS</button>
         </div>
       </div>
       <div class="mt-3 grid grid-cols-2 md:grid-cols-4 gap-2 text-xs">
         <div class="p-2 rounded bg-slate-900/40">
           <div class="text-gray-500 mb-1">Tagline</div>
-          <div class="font-bold">Always peaking.</div>
-          <button onclick="copyText('Always peaking.', this)" class="text-[10px] neon mt-1">Copy</button>
+          <div class="font-bold">Social, das skaliert.</div>
+          <button onclick="copyText('Social, das skaliert.', this)" class="text-[10px] neon mt-1">Copy</button>
         </div>
         <div class="p-2 rounded bg-slate-900/40">
           <div class="text-gray-500 mb-1">Sub-Tagline</div>
-          <div class="font-bold">The climb is the peak.</div>
-          <button onclick="copyText('The climb is the peak.', this)" class="text-[10px] neon mt-1">Copy</button>
+          <div class="font-bold">Strategie statt Zufall.</div>
+          <button onclick="copyText('Strategie statt Zufall.', this)" class="text-[10px] neon mt-1">Copy</button>
         </div>
         <div class="p-2 rounded bg-slate-900/40">
           <div class="text-gray-500 mb-1">Insta-Handle</div>
@@ -436,15 +436,15 @@ function showAdminPrompt() {
   overlay.id = 'adminGate';
   overlay.style.cssText = 'position:fixed;inset:0;z-index:200;background:rgba(15,23,42,0.95);backdrop-filter:blur(10px);display:flex;align-items:center;justify-content:center;padding:20px;';
   overlay.innerHTML = `
-    <div style="background:linear-gradient(135deg,#1e293b,#0f172a);border:1px solid rgba(255,169,77,0.3);border-radius:24px;padding:32px;max-width:420px;width:100%;text-align:center;">
+    <div style="background:linear-gradient(135deg,#11161D,#0B0F14);border:1px solid rgba(0,184,136,0.3);border-radius:24px;padding:32px;max-width:420px;width:100%;text-align:center;">
       <div style="font-size:48px;margin-bottom:12px;">👑</div>
       <h2 style="font-size:20px;font-weight:bold;margin-bottom:6px;">Admin-Backstage</h2>
       <p style="color:#94a3b8;font-size:13px;margin-bottom:20px;">Sebi-only · 2. Passwort erforderlich</p>
       <input id="adminPwInput" type="password" placeholder="Admin-Passwort" autofocus
-        style="width:100%;padding:14px;background:#0f172a;border:1px solid rgba(255,255,255,0.1);border-radius:12px;color:white;font-size:14px;margin-bottom:12px;outline:none;"
+        style="width:100%;padding:14px;background:#0B0F14;border:1px solid rgba(255,255,255,0.1);border-radius:12px;color:white;font-size:14px;margin-bottom:12px;outline:none;"
         onkeydown="if(event.key==='Enter') submitAdminPw()">
       <div id="adminPwError" style="color:#f87171;font-size:12px;margin-bottom:12px;display:none;">❌ Falsches Passwort</div>
-      <button onclick="submitAdminPw()" style="background:linear-gradient(135deg,#FFA94D,#FF6B6B);color:#0f172a;font-weight:bold;padding:12px 24px;border-radius:14px;border:none;cursor:pointer;width:100%;">→ Entsperren</button>
+      <button onclick="submitAdminPw()" style="background:linear-gradient(135deg,#00B888,#1FC998);color:#04201A;font-weight:bold;padding:12px 24px;border-radius:14px;border:none;cursor:pointer;width:100%;">→ Entsperren</button>
       <button onclick="window.location.href='dashboard.html'" style="background:transparent;color:#94a3b8;border:none;cursor:pointer;margin-top:14px;font-size:12px;">← Zurück zum Dashboard</button>
     </div>
   `;
@@ -474,11 +474,11 @@ function adminEnd() {
 
 function blockAdmin(msg) {
   document.body.innerHTML = `
-    <div style="position:fixed;inset:0;background:linear-gradient(135deg,#0f172a,#1e293b);display:flex;align-items:center;justify-content:center;text-align:center;color:white;font-family:-apple-system,sans-serif;padding:20px;">
+    <div style="position:fixed;inset:0;background:linear-gradient(135deg,#0B0F14,#11161D);display:flex;align-items:center;justify-content:center;text-align:center;color:white;font-family:-apple-system,sans-serif;padding:20px;">
       <div>
         <div style="font-size:48px;margin-bottom:16px;">🔒</div>
         <p style="font-size:18px;font-weight:bold;margin-bottom:12px;">${msg}</p>
-        <a href="dashboard.html" style="color:#FFA94D;text-decoration:underline;">← Dashboard</a>
+        <a href="dashboard.html" style="color:#00B888;text-decoration:underline;">← Dashboard</a>
       </div>
     </div>
   `;
@@ -505,7 +505,7 @@ const LOGOS = [
   { file: 'logo-mix-a.svg',    name: '🌅 Mix-A · Stacked (V1)',   desc: 'Pyramide + Halo + Wordmark · alte Version mit Zipfel' },
   { file: 'logo-mix-b.svg',    name: '🌅 Mix-B · Mountain-Range', desc: '4 Peaks + Wordmark rechts · Header + Press-Kit' },
   { file: 'logo-mix-c.svg',    name: '🌅 Mix-C · Banner',         desc: 'Pyramide-Icon + Wordmark inline · Footer + Mobile-Top' },
-  { file: 'logo.svg',          name: 'Original · Flat-Sunrise',  desc: '1 Polygon · Sunrise-Gradient' },
+  { file: 'logo.svg',          name: 'Original · Flat-Emerald',  desc: '1 Polygon · Emerald-Gradient' },
   { file: 'logo-v3-a.svg',     name: 'V3-A · Faceted',           desc: 'Light/Shadow Split · Drama' },
   { file: 'logo-v3-b.svg',     name: 'V3-B · Rising Sun',        desc: 'Sun + Mountain · Narrativ' },
   { file: 'logo-v3-c.svg',     name: 'V3-C · Isometric',         desc: '3D-Projection · Modern' },
@@ -518,15 +518,15 @@ function renderAssets() {
   if (!grid) return;
   grid.innerHTML = LOGOS.map(l => `
     <div style="background: rgba(15, 23, 42, 0.5); border: 1px solid rgba(255,255,255,0.08); border-radius: 14px; padding: 16px;">
-      <div style="background: linear-gradient(135deg, #0f172a, #1e293b); border-radius: 10px; padding: 20px; min-height: 100px; display: flex; align-items: center; justify-content: center; margin-bottom: 10px;">
-        <img src="assets/${l.file}" alt="${l.name}" style="max-width: 80px; max-height: 80px; filter: drop-shadow(0 4px 16px rgba(255,169,77,0.25));">
+      <div style="background: linear-gradient(135deg, #0B0F14, #11161D); border-radius: 10px; padding: 20px; min-height: 100px; display: flex; align-items: center; justify-content: center; margin-bottom: 10px;">
+        <img src="assets/${l.file}" alt="${l.name}" style="max-width: 80px; max-height: 80px; filter: drop-shadow(0 4px 16px rgba(0,184,136,0.25));">
       </div>
       <div class="font-bold text-sm mb-1">${escapeHTML(l.name)}</div>
       <div class="text-xs text-gray-500 mb-3">${escapeHTML(l.desc)}</div>
       <div class="flex gap-1 flex-wrap">
-        <a href="assets/${l.file}" download class="px-2 py-1 rounded text-xs" style="background: linear-gradient(135deg, #FFA94D, #FF6B6B); color: #0f172a; font-weight: 700; text-decoration: none;">📥 SVG</a>
-        <button onclick="copyText('${l.file}', this)" class="px-2 py-1 rounded text-xs" style="background: rgba(15,23,42,0.6); border: 1px solid rgba(255,169,77,0.3); color: white;">📋 Filename</button>
-        <button onclick="copyText(window.location.origin + '/assets/' + '${l.file}', this)" class="px-2 py-1 rounded text-xs" style="background: rgba(15,23,42,0.6); border: 1px solid rgba(255,169,77,0.3); color: white;">🔗 URL</button>
+        <a href="assets/${l.file}" download class="px-2 py-1 rounded text-xs" style="background: linear-gradient(135deg, #00B888, #1FC998); color: #04201A; font-weight: 700; text-decoration: none;">📥 SVG</a>
+        <button onclick="copyText('${l.file}', this)" class="px-2 py-1 rounded text-xs" style="background: rgba(15,23,42,0.6); border: 1px solid rgba(0,184,136,0.3); color: white;">📋 Filename</button>
+        <button onclick="copyText(window.location.origin + '/assets/' + '${l.file}', this)" class="px-2 py-1 rounded text-xs" style="background: rgba(15,23,42,0.6); border: 1px solid rgba(0,184,136,0.3); color: white;">🔗 URL</button>
       </div>
     </div>
   `).join('');
@@ -585,7 +585,7 @@ async function generatePng() {
         a.download = file.replace('.svg', '') + `-${size}x${size}.png`;
         a.click();
         URL.revokeObjectURL(a.href);
-        preview.innerHTML = `<div class="text-sm" style="color:#84cc16;">✓ ${a.download} runtergeladen (2× Retina)</div><img src="${canvas.toDataURL()}" style="max-width:240px; max-height:240px; margin-top:12px; border-radius:12px; box-shadow: 0 0 32px rgba(255,169,77,0.35);">`;
+        preview.innerHTML = `<div class="text-sm" style="color:#84cc16;">✓ ${a.download} runtergeladen (2× Retina)</div><img src="${canvas.toDataURL()}" style="max-width:240px; max-height:240px; margin-top:12px; border-radius:12px; box-shadow: 0 0 32px rgba(0,184,136,0.35);">`;
       }, 'image/png');
     };
     img.onerror = () => {
@@ -657,9 +657,9 @@ function deleteIdea(id) {
 function setFilter(f) {
   ideasFilter = f;
   document.querySelectorAll('.filter-pill').forEach(b => {
-    b.classList.toggle('bg-orange-400/30', b.dataset.f === f);
+    b.classList.toggle('bg-emerald-400/30', b.dataset.f === f);
     b.classList.toggle('border', b.dataset.f === f);
-    b.classList.toggle('border-orange-400/50', b.dataset.f === f);
+    b.classList.toggle('border-emerald-400/50', b.dataset.f === f);
   });
   renderIdeas();
 }
@@ -779,12 +779,12 @@ function renderCaptures() {
   list.innerHTML = items.map(c => `
     <div style="background: rgba(15, 23, 42, 0.5); border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; padding: 12px;">
       <div class="flex items-start gap-3">
-        <span class="text-xs font-bold whitespace-nowrap" style="color:#FFA94D; padding:2px 8px; background: rgba(255, 169, 77, 0.15); border-radius: 999px;">${CAPTURE_TYPE_LABELS[c.type] || c.type}</span>
+        <span class="text-xs font-bold whitespace-nowrap" style="color:#00B888; padding:2px 8px; background: rgba(0, 184, 136, 0.15); border-radius: 999px;">${CAPTURE_TYPE_LABELS[c.type] || c.type}</span>
         <div class="flex-1 text-sm leading-relaxed">${escapeHTML(c.text)}</div>
         <span class="text-[10px] text-gray-500 whitespace-nowrap">${timeAgo(c.createdAt)}</span>
       </div>
       <div class="flex gap-2 mt-2 text-xs">
-        <button onclick="promoteCapture('${c.id}')" class="px-3 py-1 rounded-lg bg-gradient-to-br from-orange-400 to-red-400 text-slate-900 font-bold">→ als Idea</button>
+        <button onclick="promoteCapture('${c.id}')" class="px-3 py-1 rounded-lg font-bold" style="background: linear-gradient(135deg, #00B888, #1FC998); color: #04201A;">→ als Idea</button>
         <button onclick="deleteCapture('${c.id}')" class="ml-auto px-2 py-1 rounded text-red-400 hover:text-red-300">🗑️</button>
       </div>
     </div>

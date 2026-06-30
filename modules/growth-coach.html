@@ -9,41 +9,41 @@
 <link rel="icon" href="../assets/logo.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="../assets/logo.svg">
 <link rel="manifest" href="../manifest.json">
-<meta name="theme-color" content="#FFA94D">
+<meta name="theme-color" content="#00B888">
 <link rel="stylesheet" href="../assets/effects.css">
 <script src="https://cdn.tailwindcss.com"></script>
 <style>
   body {
-    background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+    background: linear-gradient(135deg, #0B0F14 0%, #11161D 100%);
     min-height: 100dvh;
     color: white;
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Inter, sans-serif;
   }
   .glass { background: rgba(30,41,59,0.6); backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.1); }
-  .neon { color: #FFA94D; }
+  .neon { color: #00B888; }
   .text-sunrise {
-    background: linear-gradient(135deg, #FF6B6B, #FFA94D, #FFD43B);
+    background: linear-gradient(135deg, #00B888, #1FC998, #28C281);
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
     -webkit-text-fill-color: transparent;
   }
   .btn-primary {
-    background: linear-gradient(135deg, #FFD43B, #FFA94D, #FF6B6B);
-    color: #0f172a;
+    background: linear-gradient(135deg, #28C281, #1FC998, #00B888);
+    color: #04201A;
     font-weight: 800;
     transition: transform 0.12s, box-shadow 0.25s;
   }
-  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 14px 36px rgba(255,169,77,0.5); }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 14px 36px rgba(0, 184, 136,0.5); }
   .tip-card { transition: all 0.2s; }
-  .tip-card:hover { transform: translateY(-2px); border-color: rgba(255,169,77,0.3); }
+  .tip-card:hover { transform: translateY(-2px); border-color: rgba(0, 184, 136,0.3); }
   .sev-red { border-left: 3px solid #ef4444; }
-  .sev-yellow { border-left: 3px solid #FFA94D; }
+  .sev-yellow { border-left: 3px solid #00B888; }
   .sev-green { border-left: 3px solid #22c55e; }
   .sev-info { border-left: 3px solid #60a5fa; }
   .pill { display:inline-block; padding:2px 8px; border-radius:6px; font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:0.5px; }
   .pill-red { background: rgba(239,68,68,0.15); color: #ef4444; }
-  .pill-yellow { background: rgba(255,169,77,0.15); color: #FFA94D; }
+  .pill-yellow { background: rgba(0, 184, 136,0.15); color: #00B888; }
   .pill-green { background: rgba(34,197,94,0.15); color: #22c55e; }
   .pill-info { background: rgba(96,165,250,0.15); color: #60a5fa; }
 </style>
@@ -69,7 +69,7 @@
   </div>
 
   <!-- Daily-Tip-Hero -->
-  <div class="glass rounded-2xl p-6 mb-5" style="background: linear-gradient(135deg, rgba(255,169,77,0.12), rgba(255,212,59,0.06)); border: 1px solid rgba(255,169,77,0.3);">
+  <div class="glass rounded-2xl p-6 mb-5" style="background: linear-gradient(135deg, rgba(0, 184, 136,0.12), rgba(31, 201, 152,0.06)); border: 1px solid rgba(0, 184, 136,0.3);">
     <div class="flex items-start gap-3 mb-3">
       <div class="text-3xl">💡</div>
       <div class="flex-1 min-w-0">
@@ -190,7 +190,7 @@ async function runAnalysis() {
     document.getElementById('dailyTipMeta').textContent = `${dailyTip.cat} · Severity: ${dailyTip.sev.toUpperCase()} · ${triggered.length} aktive Tipps insgesamt`;
   } else {
     document.getElementById('dailyTipTitle').textContent = 'Du bist im Flow ✨';
-    document.getElementById('dailyTipBody').textContent = 'Keine kritischen Trigger. Post 3-5 Reels/Woche, vary Hooks, halt deine Pillars 80/20. Always peaking.';
+    document.getElementById('dailyTipBody').textContent = 'Keine kritischen Trigger. Post 3-5 Reels/Woche, vary Hooks, halt deine Pillars 80/20. Social, das skaliert.';
     document.getElementById('dailyTipMeta').textContent = '0 aktive Tipps · grünes Licht';
   }
 
@@ -210,7 +210,7 @@ async function runAnalysis() {
   }
 
   document.getElementById('allTemplates').innerHTML = TEMPLATES.map(t => `
-    <div class="border-l-2 pl-3" style="border-color:${t.sev==='red'?'#ef4444':t.sev==='yellow'?'#FFA94D':t.sev==='green'?'#22c55e':'#60a5fa'}">
+    <div class="border-l-2 pl-3" style="border-color:${t.sev==='red'?'#ef4444':t.sev==='yellow'?'#00B888':t.sev==='green'?'#22c55e':'#60a5fa'}">
       <div class="font-bold">${t.title}</div>
       <div class="text-gray-500">${t.body}</div>
       <div class="text-[9px] uppercase tracking-wider text-gray-600 mt-1">${t.cat} · ${t.sev}</div>

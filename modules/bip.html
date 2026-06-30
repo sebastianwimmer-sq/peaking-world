@@ -9,14 +9,14 @@
 <link rel="icon" href="../assets/logo.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="../assets/logo.svg">
 <link rel="manifest" href="../manifest.json">
-<meta name="theme-color" content="#FFA94D">
+<meta name="theme-color" content="#00B888">
 <link rel="stylesheet" href="../assets/effects.css">
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="../js/app.js"></script>
 <style>
   body {
-    background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+    background: linear-gradient(135deg, #0B0F14 0%, #11161D 100%);
     min-height: 100dvh;
     color: white;
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
@@ -26,14 +26,14 @@
     backdrop-filter: blur(10px);
     border: 1px solid rgba(255,255,255,0.1);
   }
-  .neon { color: #FFA94D; }
+  .neon { color: #00B888; }
   .btn-primary {
-    background: linear-gradient(135deg, #FFA94D, #FF6B6B);
-    color: #0f172a;
+    background: linear-gradient(135deg, #00B888, #1FC998);
+    color: #04201A;
     font-weight: bold;
     transition: all 0.2s;
   }
-  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(255, 169, 77, 0.4); }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(0, 184, 136, 0.4); }
   input, select, textarea {
     background: rgba(15, 23, 42, 0.6);
     border: 1px solid rgba(255,255,255,0.15);
@@ -41,7 +41,7 @@
   }
   input:focus, select:focus, textarea:focus {
     outline: none;
-    border-color: #FFA94D;
+    border-color: #00B888;
   }
   .log-card {
     background: rgba(15, 23, 42, 0.5);
@@ -50,14 +50,14 @@
     padding: 16px;
     transition: all 0.2s;
   }
-  .log-card:hover { border-color: rgba(255, 169, 77, 0.3); }
+  .log-card:hover { border-color: rgba(0, 184, 136, 0.3); }
   .energy-slider {
     -webkit-appearance: none;
     appearance: none;
     width: 100%;
     height: 8px;
     border-radius: 999px;
-    background: linear-gradient(to right, #ef4444, #f59e0b, #FFA94D, #10b981);
+    background: linear-gradient(to right, #ef4444, #f59e0b, #00B888, #10b981);
     outline: none;
   }
   .energy-slider::-webkit-slider-thumb {
@@ -65,7 +65,7 @@
     width: 24px; height: 24px;
     border-radius: 50%;
     background: white;
-    border: 3px solid #FFA94D;
+    border: 3px solid #00B888;
     cursor: pointer;
     box-shadow: 0 4px 12px rgba(0,0,0,0.3);
   }
@@ -73,7 +73,7 @@
     width: 24px; height: 24px;
     border-radius: 50%;
     background: white;
-    border: 3px solid #FFA94D;
+    border: 3px solid #00B888;
     cursor: pointer;
   }
   .stat-mini {
@@ -89,9 +89,9 @@
   .toast {
     position: fixed; bottom: 24px; left: 50%;
     transform: translateX(-50%) translateY(100px);
-    background: #FFA94D; color: #0f172a;
+    background: #00B888; color: #04201A;
     padding: 12px 24px; border-radius: 999px; font-weight: bold;
-    box-shadow: 0 8px 24px rgba(255, 169, 77, 0.4);
+    box-shadow: 0 8px 24px rgba(0, 184, 136, 0.4);
     transition: transform 0.3s ease; z-index: 100;
   }
   .toast.show { transform: translateX(-50%) translateY(0); }
@@ -102,19 +102,19 @@
     border-radius: 999px;
     font-size: 11px;
     font-weight: 700;
-    color: #0f172a;
+    color: #04201A;
   }
   .quick-prompt {
     padding: 8px 12px;
     border-radius: 10px;
-    background: rgba(255, 169, 77, 0.08);
-    border: 1px solid rgba(255, 169, 77, 0.2);
-    color: #FFA94D;
+    background: rgba(0, 184, 136, 0.08);
+    border: 1px solid rgba(0, 184, 136, 0.2);
+    color: #00B888;
     font-size: 12px;
     cursor: pointer;
     transition: all 0.15s;
   }
-  .quick-prompt:hover { background: rgba(255, 169, 77, 0.15); }
+  .quick-prompt:hover { background: rgba(0, 184, 136, 0.15); }
 </style>
 </head>
 <body class="p-4 md:p-6 pb-24 bg-depth">
@@ -204,7 +204,7 @@
   </div>
 
   <div class="text-center text-gray-500 text-xs mt-12">
-    📊 PEAKING · BIP-Log · Solo built. Public stats.
+    📊 BIP-Log · powered by PEAKING · Solo built. Public stats.
   </div>
 </div>
 
@@ -342,7 +342,7 @@ function renderLogCard(l) {
   const d = new Date(l.date);
   const label = d.toLocaleDateString('de-DE', { weekday: 'short', day: 'numeric', month: 'short' });
   const energy = l.energy || 7;
-  const energyColor = energy >= 8 ? '#10b981' : energy >= 5 ? '#FFA94D' : '#f59e0b';
+  const energyColor = energy >= 8 ? '#10b981' : energy >= 5 ? '#00B888' : '#f59e0b';
 
   return `
     <div class="log-card" onclick="openEditModal('${l.date}')">
@@ -415,13 +415,13 @@ function renderTrendChart() {
       datasets: [{
         label: 'Energy',
         data,
-        borderColor: '#FFA94D',
-        backgroundColor: 'rgba(255, 169, 77, 0.15)',
+        borderColor: '#00B888',
+        backgroundColor: 'rgba(0, 184, 136, 0.15)',
         fill: true,
         tension: 0.3,
         borderWidth: 2,
         pointRadius: 3,
-        pointBackgroundColor: '#FFA94D'
+        pointBackgroundColor: '#00B888'
       }]
     },
     options: {

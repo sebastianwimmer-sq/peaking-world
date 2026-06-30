@@ -9,7 +9,7 @@
 <link rel="icon" href="../assets/logo.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="../assets/logo.svg">
 <link rel="manifest" href="../manifest.json">
-<meta name="theme-color" content="#FFA94D">
+<meta name="theme-color" content="#00B888">
 <link rel="stylesheet" href="../assets/effects.css">
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -37,15 +37,15 @@
   }
   input:focus, select:focus, textarea:focus {
     outline: none;
-    border-color: #FFA94D;
+    border-color: #00B888;
   }
   .btn-primary {
-    background: linear-gradient(135deg, #FFD43B, #FFA94D, #FF6B6B);
-    color: #0f172a;
+    background: linear-gradient(135deg, #28C281, #1FC998, #00B888);
+    color:#04201A;
     font-weight: bold;
     transition: all 0.2s;
   }
-  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(255, 169, 77, 0.4); }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(0, 184, 136, 0.4); }
   .btn-danger {
     background: linear-gradient(135deg, #ef4444, #dc2626);
   }
@@ -63,18 +63,18 @@
   <div class="text-center mb-8">
     <div class="text-xs text-gray-500 mb-2"><a href="../dashboard.html" class="hover:text-white">← Dashboard</a></div>
     <h1 class="text-4xl md:text-5xl font-bold mb-2">📊 Reel Tracker</h1>
-    <p class="text-gray-400">⛰️ PEAKING · <span class="neon font-bold">Always peaking.</span></p>
+    <p class="text-gray-400">⛰️ powered by PEAKING · <span class="neon font-bold">Social, das skaliert.</span></p>
   </div>
 
   <!-- 🟢 AUTO-TRACKER LIVE (v1.9.5 — Meta API direkt, kein Screenshot mehr) -->
-  <div class="rounded-3xl p-6 mb-6" style="background: linear-gradient(135deg, rgba(34,197,94,0.10), rgba(255,169,77,0.06)); border: 1px solid rgba(34,197,94,0.30);">
+  <div class="rounded-3xl p-6 mb-6" style="background: linear-gradient(135deg, rgba(34,197,94,0.10), rgba(0, 184, 136,0.06)); border: 1px solid rgba(34,197,94,0.30);">
     <div class="flex items-start gap-3 mb-4 flex-wrap">
       <div class="text-3xl">🟢</div>
       <div class="flex-1 min-w-0">
         <h2 class="text-2xl font-bold">Auto-Tracker <span class="text-xs font-normal text-green-400">· LIVE via Meta API</span></h2>
         <p class="text-gray-400 text-sm">Reels werden automatisch alle 6h gesynct — Likes + Comments + Captions live. Kein Screenshot mehr nötig.</p>
       </div>
-      <button id="syncNowBtn" onclick="autoTrackerRefresh()" class="rounded-xl px-4 py-2 text-xs font-bold" style="background: linear-gradient(135deg,#FFD43B,#FFA94D,#FF6B6B); color:#0f172a">🔄 Refresh</button>
+      <button id="syncNowBtn" onclick="autoTrackerRefresh()" class="rounded-xl px-4 py-2 text-xs font-bold" style="background: linear-gradient(135deg, #28C281, #1FC998, #00B888); color:#04201A">🔄 Refresh</button>
     </div>
 
     <!-- Brand-Tabs -->
@@ -107,19 +107,19 @@
 
   <style>
     .auto-brand-pill { padding:6px 14px; border-radius:999px; font-size:12px; font-weight:600; border:1px solid rgba(255,255,255,0.15); background:rgba(15,23,42,0.6); color:#cbd5e1; cursor:pointer; transition:all 0.15s; white-space:nowrap; }
-    .auto-brand-pill:hover { border-color: rgba(255,169,77,0.5); }
-    .auto-brand-pill.active { background: linear-gradient(135deg,#FFA94D,#FF6B6B); color:#0f172a; border-color:#FFA94D; font-weight:800; }
+    .auto-brand-pill:hover { border-color: rgba(0, 184, 136,0.5); }
+    .auto-brand-pill.active { background: linear-gradient(135deg, #00B888, #1FC998); color:#04201A; border-color:#00B888; font-weight:800; }
     .auto-reel-card { background:rgba(15,23,42,0.5); border:1px solid rgba(255,255,255,0.08); border-radius:14px; overflow:hidden; transition:all 0.2s; cursor:pointer; }
-    .auto-reel-card:hover { transform: translateY(-2px); border-color: rgba(255,169,77,0.3); box-shadow: 0 14px 24px -14px rgba(255,169,77,0.25); }
+    .auto-reel-card:hover { transform: translateY(-2px); border-color: rgba(0, 184, 136,0.3); box-shadow: 0 14px 24px -14px rgba(0, 184, 136,0.25); }
     .auto-reel-thumb { width:100%; aspect-ratio:9/16; object-fit:cover; background:#1e293b; }
     .auto-reel-pill { display:inline-flex; align-items:center; gap:4px; padding:2px 8px; border-radius:999px; font-size:10px; font-weight:700; }
-    .pill-brand-peaking { background:rgba(255,169,77,0.18); color:#FFA94D; }
+    .pill-brand-peaking { background:rgba(0, 184, 136,0.18); color:#00B888; }
     .pill-brand-hulk { background:rgba(74,222,128,0.18); color:#4ade80; }
     .pill-brand-smash { background:rgba(34,197,94,0.18); color:#22c55e; }
   </style>
 
   <!-- 📸 LEGACY: Screenshot-Workflow (deprecated, nur als Fallback für Pre-Sync-Reels) -->
-  <details class="rounded-3xl p-6 mb-8" style="background: linear-gradient(135deg, rgba(255, 107, 107, 0.06), rgba(255, 212, 59, 0.04)); border: 1px solid rgba(255, 169, 77, 0.15);">
+  <details class="rounded-3xl p-6 mb-8" style="background: linear-gradient(135deg, rgba(0, 184, 136, 0.06), rgba(31, 201, 152, 0.04)); border: 1px solid rgba(0, 184, 136, 0.15);">
     <summary class="cursor-pointer flex items-center gap-3 select-none">
       <div class="text-2xl opacity-70">📸</div>
       <div class="flex-1">
@@ -748,8 +748,8 @@ function updateCharts() {
         datasets: [{
           label: 'Skip-Rate %',
           data: skipData.map(r => r.skipRate),
-          borderColor: '#FF6B6B',
-          backgroundColor: 'rgba(255,107,107,0.1)',
+          borderColor: '#00B888',
+          backgroundColor: 'rgba(0, 184, 136,0.1)',
           fill: true,
           tension: 0.3
         }]
@@ -779,7 +779,7 @@ function updateCharts() {
         labels: ['Männer', 'Frauen'],
         datasets: [{
           data: [Math.round(avgMale * 10) / 10, Math.round(avgFemale * 10) / 10],
-          backgroundColor: ['#FFA94D', '#8b5cf6']
+          backgroundColor: ['#00B888', '#8b5cf6']
         }]
       },
       options: {
@@ -803,7 +803,7 @@ function updateCharts() {
         datasets: [{
           label: 'Ø Source %',
           data: [avgSrc('sourceFeed'), avgSrc('sourceStories'), avgSrc('sourceReelsTab'), avgSrc('sourceProfile')].map(v => Math.round(v * 10) / 10),
-          backgroundColor: ['#10b981', '#f59e0b', '#FFA94D', '#84cc16']
+          backgroundColor: ['#10b981', '#f59e0b', '#00B888', '#84cc16']
         }]
       },
       options: {
@@ -856,15 +856,15 @@ function reelSparkline(reel, allReels, color) {
   return `<svg width="${w}" height="${h}" viewBox="0 0 ${w} ${h}" style="display:block;overflow:visible" aria-label="7-Tage-Trend">
     <defs>
       <linearGradient id="${gid}" x1="0" y1="0" x2="1" y2="0">
-        <stop offset="0%" stop-color="#FF6B6B"/><stop offset="50%" stop-color="#FFA94D"/><stop offset="100%" stop-color="#FFD43B"/>
+        <stop offset="0%" stop-color="#00B888"/><stop offset="50%" stop-color="#00B888"/><stop offset="100%" stop-color="#1FC998"/>
       </linearGradient>
       <linearGradient id="${aid}" x1="0" y1="0" x2="0" y2="1">
-        <stop offset="0%" stop-color="#FFA94D" stop-opacity="0.3"/><stop offset="100%" stop-color="#FFA94D" stop-opacity="0"/>
+        <stop offset="0%" stop-color="#00B888" stop-opacity="0.3"/><stop offset="100%" stop-color="#00B888" stop-opacity="0"/>
       </linearGradient>
     </defs>
     <polygon points="${area}" fill="url(#${aid})"/>
     <polyline points="${line}" fill="none" stroke="url(#${gid})" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/>
-    <circle cx="${(data.length - 1) * stepX}" cy="${lastY}" r="1.8" fill="#FFD43B"/>
+    <circle cx="${(data.length - 1) * stepX}" cy="${lastY}" r="1.8" fill="#1FC998"/>
   </svg>`;
 }
 
@@ -908,18 +908,18 @@ function updateList() {
   const PI = SmashApp.PILLAR_INFO;
 
   el.innerHTML = sorted.map(r => {
-    const meta = PI[r.pillar] || { emoji: '📊', name: r.pillar, color: '#FFA94D' };
+    const meta = PI[r.pillar] || { emoji: '📊', name: r.pillar, color: '#00B888' };
     const totalEng = (r.likes||0) + (r.comments||0) + (r.saves||0) + (r.shares||0);
     const er = r.views > 0 ? ((totalEng / r.views) * 100) : 0;
     const erHot = er >= 5;
     const rel = relativeDate(r.date);
     const spark = reelSparkline(r, reels, meta.color);
     const erColor = erHot
-      ? 'background:linear-gradient(135deg,#FF6B6B 0%,#FFA94D 50%,#FFD43B 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent'
+      ? 'background:linear-gradient(135deg, #00B888 0%, #1FC998 50%, #28C281 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent'
       : 'color:#fff';
 
     return `
-      <article class="reel-card" style="position:relative;display:flex;gap:12px;padding:12px;border-radius:14px;background:rgba(30,41,59,0.6);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,0.10);box-shadow:0 4px 12px rgba(0,0,0,0.25);transition:border-color 200ms,box-shadow 200ms" onmouseover="this.style.borderColor='rgba(255,169,77,0.25)';this.style.boxShadow='0 8px 24px rgba(255,169,77,0.18)'" onmouseout="this.style.borderColor='rgba(255,255,255,0.10)';this.style.boxShadow='0 4px 12px rgba(0,0,0,0.25)'">
+      <article class="reel-card" style="position:relative;display:flex;gap:12px;padding:12px;border-radius:14px;background:rgba(30,41,59,0.6);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,0.10);box-shadow:0 4px 12px rgba(0,0,0,0.25);transition:border-color 200ms,box-shadow 200ms" onmouseover="this.style.borderColor='rgba(0, 184, 136,0.25)';this.style.boxShadow='0 8px 24px rgba(0, 184, 136,0.18)'" onmouseout="this.style.borderColor='rgba(255,255,255,0.10)';this.style.boxShadow='0 4px 12px rgba(0,0,0,0.25)'">
         <!-- Cover -->
         <div style="position:relative;flex-shrink:0;width:80px;height:142px;border-radius:10px;overflow:hidden;background:linear-gradient(160deg,${meta.color}55,${meta.color}15 60%,rgba(15,23,42,0.6));border:1px solid rgba(255,255,255,0.08);box-shadow:0 2px 8px rgba(0,0,0,0.4)">
           <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:32px">${meta.emoji}</div>
@@ -961,13 +961,13 @@ function updateList() {
           ${r.notes ? `<div style="margin-top:2px;font-size:11px;color:#94a3b8;font-style:italic;line-height:1.4">📝 ${r.notes}</div>` : ''}
           <!-- Action pills -->
           <div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:2px">
-            <button onclick="gotoInsightsForReel(${r.id})" style="display:inline-flex;align-items:center;gap:5px;padding:6px 10px;border-radius:999px;font-size:11px;font-weight:600;color:#cbd5e1;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);backdrop-filter:blur(8px);cursor:pointer;transition:all 160ms" onmouseover="this.style.color='#fff';this.style.background='rgba(255,255,255,0.08)';this.style.borderColor='rgba(255,169,77,0.35)'" onmouseout="this.style.color='#cbd5e1';this.style.background='rgba(255,255,255,0.04)';this.style.borderColor='rgba(255,255,255,0.08)'">
+            <button onclick="gotoInsightsForReel(${r.id})" style="display:inline-flex;align-items:center;gap:5px;padding:6px 10px;border-radius:999px;font-size:11px;font-weight:600;color:#cbd5e1;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);backdrop-filter:blur(8px);cursor:pointer;transition:all 160ms" onmouseover="this.style.color='#fff';this.style.background='rgba(255,255,255,0.08)';this.style.borderColor='rgba(0, 184, 136,0.35)'" onmouseout="this.style.color='#cbd5e1';this.style.background='rgba(255,255,255,0.04)';this.style.borderColor='rgba(255,255,255,0.08)'">
               <span style="font-size:12px;line-height:1">📊</span><span>Insights</span>
             </button>
-            <button onclick="reuseReelAsIdea(${r.id})" style="display:inline-flex;align-items:center;gap:5px;padding:6px 10px;border-radius:999px;font-size:11px;font-weight:600;color:#cbd5e1;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);backdrop-filter:blur(8px);cursor:pointer;transition:all 160ms" onmouseover="this.style.color='#fff';this.style.background='rgba(255,255,255,0.08)';this.style.borderColor='rgba(255,169,77,0.35)'" onmouseout="this.style.color='#cbd5e1';this.style.background='rgba(255,255,255,0.04)';this.style.borderColor='rgba(255,255,255,0.08)'">
+            <button onclick="reuseReelAsIdea(${r.id})" style="display:inline-flex;align-items:center;gap:5px;padding:6px 10px;border-radius:999px;font-size:11px;font-weight:600;color:#cbd5e1;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);backdrop-filter:blur(8px);cursor:pointer;transition:all 160ms" onmouseover="this.style.color='#fff';this.style.background='rgba(255,255,255,0.08)';this.style.borderColor='rgba(0, 184, 136,0.35)'" onmouseout="this.style.color='#cbd5e1';this.style.background='rgba(255,255,255,0.04)';this.style.borderColor='rgba(255,255,255,0.08)'">
               <span style="font-size:12px;line-height:1">♻️</span><span>Re-Use</span>
             </button>
-            <button onclick="deleteReel(${r.id})" style="display:inline-flex;align-items:center;gap:5px;padding:6px 10px;border-radius:999px;font-size:11px;font-weight:600;color:#94a3b8;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);backdrop-filter:blur(8px);cursor:pointer;transition:all 160ms" onmouseover="this.style.color='#FF6B6B';this.style.background='rgba(255,107,107,0.10)';this.style.borderColor='rgba(255,107,107,0.40)'" onmouseout="this.style.color='#94a3b8';this.style.background='rgba(255,255,255,0.04)';this.style.borderColor='rgba(255,255,255,0.08)'">
+            <button onclick="deleteReel(${r.id})" style="display:inline-flex;align-items:center;gap:5px;padding:6px 10px;border-radius:999px;font-size:11px;font-weight:600;color:#94a3b8;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);backdrop-filter:blur(8px);cursor:pointer;transition:all 160ms" onmouseover="this.style.color='#00B888';this.style.background='rgba(0, 184, 136,0.10)';this.style.borderColor='rgba(0, 184, 136,0.40)'" onmouseout="this.style.color='#94a3b8';this.style.background='rgba(255,255,255,0.04)';this.style.borderColor='rgba(255,255,255,0.08)'">
               <span style="font-size:12px;line-height:1">🗑️</span><span>Löschen</span>
             </button>
           </div>
@@ -1029,10 +1029,71 @@ function fillPillarSelect() {
 }
 fillPillarSelect();
 
+// ════════════════════════════════════════════════════════════════
+// SEED-LOADER — lädt data/seed-reels.json idempotent in localStorage.
+// Fügt ein Seed-Reel NUR hinzu, wenn dessen id nicht bereits existiert.
+// Manuell eingetragene Reels werden weder überschrieben noch gelöscht.
+// No-op wenn alle Seed-Reels bereits vorhanden sind.
+// ════════════════════════════════════════════════════════════════
+async function loadSeedReels() {
+  // Account-Gate: Seed-Reels gehören aktuell ausschließlich in peakingworld.
+  // Verhindert Leak in vegetarianhulk-localStorage beim Switcher-Wechsel.
+  const activeAccount = typeof SmashApp.getCurrentAccount === 'function'
+    ? SmashApp.getCurrentAccount()
+    : null;
+  if (activeAccount !== 'peakingworld') return;
+
+  try {
+    const res = await fetch('../data/seed-reels.json', { cache: 'no-store' });
+    if (!res.ok) return;
+    const seed = await res.json();
+    const seedReels = Array.isArray(seed.reels) ? seed.reels : [];
+    if (!seedReels.length) return;
+
+    const existingIds = new Set(reels.map(r => r.id));
+    const additions = [];
+    for (const sr of seedReels) {
+      if (existingIds.has(sr.id)) continue;
+      // Defensive Normalisierung: null → 0 für required-numeric Felder
+      // (sonst NaN in Stats/Charts). Insight-Felder bleiben null und werden
+      // in den Insight-Charts mit `!= null` gefiltert.
+      const normalized = {
+        ...sr,
+        views: sr.views ?? 0,
+        reach: sr.reach ?? 0,
+        watchTime: sr.watchTime ?? 0,
+        length: sr.length ?? 0,
+        likes: sr.likes ?? 0,
+        comments: sr.comments ?? 0,
+        saves: sr.saves ?? 0,
+        shares: sr.shares ?? 0,
+        followers: sr.followers ?? 0,
+        hour: sr.hour ?? 19,
+        sends: sr.sends ?? 0,
+        profileVisits: sr.profileVisits ?? 0,
+        funnelLayer: sr.funnelLayer ?? 'reach',
+        isTrial: sr.isTrial ?? false,
+        audio: sr.audio ?? '',
+        notes: sr.notes ?? ''
+      };
+      delete normalized._todo;
+      additions.push(normalized);
+    }
+    if (additions.length) {
+      reels.push(...additions);
+      await saveData();
+      console.info(`🌱 SEED: ${additions.length} Reel(s) aus data/seed-reels.json hinzugefügt.`);
+      updateUI();
+    }
+  } catch (e) {
+    console.warn('Seed-Loader übersprungen:', e.message);
+  }
+}
+
 // Initialize
-loadData().then(() => {
-  preloadFirstReel();
-});
+loadData()
+  .then(() => loadSeedReels())
+  .then(() => preloadFirstReel());
 
 // ════════════════════════════════════════════════════════════════
 // 🟢 AUTO-TRACKER LIVE (v1.9.5) — Meta API direkt
@@ -1173,9 +1234,9 @@ function _autoRenderSparkline(snaps) {
         <polyline points="${points}" fill="none" stroke="url(#sparkGrad)" stroke-width="1.5" />
         <defs>
           <linearGradient id="sparkGrad" x1="0%" y1="0%" x2="100%" y2="0%">
-            <stop offset="0%" stop-color="#FF6B6B" />
-            <stop offset="50%" stop-color="#FFA94D" />
-            <stop offset="100%" stop-color="#FFD43B" />
+            <stop offset="0%" stop-color="#00B888" />
+            <stop offset="50%" stop-color="#00B888" />
+            <stop offset="100%" stop-color="#1FC998" />
           </linearGradient>
         </defs>
       </svg>

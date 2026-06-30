@@ -3,19 +3,19 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
-<title>⛰️ Dashboard — PEAKING</title>
+<title>▲ Dashboard — social2scale</title>
 <link rel="icon" href="assets/logo.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="assets/logo.svg">
 <link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#FFA94D">
+<meta name="theme-color" content="#00B888">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="PEAKING">
+<meta name="apple-mobile-web-app-title" content="social2scale">
 <link rel="stylesheet" href="assets/effects.css">
 <script src="https://cdn.tailwindcss.com"></script>
 <style>
   body { 
-    background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+    background: linear-gradient(135deg, #0B0F14 0%, #11161D 100%);
     min-height: 100dvh;
     color: white;
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
@@ -25,15 +25,15 @@
     backdrop-filter: blur(10px);
     border: 1px solid rgba(255,255,255,0.1);
   }
-  .neon { color: #FFA94D; }
+  .neon { color: #00B888; }
   .module-card {
     transition: all 0.2s;
     cursor: pointer;
   }
-  .module-card:hover { 
-    transform: translateY(-4px); 
-    box-shadow: 0 12px 24px rgba(255, 169, 77, 0.15);
-    border-color: rgba(255, 169, 77, 0.3);
+  .module-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 24px rgba(0, 184, 136, 0.15);
+    border-color: rgba(0, 184, 136, 0.3);
   }
   .stat-card {
     transition: all 0.2s;
@@ -43,7 +43,7 @@
   }
   .account-switch {
     background: rgba(15, 23, 42, 0.8);
-    border: 1px solid rgba(255, 169, 77, 0.3);
+    border: 1px solid rgba(0, 184, 136, 0.3);
     color: white;
     padding: 8px 14px;
     border-radius: 999px;
@@ -54,8 +54,8 @@
     display: flex; align-items: center; gap: 6px;
   }
   .account-switch:hover {
-    border-color: #FFA94D;
-    box-shadow: 0 4px 16px rgba(255, 169, 77, 0.25);
+    border-color: #00B888;
+    box-shadow: 0 4px 16px rgba(0, 184, 136, 0.25);
   }
   .account-menu {
     position: absolute;
@@ -63,11 +63,11 @@
     margin-top: 8px;
     background: rgba(15, 23, 42, 0.98);
     backdrop-filter: blur(12px);
-    border: 1px solid rgba(255, 169, 77, 0.3);
+    border: 1px solid rgba(0, 184, 136, 0.3);
     border-radius: 14px;
     padding: 6px;
     min-width: 220px;
-    box-shadow: 0 12px 32px rgba(0,0,0,0.4), 0 0 24px rgba(255, 169, 77, 0.15);
+    box-shadow: 0 12px 32px rgba(0,0,0,0.4), 0 0 24px rgba(0, 184, 136, 0.15);
     z-index: 100;
   }
   .account-menu button {
@@ -82,12 +82,12 @@
     transition: background 0.15s;
     font-size: 14px;
   }
-  .account-menu button:hover { background: rgba(255, 169, 77, 0.1); }
-  .account-menu button.current { background: rgba(255, 169, 77, 0.15); border: 1px solid rgba(255, 169, 77, 0.3); }
+  .account-menu button:hover { background: rgba(0, 184, 136, 0.1); }
+  .account-menu button.current { background: rgba(0, 184, 136, 0.15); border: 1px solid rgba(0, 184, 136, 0.3); }
   .account-menu button.current::after {
     content: '✓';
     margin-left: auto;
-    color: #FFA94D;
+    color: #00B888;
     font-weight: bold;
   }
 </style>
@@ -95,20 +95,20 @@
 <body class="p-4 md:p-6 bg-depth">
 
 <!-- Beta-Banner (toggle in Settings) -->
-<div id="betaBanner" style="display:none; position:sticky; top:0; z-index:40; background:linear-gradient(90deg, #FFA94D, #FF6B6B); color:#0f172a; text-align:center; font-size:11px; font-weight:700; padding:6px 12px; letter-spacing:0.5px; text-transform:uppercase;">
-  ⚡ <span id="appVersion">v1.6.0</span> · Always peaking. Sebi-Build, läuft live.
+<div id="betaBanner" style="display:none; position:sticky; top:0; z-index:40; background:linear-gradient(90deg, #00B888, #1FC998); color:#04201A; text-align:center; font-size:11px; font-weight:700; padding:6px 12px; letter-spacing:0.5px; text-transform:uppercase;">
+  ⚡ <span id="appVersion">v1.6.0</span> · Social, das skaliert. Sebi-Build, läuft live.
 </div>
 
 <!-- Account-Tint Top-Border (toggle in Settings) -->
-<div id="accountTintBar" style="display:none; height:3px; background:#FFA94D; box-shadow: 0 0 18px currentColor;"></div>
+<div id="accountTintBar" style="display:none; height:3px; background:#00B888; box-shadow: 0 0 18px currentColor;"></div>
 
 <div class="max-w-6xl mx-auto">
   
   <!-- Header -->
   <div class="flex justify-between items-center mb-6">
     <div>
-      <h1 class="text-2xl md:text-4xl font-bold flex items-center gap-2"><img src="assets/logo.svg" alt="" class="w-8 h-8 md:w-10 md:h-10 logo-glow"> <span class="text-sunrise">PEAKING</span></h1>
-      <p class="text-gray-400 text-sm"><span class="neon font-bold">Always peaking.</span> · <span id="todayDate"></span></p>
+      <h1 class="text-2xl md:text-4xl font-bold flex items-center gap-2"><img src="assets/logo.svg" alt="" class="w-8 h-8 md:w-10 md:h-10 logo-glow"> <span class="text-sunrise">social2scale</span></h1>
+      <p class="text-gray-400 text-sm"><span class="neon font-bold">Social, das skaliert.</span> · <span id="todayDate"></span></p>
     </div>
     <div class="flex items-center gap-2 relative">
       <div class="relative">
@@ -149,7 +149,7 @@
   </div>
 
   <!-- 🧭 PEAKING Coach (Dashboard-Hero · daily insight + next-3) -->
-  <div id="coachHero" class="rounded-3xl p-5 mb-4 float-in" style="display:none; background: linear-gradient(135deg, rgba(255, 107, 107, 0.10), rgba(255, 169, 77, 0.14), rgba(255, 212, 59, 0.08)); border: 1px solid rgba(255, 169, 77, 0.4); box-shadow: 0 12px 40px rgba(255, 169, 77, 0.12);">
+  <div id="coachHero" class="rounded-3xl p-5 mb-4 float-in" style="display:none; background: linear-gradient(135deg, rgba(0, 184, 136, 0.10), rgba(31, 201, 152, 0.14), rgba(40, 194, 129, 0.08)); border: 1px solid rgba(0, 184, 136, 0.4); box-shadow: 0 12px 40px rgba(0, 184, 136, 0.12);">
     <div class="flex justify-between items-start mb-3 gap-3 flex-wrap">
       <div class="text-xs uppercase tracking-wider text-gray-400 font-bold">🧭 Coach · <span id="coachToday">heute</span></div>
       <a href="modules/coach.html" class="text-xs neon hover:underline whitespace-nowrap">→ Voller Coach</a>
@@ -160,7 +160,7 @@
   </div>
 
   <!-- Today/Next Action (kompakt-Fallback wenn Coach off) -->
-  <div id="nextPostCard" class="glass gradient-flow rounded-3xl p-5 mb-6 border-l-4 float-in" style="border-left-color: #FFA94D;">
+  <div id="nextPostCard" class="glass gradient-flow rounded-3xl p-5 mb-6 border-l-4 float-in" style="border-left-color: #00B888;">
     <div class="text-xs text-gray-400 mb-1">🎯 NÄCHSTER POST</div>
     <div class="text-lg md:text-xl font-bold mb-1" id="nextPost">Heute: 💪 Gym-Reel</div>
     <div class="text-sm text-gray-400" id="nextPostTime">Empfohlene Zeit: 19:00 Uhr</div>
@@ -183,13 +183,13 @@
       <span class="text-[10px] text-gray-500" data-cat-count>5 Module</span>
     </div>
     <div class="grid grid-cols-2 md:grid-cols-3 gap-3 stagger">
-      <a href="modules/brain-v3.html" class="mod-tile glass module-card lift-glow press-feedback rounded-2xl p-5" data-keywords="brain memos memory ki ai dashboard wissen knowledge search filter all decisions v3 unified hub cross-brand" style="border: 1px solid rgba(255, 169, 77, 0.4); position: relative;">
-        <span style="position:absolute;top:8px;right:8px;background:linear-gradient(135deg,#FF6B6B,#FFA94D);color:#0e1518;font-size:9px;font-weight:800;letter-spacing:1px;padding:2px 6px;border-radius:4px">V3</span>
+      <a href="modules/brain-v3.html" class="mod-tile glass module-card lift-glow press-feedback rounded-2xl p-5" data-keywords="brain memos memory ki ai dashboard wissen knowledge search filter all decisions v3 unified hub cross-brand" style="border: 1px solid rgba(0, 184, 136, 0.4); position: relative;">
+        <span style="position:absolute;top:8px;right:8px;background:linear-gradient(135deg,#00B888,#1FC998);color:#03080D;font-size:9px;font-weight:800;letter-spacing:1px;padding:2px 6px;border-radius:4px">V3</span>
         <div class="text-3xl mb-2">🧠</div>
         <div class="font-bold mb-1">AI Brain</div>
         <div class="text-xs text-gray-400">Unified Hub · Cross-Brand · Filter · Search</div>
       </a>
-      <a href="modules/brain-recap.html" class="mod-tile glass module-card lift-glow press-feedback rounded-2xl p-5" data-keywords="recap sunday reflection week kw zusammenfassung review wochen-recap reels stats summary plan" style="border: 1px solid rgba(255, 107, 107, 0.4);">
+      <a href="modules/brain-recap.html" class="mod-tile glass module-card lift-glow press-feedback rounded-2xl p-5" data-keywords="recap sunday reflection week kw zusammenfassung review wochen-recap reels stats summary plan" style="border: 1px solid rgba(0, 184, 136, 0.4);">
         <div class="text-3xl mb-2">📊</div>
         <div class="font-bold mb-1">Sunday Recap</div>
         <div class="text-xs text-gray-400">Wochen-Reflexion · Top/Flop · AI-Summary · KW-Plan</div>
@@ -199,17 +199,17 @@
         <div class="font-bold mb-1">Help-Center</div>
         <div class="text-xs text-gray-400">FAQ · How-Tos · Troubleshooting</div>
       </a>
-      <a href="modules/growth-coach.html" class="mod-tile glass module-card lift-glow press-feedback rounded-2xl p-5" data-keywords="growth coach ki ai tipps wachstum reels algorithm 2026" style="border: 1px solid rgba(255, 169, 77, 0.4);">
+      <a href="modules/growth-coach.html" class="mod-tile glass module-card lift-glow press-feedback rounded-2xl p-5" data-keywords="growth coach ki ai tipps wachstum reels algorithm 2026" style="border: 1px solid rgba(0, 184, 136, 0.4);">
         <div class="text-3xl mb-2">🧭</div>
         <div class="font-bold mb-1">Growth-Coach</div>
         <div class="text-xs text-gray-400">15 Tips · Live-Data · Algorithm 2026</div>
       </a>
-      <a href="modules/insta.html" class="mod-tile glass module-card lift-glow press-feedback rounded-2xl p-5" data-keywords="insta sync live api meta graph reels followers dashboard auto" style="border: 1px solid rgba(255, 169, 77, 0.4);">
+      <a href="modules/insta.html" class="mod-tile glass module-card lift-glow press-feedback rounded-2xl p-5" data-keywords="insta sync live api meta graph reels followers dashboard auto" style="border: 1px solid rgba(0, 184, 136, 0.4);">
         <div class="text-3xl mb-2">📡</div>
         <div class="font-bold mb-1">Live Insta Sync</div>
         <div class="text-xs text-gray-400">3 Brands · Auto-Sync 6h · Meta API</div>
       </a>
-      <a href="modules/reel-edit-assistant.html" class="mod-tile glass module-card lift-glow press-feedback rounded-2xl p-5" data-keywords="reel edit audio whisper transcribe srt untertitel davinci subtitle ai" style="border: 1px solid rgba(255, 169, 77, 0.4);">
+      <a href="modules/reel-edit-assistant.html" class="mod-tile glass module-card lift-glow press-feedback rounded-2xl p-5" data-keywords="reel edit audio whisper transcribe srt untertitel davinci subtitle ai" style="border: 1px solid rgba(0, 184, 136, 0.4);">
         <div class="text-3xl mb-2">✂️</div>
         <div class="font-bold mb-1">Reel-Edit-Assistant</div>
         <div class="text-xs text-gray-400">Audio → SRT · 53% Zeitsparung</div>
@@ -259,7 +259,7 @@
         <div class="font-bold mb-1">Carousel Builder</div>
         <div class="text-xs text-gray-400">10 Slides · Bulk-Download</div>
       </a>
-      <a href="modules/hooks.html" class="mod-tile glass module-card lift-glow press-feedback rounded-2xl p-5" data-keywords="hook library patterns win rate loss twist stat reveal mistake curiosity pov" style="border: 1px solid rgba(255, 169, 77, 0.3);">
+      <a href="modules/hooks.html" class="mod-tile glass module-card lift-glow press-feedback rounded-2xl p-5" data-keywords="hook library patterns win rate loss twist stat reveal mistake curiosity pov" style="border: 1px solid rgba(0, 184, 136, 0.3);">
         <div class="text-3xl mb-2">🪝</div>
         <div class="font-bold mb-1 text-sunrise">Hook Library</div>
         <div class="text-xs text-gray-400">50+ Patterns · Win-Rate</div>
@@ -299,12 +299,12 @@
         <div class="font-bold mb-1">Cross-Posting</div>
         <div class="text-xs text-gray-400">Re-Cut: Account A → Account B</div>
       </a>
-      <a href="modules/growth.html" class="mod-tile glass module-card lift-glow press-feedback rounded-2xl p-5" data-keywords="growth bootstrap profil setup checklist 30 tage plan cross promo" style="border: 1px solid rgba(255, 169, 77, 0.3);">
+      <a href="modules/growth.html" class="mod-tile glass module-card lift-glow press-feedback rounded-2xl p-5" data-keywords="growth bootstrap profil setup checklist 30 tage plan cross promo" style="border: 1px solid rgba(0, 184, 136, 0.3);">
         <div class="text-3xl mb-2">🚀</div>
         <div class="font-bold mb-1 text-sunrise">Growth Center</div>
         <div class="text-xs text-gray-400">30-Tage-Bootstrap · Setup</div>
       </a>
-      <a href="modules/coach.html" class="mod-tile glass module-card lift-glow press-feedback rounded-2xl p-5" data-keywords="coach mastermind insights setup checklist daily algorithm pattern detection feedback" style="border: 1px solid rgba(255, 107, 107, 0.4); background: linear-gradient(135deg, rgba(255, 107, 107, 0.08), rgba(255, 169, 77, 0.05));">
+      <a href="modules/coach.html" class="mod-tile glass module-card lift-glow press-feedback rounded-2xl p-5" data-keywords="coach mastermind insights setup checklist daily algorithm pattern detection feedback" style="border: 1px solid rgba(0, 184, 136, 0.4); background: linear-gradient(135deg, rgba(0, 184, 136, 0.08), rgba(0, 184, 136, 0.05));">
         <div class="text-3xl mb-2">🧭</div>
         <div class="font-bold mb-1 text-sunrise">PEAKING Coach</div>
         <div class="text-xs text-gray-400">Daily Insights · Mastermind · Next-3</div>
@@ -356,27 +356,27 @@
     🤷 Kein Modul gefunden für „<span id="searchTerm"></span>"
   </div>
 
-  <!-- Brand-Section-Divider mit Sunrise-Strich (klare Visual-Trennung Module ↔ Account-Daten) -->
+  <!-- Brand-Section-Divider mit Emerald-Strich (klare Visual-Trennung Module ↔ Account-Daten) -->
   <div class="flex items-center gap-3 mt-8 mb-4">
-    <div style="height: 2px; flex: 1; background: linear-gradient(90deg, transparent, rgba(255, 169, 77, 0.4), transparent);"></div>
-    <span class="text-xs uppercase tracking-wider font-bold text-sunrise">⛰️ Account-Übersicht</span>
-    <div style="height: 2px; flex: 1; background: linear-gradient(90deg, transparent, rgba(255, 169, 77, 0.4), transparent);"></div>
+    <div style="height: 2px; flex: 1; background: linear-gradient(90deg, transparent, rgba(0, 184, 136, 0.4), transparent);"></div>
+    <span class="text-xs uppercase tracking-wider font-bold text-sunrise">▲ Account-Übersicht</span>
+    <div style="height: 2px; flex: 1; background: linear-gradient(90deg, transparent, rgba(0, 184, 136, 0.4), transparent);"></div>
   </div>
 
-  <!-- Säulen-Balance (Account-spezifisch, KEIN PEAKING-Brand-Token) -->
-  <div class="glass rounded-3xl p-5 mb-4" style="border: 1px solid rgba(255, 169, 77, 0.2);">
+  <!-- Säulen-Balance (Account-spezifisch, KEIN Brand-Token) -->
+  <div class="glass rounded-3xl p-5 mb-4" style="border: 1px solid rgba(0, 184, 136, 0.2);">
     <div class="flex items-baseline justify-between mb-1 flex-wrap gap-2">
       <h2 class="text-lg font-bold">⚖️ Säulen-Balance <span class="text-xs text-gray-500 font-normal">· <span id="pbAccountLabel">@vegetarianhulk</span></span></h2>
-      <span class="text-[10px] text-gray-500">Pillar-Tokens · NICHT PEAKING-Brand</span>
+      <span class="text-[10px] text-gray-500">Pillar-Tokens · NICHT Brand</span>
     </div>
-    <p class="text-[11px] text-gray-500 mb-3">Färbung der Bars = Account-Pillar-Categorization (z.B. Outdoor-Grün, Gym-Amber). Sunrise ist PEAKING-Brand drüber.</p>
+    <p class="text-[11px] text-gray-500 mb-3">Färbung der Bars = Account-Pillar-Categorization (z.B. Outdoor-Grün, Gym-Amber). Emerald ist Brand drüber.</p>
     <div id="pillarBalance" class="space-y-3">
       <!-- Wird via JS gefüllt -->
     </div>
   </div>
 
   <!-- Recent Reels -->
-  <div class="glass rounded-3xl p-5 mb-6" style="border: 1px solid rgba(255, 169, 77, 0.2);">
+  <div class="glass rounded-3xl p-5 mb-6" style="border: 1px solid rgba(0, 184, 136, 0.2);">
     <h2 class="text-lg font-bold mb-4">📝 Letzte Reels <span class="text-xs text-gray-500 font-normal">· <span id="rrAccountLabel">@vegetarianhulk</span></span></h2>
     <div id="recentReels" class="space-y-2">
       <p class="text-gray-500 italic text-sm">Noch keine Reels getrackt. <a href="modules/tracker.html" class="neon underline">Jetzt starten →</a></p>
@@ -385,7 +385,7 @@
 
   <!-- Footer -->
   <div class="text-center text-gray-500 text-xs mt-8">
-    ⛰️ PEAKING · Always peaking. · vegetarianhulk
+    ▲ social2scale · Social, das skaliert. · powered by PEAKING
   </div>
 </div>
 
@@ -512,8 +512,8 @@ SmashApp.requireAuth();
     const acc = SmashApp.getAccount();
     if (tint && acc) {
       tint.style.display = 'block';
-      tint.style.background = acc.color || '#FFA94D';
-      tint.style.color = acc.color || '#FFA94D';
+      tint.style.background = acc.color || '#00B888';
+      tint.style.color = acc.color || '#00B888';
     }
   }
   if (pref('reducedMotion', false)) {
@@ -542,7 +542,7 @@ function renderCoachHero() {
       <div class="flex-1">
         <h2 class="text-lg md:text-xl font-bold mb-1">${escapeHTMLD(card.title)}</h2>
         <p class="text-sm text-gray-200 leading-relaxed mb-3">${escapeHTMLD(card.body)}</p>
-        ${card.cta ? `<a href="modules/${card.cta.href}" class="inline-block px-4 py-2 rounded-xl text-sm font-bold" style="background: linear-gradient(135deg, #FFA94D, #FF6B6B); color: #0f172a;">${escapeHTMLD(card.cta.text)}</a>` : ''}
+        ${card.cta ? `<a href="modules/${card.cta.href}" class="inline-block px-4 py-2 rounded-xl text-sm font-bold" style="background: linear-gradient(135deg, #00B888, #1FC998); color: #04201A;">${escapeHTMLD(card.cta.text)}</a>` : ''}
       </div>
     </div>
   `;
@@ -550,9 +550,9 @@ function renderCoachHero() {
   // Next-3 Steps (compact)
   const next3 = Coach.getNext3Steps();
   document.getElementById('coachNextSteps').innerHTML = next3.map(s => `
-    <a href="modules/${s.href || ''}" class="block p-3 rounded-xl text-xs ${s.done ? 'opacity-50' : ''}" style="background: rgba(15, 23, 42, 0.5); border: 1px solid rgba(255, 169, 77, 0.15);">
+    <a href="modules/${s.href || ''}" class="block p-3 rounded-xl text-xs ${s.done ? 'opacity-50' : ''}" style="background: rgba(15, 23, 42, 0.5); border: 1px solid rgba(0, 184, 136, 0.15);">
       <div class="flex items-center gap-2">
-        <span style="color:${s.done ? '#84cc16' : '#FFA94D'}">${s.done ? '✓' : '○'}</span>
+        <span style="color:${s.done ? '#84cc16' : '#00B888'}">${s.done ? '✓' : '○'}</span>
         <span class="${s.done ? 'line-through text-gray-500' : ''}">${escapeHTMLD(s.text)}</span>
       </div>
     </a>
@@ -583,9 +583,9 @@ function maybeShowOnboarding() {
   overlay.style.cssText = 'position:fixed;inset:0;z-index:300;background:rgba(15,23,42,0.92);backdrop-filter:blur(10px);display:flex;align-items:center;justify-content:center;padding:20px;';
   const steps = [
     {
-      emoji: '🌅',
-      title: 'Willkommen bei PEAKING',
-      body: 'Solo-Creator-Stack für Instagram. <b class="neon">Always peaking.</b> heißt: heute 1 Schritt weiter, nicht alles auf einmal. Wir nehmen dich an die Hand — Setup-Wizard, Daily-Coach, Pattern-Insights.'
+      emoji: '📈',
+      title: 'Willkommen bei social2scale',
+      body: 'Solo-Creator-Stack für Instagram. <b class="neon">Strategie statt Zufall.</b> heißt: heute 1 Schritt weiter, nicht alles auf einmal. Wir nehmen dich an die Hand — Setup-Wizard, Daily-Coach, Pattern-Insights.'
     },
     {
       emoji: '🧭',
@@ -595,7 +595,7 @@ function maybeShowOnboarding() {
     {
       emoji: '⚡',
       title: 'Setup-Wizard',
-      body: '6 Schritte: Pillars · Posting-Plan · Bio · Erste Hook · Erstes Reel · Cross-Post. PEAKING erkennt automatisch wenn du sie tust. Alles in <b class="neon">→ Coach</b>.'
+      body: '6 Schritte: Pillars · Posting-Plan · Bio · Erste Hook · Erstes Reel · Cross-Post. social2scale erkennt automatisch wenn du sie tust. Alles in <b class="neon">→ Coach</b>.'
     },
     {
       emoji: '🪝',
@@ -608,9 +608,9 @@ function maybeShowOnboarding() {
       body: 'Wenn du @vegetarianhulk + @peakingworld pflegst: 1 Reel auf Account A → Re-Cut für Account B in 3 Klicks. Hebel pro Idee verdoppelt.'
     },
     {
-      emoji: '⛰️',
+      emoji: '▲',
       title: 'Du bist soweit.',
-      body: 'Web-Only. Keine App-Store-Wartezeit. Iteration in Minuten. <b class="neon">Always peaking.</b> Lass uns climben.'
+      body: 'Web-Only. Keine App-Store-Wartezeit. Iteration in Minuten. <b class="neon">Social, das skaliert.</b> Lass uns skalieren.'
     }
   ];
   let idx = 0;
@@ -618,17 +618,17 @@ function maybeShowOnboarding() {
   function renderStep() {
     const s = steps[idx];
     overlay.innerHTML = `
-      <div style="background:linear-gradient(135deg,#1e293b,#0f172a); border:1px solid rgba(255,169,77,0.3); border-radius:24px; max-width:500px; width:100%; padding:32px; text-align:center;">
+      <div style="background:linear-gradient(135deg,#11161D,#0B0F14); border:1px solid rgba(0, 184, 136, 0.3); border-radius:24px; max-width:500px; width:100%; padding:32px; text-align:center;">
         <div style="font-size:64px; margin-bottom:16px;">${s.emoji}</div>
         <h2 style="font-size:22px; font-weight:bold; margin-bottom:12px;">${s.title}</h2>
         <p style="color:#cbd5e1; font-size:15px; line-height:1.6; margin-bottom:24px;">${s.body}</p>
         <div style="display:flex; gap:8px; justify-content:center; margin-bottom:20px;">
-          ${steps.map((_, i) => `<div style="width:8px; height:8px; border-radius:50%; background:${i === idx ? '#FFA94D' : 'rgba(255,255,255,0.15)'};"></div>`).join('')}
+          ${steps.map((_, i) => `<div style="width:8px; height:8px; border-radius:50%; background:${i === idx ? '#00B888' : 'rgba(255,255,255,0.15)'};"></div>`).join('')}
         </div>
         <div style="display:flex; gap:10px; justify-content:center; flex-wrap:wrap;">
           ${idx > 0 ? '<button onclick="onboardPrev()" style="background:transparent; color:#94a3b8; border:1px solid rgba(255,255,255,0.1); padding:10px 18px; border-radius:12px; cursor:pointer; font-size:13px;">← Zurück</button>' : ''}
-          <button onclick="${idx === steps.length-1 ? 'finishOnboarding()' : 'onboardNext()'}" style="background:linear-gradient(135deg,#FFA94D,#FF6B6B); color:#0f172a; font-weight:bold; padding:10px 22px; border-radius:12px; border:none; cursor:pointer; font-size:13px;">
-            ${idx === steps.length-1 ? '⛰️ Lets go climben' : 'Weiter →'}
+          <button onclick="${idx === steps.length-1 ? 'finishOnboarding()' : 'onboardNext()'}" style="background:linear-gradient(135deg,#00B888,#1FC998); color:#04201A; font-weight:bold; padding:10px 22px; border-radius:12px; border:none; cursor:pointer; font-size:13px;">
+            ${idx === steps.length-1 ? '▲ Lets go skalieren' : 'Weiter →'}
           </button>
           ${idx < steps.length-1 ? '<button onclick="finishOnboarding()" style="background:transparent; color:#64748b; border:none; cursor:pointer; font-size:12px; padding:10px;">Skip</button>' : ''}
         </div>
@@ -828,7 +828,7 @@ function filterModules() {
   <a href="impressum.html" class="hover:text-orange-300 mx-2">Impressum</a> ·
   <a href="datenschutz.html" class="hover:text-orange-300 mx-2">Datenschutz</a> ·
   <a href="agb.html" class="hover:text-orange-300 mx-2">AGB</a>
-  <div class="mt-1 text-gray-700">© Sebastian Wimmer · peaking.world · Always peaking.</div>
+  <div class="mt-1 text-gray-700">© Sebastian Wimmer · peaking.world · powered by PEAKING</div>
 </footer>
 
 </body>

@@ -1,17 +1,18 @@
-# PEAKING — Brand Specification
+# social2scale — Brand Specification
 
-> **Tagline:** Always peaking.
-> **Sub-Tagline:** The climb is the peak.
+> **Tagline:** Social, das skaliert.
+> **Sub-Tagline:** Strategie statt Zufall.
+> **Credit:** powered by PEAKING
 > **Live:** https://peaking.world (DNS propagating) · Mirror: https://smashuniverse.info/insta
 > **Repo (primary):** https://github.com/sebastianwimmer-sq/peaking-world
 > **Repo (mirror):** https://github.com/sebastianwimmer-sq/smash-universe-hub
 > **Source-Repo (lokal):** `~/smash-insta-manager/`
 
-Personal Insta-Influencer-Tracking-Tool für Solo-Creators auf der Reise von 2k → 1M Follower.
+Premium Social-Growth-Tool für Accounts, die planen, messen und skalieren.
 
-> *„Track was hooked. Climb deine Influence. Always peaking."*
+> *„Miss, was wirkt. Lass den Rest. Social, das skaliert."*
 
-**Status:** v1.2 (06.05.2026) — Sunrise Hustle Brand · Multi-Account-Support · Influencer-Glow
+**Status:** v1.2 (06.05.2026) — s2s Emerald Brand · Multi-Account-Support · Emerald-Glow · powered by PEAKING
 
 ---
 
@@ -33,11 +34,12 @@ Personal Insta-Influencer-Tracking-Tool für Solo-Creators auf der Reise von 2k 
 
 | Element | Wert |
 |---|---|
-| **Name** | PEAKING |
-| **Tagline (Haupt)** | „Always peaking." |
-| **Tagline (Sub)** | „The climb is the peak." |
-| **Pitch in 1 Satz** | „From climb to peak — your sunrise tool for solo creators." |
-| **Vibe** | Influencer-Glow · Sunrise-warm · Premium-modern · Hopeful-Energetic |
+| **Name** | social2scale (s2s) |
+| **Tagline (Haupt)** | „Social, das skaliert." |
+| **Tagline (Sub)** | „Strategie statt Zufall." |
+| **Credit** | „powered by PEAKING" |
+| **Pitch in 1 Satz** | „Das Premium-Tool, mit dem social2scale Accounts plant, misst und skaliert." |
+| **Vibe** | Premium · Klar · Datengetrieben · Skalierungs-fokussiert |
 | **Vibe-Vergleich** | Notion × Buffer × Loom |
 | **Audience** | Solo-Creators 16–30 (Sebi-like) · DACH primary, EN secondary |
 | **Domain** | peaking.world (United-Domains) |
@@ -47,50 +49,51 @@ Personal Insta-Influencer-Tracking-Tool für Solo-Creators auf der Reise von 2k 
 
 ## 🎨 Colors
 
-### Sunrise-Gradient (Primary Brand)
+### Emerald-Gradient (Primary Brand — s2s)
 
 | Token | Hex | RGB | Usage |
 |---|---|---|---|
-| Sunrise Coral | `#FF6B6B` | `rgb(255, 107, 107)` | Gradient start, hot accents |
-| **Sunrise Orange** ⭐ | `#FFA94D` | `rgb(255, 169, 77)` | **Primary single-color accent** (buttons, links, glow, neon-Klasse) |
-| Sunrise Yellow | `#FFD43B` | `rgb(255, 212, 59)` | Gradient end, highlights |
+| **Emerald** ⭐ | `#00B888` | `rgb(0, 184, 136)` | **Primary single-color accent** (buttons, links, glow, neon-Klasse), Gradient start |
+| Emerald Soft | `#1FC998` | `rgb(31, 201, 152)` | Gradient mid/end, highlights |
+| Emerald Soft-Bright | `#28C281` | `rgb(40, 194, 129)` | Highlights, gradient bright stop |
+| Emerald-Text-Dark | `#04201A` | `rgb(4, 32, 26)` | Text/Icons auf Emerald-Flächen |
 
-**Standard-Sunrise-Gradient:**
+**Standard-Emerald-Gradient:**
 ```css
-background: linear-gradient(135deg, #FFD43B, #FFA94D, #FF6B6B);
+background: linear-gradient(135deg, #00B888, #1FC998, #28C281);
 /* Alt: 2-stop für Buttons */
-background: linear-gradient(135deg, #FFA94D, #FF6B6B);
+background: linear-gradient(135deg, #00B888, #1FC998);
 ```
 
-**Sunrise-Glow (Box-Shadow):**
+**Emerald-Glow (Box-Shadow):**
 ```css
-box-shadow: 0 8px 24px rgba(255, 169, 77, 0.35);
+box-shadow: 0 8px 24px rgba(0, 184, 136, 0.35);
 /* Strong */
-box-shadow: 0 12px 36px rgba(255, 169, 77, 0.55);
+box-shadow: 0 12px 36px rgba(0, 184, 136, 0.55);
 ```
 
-### Background
+### Background (Dark-only s2s-Stack)
 
 | Token | Hex / Value | Usage |
 |---|---|---|
-| BG Gradient Start | `#0f172a` | App background top |
-| BG Gradient End | `#1e293b` | App background bottom |
-| Glass Surface | `rgba(30, 41, 59, 0.6)` | Cards (glassmorphism) |
+| BG Deep | `#03080D` | Deepest background, Insta-PB-BG |
+| BG Mid | `#0B0F14` | App background top |
+| BG Surface | `#11161D` | App background bottom, glass-surface basis |
 | Glass Border | `rgba(255, 255, 255, 0.1)` | Card hairlines |
-| Surface Strong | `rgba(15, 23, 42, 0.8)` | Modal backgrounds, code blocks |
+| Surface Strong | `rgba(11, 15, 20, 0.8)` | Modal backgrounds, code blocks |
 
 **Standard-BG-Gradient:**
 ```css
-background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+background: linear-gradient(135deg, #0B0F14 0%, #11161D 100%);
 ```
 
 ### Text
 
 | Token | Hex | Usage |
 |---|---|---|
-| Text Primary | `#ffffff` | Headlines, body |
-| Text Secondary | `#94a3b8` | Subtle copy, labels |
-| Text Muted | `#64748b` | Footnotes, timestamps |
+| Text Primary | `#F2F3F1` | Headlines, body |
+| Text Secondary | `#A4A6A1` | Subtle copy, labels |
+| Text Muted | `#7C7E78` | Footnotes, timestamps |
 
 ### State (functional, not brand)
 
@@ -113,7 +116,7 @@ Diese sind **content-categorization tokens**, KEINE Brand-Tokens. Werden in den 
 | Mindset | `#8b5cf6` | 🧠 |
 | Plant-Based | `#84cc16` | 🌿 |
 
-> ⚠️ **Achtung:** Gym-Pillar (`#f59e0b`) ist phonetisch nahe Sunrise-Orange. Im Brand-Context immer Sunrise-Orange (`#FFA94D`) nehmen. Im Pillar-Context Pillar-Orange.
+> ⚠️ **Achtung:** Gym-Pillar (`#f59e0b`) ist ein funktionaler Pillar-Token, KEIN Brand-Token. Im Brand-Context immer Emerald (`#00B888`) nehmen. Im Pillar-Context Pillar-Orange.
 
 ---
 
@@ -124,26 +127,26 @@ Diese sind **content-categorization tokens**, KEINE Brand-Tokens. Werden in den 
 | File | Format | Usage |
 |---|---|---|
 | `logo.svg` | 64×64 SVG | Triangle-only. Favicon, App-Icon, Splash-Icon, Insta-PB. |
-| `logo-wordmark.svg` | 280×64 SVG | Triangle + „peaking"-Wordmark. Header-Bereich. |
+| `logo-wordmark.svg` | 280×320 SVG | Triangle + „social2scale"-Wordmark. Header-Bereich. |
 | `logo-preview.html` | HTML | Multi-Size + App-Icon + Insta-PB Mockups. |
 
 ### Logo-Concept
 
-**„Peak Triangle mit Sunrise-Gradient"** — stilisierter Berg-Gipfel als gefülltes Dreieck, vertical Gradient von Coral (unten/links) → Orange (mitte) → Yellow (oben/rechts), als Symbol für „Sunrise am Peak".
+**„Peak Triangle mit Emerald-Halo"** — stilisierter Berg-Gipfel als gefülltes Dreieck, Emerald-Gradient von `#00B888` → `#1FC998` auf hellem Facet, dunkler s2s-Stack auf der Schatten-Facet, hinterlegt mit Emerald-Halo. Datei-/Konzept-Name bleibt, Farben sind s2s-Emerald.
 
 ### SVG-Source (logo.svg)
 
 ```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
-  <title>PEAKING — Always peaking.</title>
+  <title>social2scale — Social, das skaliert.</title>
   <defs>
-    <linearGradient id="sunrise" x1="0%" y1="100%" x2="100%" y2="0%">
-      <stop offset="0%" stop-color="#FF6B6B"/>
-      <stop offset="50%" stop-color="#FFA94D"/>
-      <stop offset="100%" stop-color="#FFD43B"/>
+    <linearGradient id="emerald" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#00B888"/>
+      <stop offset="50%" stop-color="#1FC998"/>
+      <stop offset="100%" stop-color="#28C281"/>
     </linearGradient>
   </defs>
-  <path d="M 32 8 L 58 56 L 6 56 Z" fill="url(#sunrise)"/>
+  <path d="M 32 8 L 58 56 L 6 56 Z" fill="url(#emerald)"/>
 </svg>
 ```
 
@@ -155,16 +158,17 @@ Diese sind **content-categorization tokens**, KEINE Brand-Tokens. Werden in den 
 | Dashboard-Header | `logo.svg` | 32–40 | `logo-glow` |
 | Favicon | `logo.svg` | Browser handles | — |
 | Apple-Touch-Icon | `logo.svg` | 180×180 | — |
-| Header-Wordmark | inline `<span>PEAKING</span>` | text-3xl bis text-4xl | `text-sunrise font-bold tracking-tight` |
-| Insta-PB | `logo.svg` auf Black-BG | 96×96 | 3px Sunrise-Border |
+| Header-Wordmark | inline `<span>social2scale</span>` | text-3xl bis text-4xl | `text-sunrise font-bold tracking-tight` |
+| Insta-PB | `logo.svg` auf Dark-BG | 96×96 | 3px Emerald-Border |
 
 ---
 
 ## 🅰️ Typography
 
-- **Font-Stack:** `-apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', sans-serif`
-- **Wordmark „PEAKING":**
-  - Uppercase Variante: `text-3xl bis text-5xl font-bold tracking-tight text-sunrise`
+- **Display-Font:** `'Space Grotesk', 'Inter', -apple-system, sans-serif` (Headlines, Wordmark)
+- **Body-Font:** `'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif`
+- **Wordmark „social2scale":**
+  - Display-Variante: `text-3xl bis text-5xl font-bold tracking-tight text-sunrise` (font-family Space Grotesk)
   - Lowercase Variante: gleicher Style mit `lowercase` für softeren Vibe (Stripe-Style)
 - **Headlines:** `font-bold` (700) bis `font-black` (900)
 - **Body:** Tailwind Default (400–600)
@@ -175,20 +179,21 @@ Diese sind **content-categorization tokens**, KEINE Brand-Tokens. Werden in den 
 ## 🗣️ Voice / Tone
 
 ### Core Principles
-- **Hopeful** — Optimismus, Aufstieg, „du kommst hoch"
-- **Energetic** — Hustle-Vibe, aber nicht aggressiv
-- **Inspiring** — Identifikations-Stories („every reel is a step")
-- **Honest** — Build-in-Public-DNA, keine Vanity-Lügen
+- **Premium** — hochwertig, klar, vertrauenswürdig
+- **Datengetrieben** — Entscheidungen aus Metriken, nicht aus Bauchgefühl
+- **Klar** — keine Floskeln, kein Hype, präzise
+- **Skalierungs-fokussiert** — alles dient dem Wachstum des Accounts
 
-### Sätze die zu PEAKING gehören
-- „Always peaking."
-- „The climb is the peak."
-- „From climb to peak."
-- „You're climbing — the peak rewards you."
-- „Track was hooked. Skip the rest."
-- „From 2k to 1M. Always peaking."
+### Sätze die zu social2scale gehören
+- „Social, das skaliert."
+- „Strategie statt Zufall."
+- „Von der Strategie zur Skalierung."
+- „Konsequenz wird belohnt."
+- „Miss, was wirkt. Lass den Rest."
+- „Von den ersten Followern zur echten Reichweite."
+- „powered by PEAKING" (als Credit in Footer/Sub-Spots behalten)
 
-### Sätze die NICHT zu PEAKING gehören
+### Sätze die NICHT zu social2scale gehören
 - „Date your best self." → SMASH only
 - „Mach hin." → SMASH only
 - „Hulk-Mode an." → SMASH only
@@ -208,9 +213,9 @@ Diese sind **content-categorization tokens**, KEINE Brand-Tokens. Werden in den 
 
 | Klasse | Effekt |
 |---|---|
-| `.btn-primary` | Sunrise-Gradient (Yellow→Orange→Coral) Background, dark text, font-bold |
+| `.btn-primary` | Emerald-Gradient (Emerald→Soft→Soft-Bright) Background, dark text, font-bold |
 | `.btn-shimmer` | Hover: White-Shine sweep across (links→rechts) |
-| `.btn-glow-strong` | Stärkerer Sunrise-Box-Shadow + Inset-Highlight |
+| `.btn-glow-strong` | Stärkerer Emerald-Box-Shadow + Inset-Highlight |
 | `.press-feedback` | Active: scale(0.96) — taktiles Feedback beim Tap |
 
 ### Cards & Surfaces
@@ -218,16 +223,16 @@ Diese sind **content-categorization tokens**, KEINE Brand-Tokens. Werden in den 
 | Klasse | Effekt |
 |---|---|
 | `.glass` | Glassmorphism (backdrop-filter blur + halbtransparenter dark BG) |
-| `.lift-glow` | Hover: lift up 4px + Sunrise-Glow-Shadow + Border-Tint |
-| `.gradient-flow` | Animierter Sunrise-Background (8s loop) |
-| `.bg-depth` | Subtle radiale Sunrise-Glows in Ecken (für Body) |
+| `.lift-glow` | Hover: lift up 4px + Emerald-Glow-Shadow + Border-Tint |
+| `.gradient-flow` | Animierter Emerald-Background (8s loop) |
+| `.bg-depth` | Subtle radiale Emerald-Glows in Ecken (für Body) |
 
 ### Pills & Chips
 
 | Klasse | Effekt |
 |---|---|
 | `.chip` | Pill-shaped Filter-Button, transparent BG |
-| `.chip.active` | Sunrise-Gradient BG + Glow |
+| `.chip.active` | Emerald-Gradient BG + Glow |
 | `.pillar-pill` | Pillar-color BG (functional, nicht brand) |
 | `.status-pill` | Success/Warning/Skipped-States für Calendar-Slots |
 
@@ -235,15 +240,15 @@ Diese sind **content-categorization tokens**, KEINE Brand-Tokens. Werden in den 
 
 | Klasse | Effekt |
 |---|---|
-| `.toast` | Sunrise-Orange BG, dark text, bouncy entry-animation |
+| `.toast` | Emerald BG, dark text, bouncy entry-animation |
 | `.modal-bg` | Backdrop blur + dark overlay |
 
 ### Account-Switcher (Dashboard)
 
 | Klasse | Effekt |
 |---|---|
-| `.account-switch` | Pill mit Sunrise-Border + Hover-Glow |
-| `.account-menu` | Dropdown mit Sunrise-Border + Glow-Shadow |
+| `.account-switch` | Pill mit Emerald-Border + Hover-Glow |
+| `.account-menu` | Dropdown mit Emerald-Border + Glow-Shadow |
 
 ---
 
@@ -266,9 +271,9 @@ Diese sind **content-categorization tokens**, KEINE Brand-Tokens. Werden in den 
 ## 🚫 Anti-Patterns (NIE machen)
 
 - ❌ **Hulk-Green** (`#39FF14`, `#00ff6a`, `#2ecc71`) verwenden — gehört zu SMASH, klare Brand-Trennung halten
-- ❌ Mehr als 3 Stops im Sunrise-Gradient (Coral/Orange/Yellow ist die kanonische Palette)
+- ❌ Mehr als 3 Stops im Emerald-Gradient (Emerald/Soft/Soft-Bright ist die kanonische Palette)
 - ❌ Light-Mode-Variante (PEAKING ist **Dark-Only**)
-- ❌ Drop-Shadows ohne Sunrise-Tint (sondern grau/schwarz) — wirkt billig
+- ❌ Drop-Shadows ohne Emerald-Tint (sondern grau/schwarz) — wirkt billig
 - ❌ Generic Stock-Mountain-Logos statt unser eigenes SVG
 - ❌ SMASH-Brand-Voice mischen („Mach hin.", „Hulk-Mode") in PEAKING-Spots
 - ❌ Mehr als eine Brand-Voice pro Page
@@ -302,10 +307,10 @@ Diese sind **content-categorization tokens**, KEINE Brand-Tokens. Werden in den 
 
 ## 📝 Versionierung
 
-- **v1.0** (06.05.2026) — Initial: Sunrise Hustle Brand-Setup nach Pivot von Hulk-Green
-- **v1.1** (06.05.2026) — Logo SVG (Triangle + Sunrise-Gradient) added
+- **v1.0** (06.05.2026) — Initial: s2s Emerald Brand-Setup nach Pivot von Hulk-Green
+- **v1.1** (06.05.2026) — Logo SVG (Triangle + Emerald-Gradient) added
 - **v1.2** (06.05.2026) — Glow + Animations System (`effects.css`) added, Multi-Account dazu
 
 ---
 
-*PEAKING ist eine eigenständige Brand. Klare Trennung von SMASH (Hulk-Green-Brand). Beide leben im SMASH-Universe.*
+*social2scale (powered by PEAKING) ist eine eigenständige Brand. Klare Trennung von SMASH (Hulk-Green-Brand). Beide leben im SMASH-Universe.*

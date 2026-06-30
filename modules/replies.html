@@ -9,13 +9,13 @@
 <link rel="icon" href="../assets/logo.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="../assets/logo.svg">
 <link rel="manifest" href="../manifest.json">
-<meta name="theme-color" content="#FFA94D">
+<meta name="theme-color" content="#00B888">
 <link rel="stylesheet" href="../assets/effects.css">
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="../js/app.js"></script>
 <style>
   body {
-    background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+    background: linear-gradient(135deg, #0B0F14 0%, #11161D 100%);
     min-height: 100dvh;
     color: white;
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
@@ -25,23 +25,23 @@
     backdrop-filter: blur(10px);
     border: 1px solid rgba(255,255,255,0.1);
   }
-  .neon { color: #FFA94D; }
+  .neon { color: #00B888; }
   .btn-primary {
-    background: linear-gradient(135deg, #FFA94D, #FF6B6B);
-    color: #0f172a;
+    background: linear-gradient(135deg, #00B888, #1FC998);
+    color: #04201A;
     font-weight: bold;
     transition: all 0.2s;
   }
-  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(255, 169, 77, 0.4); }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(0, 184, 136, 0.4); }
   input, textarea, select { background: rgba(15, 23, 42, 0.6); border: 1px solid rgba(255,255,255,0.15); color: white; }
-  input:focus, textarea:focus, select:focus { outline: none; border-color: #FFA94D; }
+  input:focus, textarea:focus, select:focus { outline: none; border-color: #00B888; }
   .modal-bg { background: rgba(0,0,0,0.7); backdrop-filter: blur(4px); }
   .toast {
     position: fixed; bottom: 24px; left: 50%;
     transform: translateX(-50%) translateY(100px);
-    background: #FFA94D; color: #0f172a;
+    background: #00B888; color: #04201A;
     padding: 12px 24px; border-radius: 999px; font-weight: bold;
-    box-shadow: 0 8px 24px rgba(255, 169, 77, 0.4);
+    box-shadow: 0 8px 24px rgba(0, 184, 136, 0.4);
     transition: transform 0.3s ease; z-index: 100;
   }
   .toast.show { transform: translateX(-50%) translateY(0); }
@@ -56,7 +56,7 @@
     transition: all 0.15s;
     font-size: 13px;
   }
-  .tab-btn.active { color: #FFA94D; border-bottom-color: #FFA94D; }
+  .tab-btn.active { color: #00B888; border-bottom-color: #00B888; }
   .reply-card {
     background: rgba(15, 23, 42, 0.4);
     border: 1px solid rgba(255,255,255,0.08);
@@ -64,7 +64,7 @@
     padding: 14px;
     transition: all 0.2s;
   }
-  .reply-card:hover { border-color: rgba(255, 169, 77, 0.3); }
+  .reply-card:hover { border-color: rgba(0, 184, 136, 0.3); }
   .reply-text {
     font-size: 14px;
     line-height: 1.6;
@@ -72,8 +72,8 @@
     color: #e2e8f0;
   }
   .var-highlight {
-    background: rgba(255, 169, 77, 0.15);
-    color: #FFA94D;
+    background: rgba(0, 184, 136, 0.15);
+    color: #00B888;
     padding: 1px 4px;
     border-radius: 4px;
     font-weight: 700;
@@ -86,21 +86,21 @@
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.5px;
-    background: rgba(255, 169, 77, 0.15);
-    color: #FFA94D;
+    background: rgba(0, 184, 136, 0.15);
+    color: #00B888;
   }
   .fab {
     position: fixed; bottom: 20px; right: 20px;
     width: 56px; height: 56px; border-radius: 999px;
-    background: linear-gradient(135deg, #FFA94D, #FF6B6B);
-    color: #0f172a; font-size: 28px; font-weight: bold;
-    box-shadow: 0 8px 24px rgba(255, 169, 77, 0.4);
+    background: linear-gradient(135deg, #00B888, #1FC998);
+    color: #04201A; font-size: 28px; font-weight: bold;
+    box-shadow: 0 8px 24px rgba(0, 184, 136, 0.4);
     display: flex; align-items: center; justify-content: center;
     cursor: pointer; z-index: 50; border: none;
   }
   .preview-box {
     background: rgba(15, 23, 42, 0.8);
-    border: 1px solid rgba(255, 169, 77, 0.2);
+    border: 1px solid rgba(0, 184, 136, 0.2);
     border-radius: 12px;
     padding: 14px;
     white-space: pre-wrap;
@@ -213,7 +213,7 @@ const SEED = [
 
   // STORY REPLY
   { id: 5201, tab: 'story', ctx: 'Sticker-Antwort beantworten (Frage)', text: "[ANTWORT-INHALT].\nDanke fürs Mitdenken. ⛰️" },
-  { id: 5202, tab: 'story', ctx: 'Story-Compliment (Outdoor/Reel-Reaction)', text: "Real recognise real. Danke [NAME]. 🌅" },
+  { id: 5202, tab: 'story', ctx: 'Story-Compliment (Outdoor/Reel-Reaction)', text: "Real recognise real. Danke [NAME]. 📈" },
   { id: 5203, tab: 'story', ctx: 'Story-Frage von Friend', text: "Hey [NAME] — kurz: [ANTWORT]. Schreib gleich nochmal wenn's tiefer gehen soll." }
 ];
 

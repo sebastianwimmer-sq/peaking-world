@@ -9,12 +9,12 @@
 <link rel="icon" href="../assets/logo.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="../assets/logo.svg">
 <link rel="manifest" href="../manifest.json">
-<meta name="theme-color" content="#FFA94D">
+<meta name="theme-color" content="#00B888">
 <link rel="stylesheet" href="../assets/effects.css">
 <script src="https://cdn.tailwindcss.com"></script>
 <style>
   body {
-    background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+    background: linear-gradient(135deg, #0B0F14 0%, #11161D 100%);
     min-height: 100dvh;
     color: white;
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Inter, sans-serif;
@@ -24,21 +24,21 @@
     backdrop-filter: blur(12px);
     border: 1px solid rgba(255,255,255,0.1);
   }
-  .neon { color: #FFA94D; }
+  .neon { color: #00B888; }
   .text-sunrise {
-    background: linear-gradient(135deg, #FF6B6B, #FFA94D, #FFD43B);
+    background: linear-gradient(135deg, #00B888, #1FC998, #28C281);
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
     -webkit-text-fill-color: transparent;
   }
   .btn-primary {
-    background: linear-gradient(135deg, #FFD43B, #FFA94D, #FF6B6B);
-    color: #0f172a;
+    background: linear-gradient(135deg, #28C281, #1FC998, #00B888);
+    color: #04201A;
     transition: transform 0.12s, box-shadow 0.25s;
     font-weight: 800;
   }
-  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 14px 36px rgba(255,169,77,0.5); }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 14px 36px rgba(0, 184, 136,0.5); }
   .btn-primary:disabled { opacity: 0.5; cursor: not-allowed; transform: none; box-shadow: none; }
   .btn-ghost {
     background: rgba(15,23,42,0.7);
@@ -46,12 +46,12 @@
     color: #cbd5e1;
     transition: all 0.15s;
   }
-  .btn-ghost:hover { border-color: rgba(255,169,77,0.5); color: #FFA94D; }
+  .btn-ghost:hover { border-color: rgba(0, 184, 136,0.5); color: #00B888; }
   .btn-ghost:disabled { opacity: 0.5; cursor: not-allowed; }
   .brand-card {
     transition: all 0.2s;
   }
-  .brand-card:hover { border-color: rgba(255,169,77,0.3); }
+  .brand-card:hover { border-color: rgba(0, 184, 136,0.3); }
   .stat-num {
     font-size: 22px;
     font-weight: 800;
@@ -93,9 +93,9 @@
   .profile-pic {
     width: 56px; height: 56px;
     border-radius: 50%;
-    border: 2px solid rgba(255,169,77,0.4);
+    border: 2px solid rgba(0, 184, 136,0.4);
     object-fit: cover;
-    background: #1e293b;
+    background: #11161D;
   }
 </style>
 </head>
@@ -145,7 +145,7 @@
   const API_KEY = 'pk_peaking_2026_sebi_solo_x7k2m9';
 
   const BRAND_META = {
-    peaking: { emoji: '🚀', color: '#FFA94D' },
+    peaking: { emoji: '🚀', color: '#00B888' },
     hulk: { emoji: '🌱', color: '#22c55e' },
     smash: { emoji: '💪', color: '#10b981' },
   };
@@ -200,7 +200,7 @@
   }
 
   function renderBrandCard(b) {
-    const meta = BRAND_META[b.name] || { emoji: '📡', color: '#FFA94D' };
+    const meta = BRAND_META[b.name] || { emoji: '📡', color: '#00B888' };
     const syncedAt = b.lastSync?.syncedAt;
     const reelCount = b.reelCount || 0;
     const p = b.profile || {};

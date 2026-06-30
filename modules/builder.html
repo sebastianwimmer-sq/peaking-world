@@ -9,7 +9,7 @@
 <link rel="icon" href="../assets/logo.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="../assets/logo.svg">
 <link rel="manifest" href="../manifest.json">
-<meta name="theme-color" content="#FFA94D">
+<meta name="theme-color" content="#00B888">
 <link rel="stylesheet" href="../assets/effects.css">
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="../js/app.js"></script>
@@ -25,8 +25,8 @@
     backdrop-filter: blur(10px);
     border: 1px solid rgba(255,255,255,0.1);
   }
-  .neon { color: #FFA94D; }
-  .neon-bg { background: #FFA94D; color: #0f172a; }
+  .neon { color: #00B888; }
+  .neon-bg { background: #00B888; color:#04201A; }
   input, select, textarea {
     background: rgba(15, 23, 42, 0.6);
     border: 1px solid rgba(255,255,255,0.15);
@@ -34,15 +34,15 @@
   }
   input:focus, select:focus, textarea:focus {
     outline: none;
-    border-color: #FFA94D;
+    border-color: #00B888;
   }
   .btn-primary {
-    background: linear-gradient(135deg, #FFA94D, #FF6B6B);
-    color: #0f172a;
+    background: linear-gradient(135deg, #00B888, #1FC998);
+    color:#04201A;
     transition: all 0.2s;
     font-weight: bold;
   }
-  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(255, 169, 77, 0.3); }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(0, 184, 136, 0.3); }
   .btn-secondary {
     background: rgba(15, 23, 42, 0.6);
     border: 1px solid rgba(255,255,255,0.2);
@@ -53,12 +53,12 @@
   }
   .slide-card:hover { transform: translateY(-2px); }
   .upload-zone {
-    border: 2px dashed rgba(255, 169, 77, 0.4);
+    border: 2px dashed rgba(0, 184, 136, 0.4);
     transition: all 0.2s;
   }
   .upload-zone:hover {
-    border-color: #FFA94D;
-    background: rgba(255, 169, 77, 0.05);
+    border-color: #00B888;
+    background: rgba(0, 184, 136, 0.05);
   }
   .draggable {
     cursor: move;
@@ -76,7 +76,7 @@
   <div class="text-center mb-8">
     <div class="text-xs text-gray-500 mb-2"><a href="../dashboard.html" class="hover:text-white">← Dashboard</a></div>
     <h1 class="text-4xl md:text-5xl font-bold mb-2">🖼️ Carousel Builder</h1>
-    <p class="text-gray-400">⛰️ PEAKING · <span class="neon font-bold">Always peaking.</span></p>
+    <p class="text-gray-400">⛰️ powered by PEAKING · <span class="neon font-bold">Social, das skaliert.</span></p>
   </div>
 
   <!-- Settings -->
@@ -85,7 +85,7 @@
     <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
       <div>
         <label class="block text-sm text-gray-400 mb-1">Akzent-Farbe</label>
-        <input type="color" id="accentColor" value="#FFA94D" class="w-full h-10 rounded-lg cursor-pointer">
+        <input type="color" id="accentColor" value="#00B888" class="w-full h-10 rounded-lg cursor-pointer">
       </div>
       <div>
         <label class="block text-sm text-gray-400 mb-1">Zahlen-Position</label>
@@ -202,7 +202,7 @@
   </div>
 
   <div class="text-center mt-6 text-gray-500 text-sm">
-    🖼️ PEAKING · Always peaking. · 4-Säulen-System
+    🖼️ powered by PEAKING · 4-Säulen-System
   </div>
 </div>
 
